@@ -1,5 +1,5 @@
-export const API_URL = 'http://localhost:8000/dev/api/v1'
-export const APP_URL = "http://localhost:3001";
+export const API_URL = 'http://16.170.230.19:8000/dev/api/v1'
+export const APP_URL = "http://16.170.230.19";
 // export const API_URL = 'https://expensive-mite-underclothes.cyclic.app/dev/api/v1'
 // export const APP_URL = "http://localhost:3000";
 export const CLOUDINARY_NAME = "palliKroztek - saswat"
