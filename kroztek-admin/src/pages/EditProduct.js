@@ -210,9 +210,13 @@ function EditProduct() {
     formData.append("subcategory", product.subcategory);
     formData.append("websiteLink", product?.websiteLink);
     formData.append("youtubeLink", product?.youtubeLink);
+    // Filter out empty feature objects
+    const filteredFeatures = product.features.filter((feature) => {
+      return feature.name.trim() !== "" || feature.value.trim() !== "";
+    });
 
     // Append features as JSON string
-    formData.append("features", JSON.stringify(product?.features));
+    formData.append("features", JSON.stringify(filteredFeatures));
 
     // Append images and documents
     for (let i = 0; i < product?.images.length; i++) {
@@ -486,11 +490,16 @@ function EditProduct() {
                         Document {index + 1}
                       </a>
                       {/* Remove button */}
-                      <button onClick={() => removeDocument(index)}   className="m-2"  style={{
-                        background: "red",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",}}>
+                      <button
+                        onClick={() => removeDocument(index)}
+                        className="m-2"
+                        style={{
+                          background: "red",
+                          color: "white",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
                         Remove
                       </button>
                     </div>
@@ -530,7 +539,7 @@ function EditProduct() {
                           background: "red",
                           color: "white",
                           border: "none",
-                          cursor: "pointer",// Add a pointer cursor for interaction
+                          cursor: "pointer", // Add a pointer cursor for interaction
                         }}
                       >
                         Remove
@@ -561,10 +570,11 @@ function EditProduct() {
                         onClick={() => removeDocFromDb(document)}
                         className="m-2"
                         style={{
-                        background: "red",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",}}
+                          background: "red",
+                          color: "white",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
                       >
                         Remove
                       </button>

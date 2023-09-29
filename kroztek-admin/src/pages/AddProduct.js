@@ -153,9 +153,19 @@ function AddProduct() {
     ) {
       toast.warning("Please fill up all the star marked Inputs");
       return;
-    }   
-    console.log("product",product) 
-    addProduct(product, token, navigate);
+    }  
+      // Filter out empty feature objects
+  const filteredFeatures = product.features.filter((feature) => {
+    return feature.name.trim() !== "" || feature.value.trim() !== "";
+  });
+
+  // Create a new product object without empty features
+  const productToSend = {
+    ...product,
+    features: filteredFeatures,
+  }; 
+
+    addProduct( productToSend, token, navigate);
   };
 
   return (
