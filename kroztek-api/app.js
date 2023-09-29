@@ -27,7 +27,9 @@ app.use(helmet.frameguard());
 
 //Prevent mime sniffing
 app.use(helmet.noSniff());
-
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+  }));
 // Passport Middleware
 app.use(passport.initialize());
 
@@ -36,13 +38,14 @@ require("./config/passport")(passport);
 
 //connect to DB
 connectDb()
-
+app.use('/uploads', express.static('uploads'));
 app.get("/", (_,res) =>{
     res.send("Welcome to Kroztek integrated solution!")
 })
 //api routes
 app.use("/dev/api/v1/user", require("./routes/user"));
 app.use("/dev/api/v1/post", require("./routes/post"));
+app.use("/dev/api/v1/product", require("./routes/product"));
 app.use("/dev/api/v1/category", require("./routes/category"));
 app.use("/dev/api/v1/comment", require("./routes/comment"));
 app.use("/dev/api/v1/notification", require("./routes/notification"));

@@ -23,13 +23,15 @@ async function generateNextUserId(appName) {
     }
 }
 
-// Usage example
-// generateNextUserId('abc')
-//     .then((nextUserId) => {
-//         console.log(`Next User ID: ${nextUserId}`);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-//     });
+// Function to generate the next postId based on the highest postId in the database
+function generateNextPostId(highestPost) {
+    if (highestPost && highestPost?.postId) {
+      const highestId = parseInt(highestPost.postId.replace('kroz', ''), 10);
+      if (!isNaN(highestId)) {
+        return `kroz${highestId + 1}`;
+      }
+    }
+    return 'kroz1'; // Default if there are no existing posts or an error occurs
+  }
 
-module.exports = generateNextUserId;
+module.exports = {generateNextUserId, generateNextPostId};

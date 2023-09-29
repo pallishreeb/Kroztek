@@ -1,5 +1,6 @@
 const Category = require("../models/category");
 const SubCategory = require("../models/subCategory");
+const Product = require('../models/product');
 const { ObjectId } = require("mongodb");
 
 module.exports = {
@@ -58,6 +59,7 @@ module.exports = {
           .json({ success: false, message: "Invalid id", response: {} });
       }
       await SubCategory.deleteMany({categoryId:  ObjectId(categoryId)})
+      await Product.deleteMany({category:  ObjectId(categoryId)})
       return res.status(200).json({
         success: true,
         message: "Category deleted successfully",
@@ -160,6 +162,7 @@ module.exports = {
           .status(404)
           .json({ success: false, message: "Invalid id", response: {} });
       }
+      await Product.deleteMany({subcategory:  ObjectId(subId)})
       return res.status(200).json({
         success: true,
         message: "SubCategory deleted successfully",

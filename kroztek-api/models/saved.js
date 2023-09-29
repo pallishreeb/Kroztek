@@ -5,7 +5,7 @@ const { Schema } = mongoose
 const savedSchema = new Schema({
     postId: {
         type: Schema.Types.ObjectId,
-        ref: 'post',
+        ref: 'product',
     },
     userId: {
         type: Schema.Types.ObjectId,

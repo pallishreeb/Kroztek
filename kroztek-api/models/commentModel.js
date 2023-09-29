@@ -7,7 +7,7 @@ const commentSchema = new Schema({
     },
     postId: {
         type: Schema.Types.ObjectId,
-        ref: 'post',
+        ref: 'product',
     },
     createdBy: {
         type: Schema.Types.ObjectId,

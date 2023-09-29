@@ -5,10 +5,6 @@ const postSchema = new Schema({
   title: {
     type: String,
   },
-  postId: {
-    type: String,
-    unique: true,
-  },
   text: {
     type: String,
   },

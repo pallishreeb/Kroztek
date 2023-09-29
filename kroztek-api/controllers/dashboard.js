@@ -1,4 +1,4 @@
-const Post = require("../models/postModel");
+const Product = require('../models/product');
 const User = require("../models/userModel");
 const Category = require("../models/category");
 const SubCategory = require("../models/subCategory");
@@ -6,13 +6,13 @@ const SubCategory = require("../models/subCategory");
 exports.getStatitics = async(req,res) =>{
     try {
         const userCount = await User.countDocuments();
-        const postCount = await Post.countDocuments();
+        const postCount = await Product.countDocuments();
         const categoryCount = await Category.countDocuments();
         const subcategoryCount = await SubCategory.countDocuments();
     
         const statistics = {
           users: userCount,
-          posts: postCount,
+          Products: postCount,
           categories: categoryCount,
           subcategories: subcategoryCount,
         };

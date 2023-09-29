@@ -14,7 +14,7 @@ const Comment = require("../models/commentModel")
 
 //Config
 const keys = require("../config/keys");
-const generateNextUserId = require("../utils/generateIds")
+const {generateNextUserId} = require("../utils/generateIds")
 
 module.exports = {
   userRegister: async (req, res) => {
