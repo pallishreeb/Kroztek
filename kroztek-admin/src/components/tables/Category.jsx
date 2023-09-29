@@ -55,11 +55,14 @@ export default function CategoryTable({
     setselectedRows(selectedRowsData);
   };
   const deleteHandler = () => {
+    const confirmed = window.confirm("Are you sure you want to delete this item,products and subcategory related to this product will also be removed?");
+    if (confirmed) {
     selectedRows.forEach((item) => {
       // console.log("itemToDelete", item._id);
       setCategories(categories.filter((row) => row._id !== item._id));
       removeCategory(item._id, token);
     });
+  }
   };
 
   if (loading) {

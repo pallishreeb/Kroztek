@@ -3,10 +3,10 @@
 import React from "react";
 import {
   Groups2,
-  DynamicFeed,
   ListAltOutlined,
   Category,
 } from "@mui/icons-material";
+import InventoryIcon from '@mui/icons-material/Inventory';
 const HeaderCard = ({ statistics }) => {
   const data = [
     {
@@ -15,9 +15,9 @@ const HeaderCard = ({ statistics }) => {
       value: statistics?.users,
     },
     {
-      title: "Posts",
-      img: <DynamicFeed sx={{ height: "50px", width: "50px" }} />,
-      value: statistics?.posts,
+      title: "Products",
+      img: <InventoryIcon sx={{ height: "50px", width: "50px" }} />,
+      value: statistics?.Products,
     },
     {
       title: "Categories",

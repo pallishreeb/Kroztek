@@ -13,15 +13,7 @@ export const getCategories = async (token) => {
         headers
     })
 }
-// export const getCategory = async (token,Id) => {
 
-//     const headers = {
-//         authorization: token
-//     }
-//     return await axios.get(API_URL + '/category/', {
-//         headers
-//     })
-// }
 export const addCategory = async (token,name) => {
 let category = name;
     const headers = {

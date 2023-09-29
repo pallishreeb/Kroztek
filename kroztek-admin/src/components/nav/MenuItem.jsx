@@ -8,14 +8,14 @@ import {
   ListItemText,
 } from "@mui/material";
 import {
-  FeaturedPlayList,
   Home,
-  NoteAdd,
+  // NoteAdd,
   ListAlt,
   Category,
   Logout,
   Groups2,
 } from "@mui/icons-material";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import { AuthApiProvider } from "../../context/auth/AuthProvider";
 const MenuItem = ({ open, navigate }) => {
   const { logout } = AuthApiProvider();
@@ -26,14 +26,19 @@ const MenuItem = ({ open, navigate }) => {
       path: "/",
     },
     {
-      name: "Add Blogs",
-      icon: <NoteAdd />,
-      path: "/add",
+      name: "Categories",
+      icon: <Category color="white" />,
+      path: "/categories",
     },
+    // {
+    //   name: "Create",
+    //   icon: <NoteAdd />,
+    //   path: "/add-product",
+    // },
     {
-      name: "Blogs",
-      icon: <FeaturedPlayList color="white" />,
-      path: "/posts",
+      name: "Products",
+      icon: <InventoryIcon color="white" />,
+      path: "/products",
     },
 
     {
@@ -41,11 +46,7 @@ const MenuItem = ({ open, navigate }) => {
       icon: <Groups2 color="white" />,
       path: "/users",
     },
-    {
-      name: "Categories",
-      icon: <Category color="white" />,
-      path: "/categories",
-    },
+  
     {
       name: "Metadata",
       icon: <ListAlt color="white" />,
