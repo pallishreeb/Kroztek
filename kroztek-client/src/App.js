@@ -16,7 +16,7 @@ import Resetpassword from "./pages/resetpassword";
 import NotFoundPage from './pages/notFoundPage';
 import Contact from './pages/contact';
 import Navbar from './components/Navbar';
-
+import WhatsappImg from './img/whatsapp.png'
 function App() {
   // const params = useParams()
   return (
@@ -44,7 +44,18 @@ function App() {
         <Route exact path="/verify" element={<Verification />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
+
+      <div class="whatsapp-button" style={{
+        position: `fixed`,
+        top:700,
+        right:30,       
+        }}>
+        <a href="https://wa.me/+918637214899" target="_blank" rel="noopener noreferrer">
+        <img src={WhatsappImg} alt="WhatsApp Icon" width={60} height={60}/>
+        </a>
+    </div>
       <AppFooter />
+     
     </div>
   );
 }

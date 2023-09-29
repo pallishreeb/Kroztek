@@ -7,11 +7,11 @@ import EditProfile from "../components/EditProfile";
 import { savedPost, removeSavedPost } from "../networkCalls/post";
 import { useNavigate } from "react-router-dom";
 import authContext from "../context";
-import { htmlToText } from "html-to-text";
 import imgPlaceholder from "../img/no-image.jpg";
 import { HeartFilled } from "@ant-design/icons";
 import nodata from "../img/no-data.png"
 import "../css/profile.css"
+import { IMG_URL } from "../config";
 
 
 function Profile() {
@@ -42,7 +42,6 @@ function Profile() {
 
   const removeSavePost = async (savedPostId) => {
     removeSavedPost(token, savedPostId).then((res) => {
-      // console.log("Remoed from saved post", res);
       getData(token);
     });
   };
@@ -59,6 +58,12 @@ function Profile() {
       children: <EditProfile />,
     },
   ];
+  function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength - 3) + '...';
+    }
+    return text;
+  }
   return (
     <>
       {/* User profile details and edit tab */}
@@ -82,14 +87,14 @@ function Profile() {
                   <div key={index} className="blog-card">
                     <div
                       className="card-image"
-                      onClick={() => navigateToDetails(post?.postId._id)}
+                      onClick={() => navigateToDetails(post?.postId?._id)}
                     >
                       <img
-                        src={post?.postId.images[0] || imgPlaceholder}
+                        src={`${IMG_URL}/images/${post?.postId.images[0]}` || imgPlaceholder}
                         alt="Blog Thumbnail"
                       />
                       <h2 className="blog-title">
-                        {post?.postId.title.trim().slice(0, 30)}...
+                        {truncateText(post?.postId?.name.trim(), 30)}
                       </h2>
                     </div>
                     <div className="card-content">
@@ -97,7 +102,7 @@ function Profile() {
                         className="blog-details"
                         onClick={() => navigateToDetails(post?.postId._id)}
                       >
-                        {htmlToText(post?.postId.text).split("", 180)}.....
+                        {truncateText(post?.postId?.description, 180)}
                       </p>
                       <div className="card-info">
                         <span className="blog-date">

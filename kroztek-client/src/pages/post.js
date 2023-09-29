@@ -14,6 +14,7 @@ import {
 import BlogCard from "../components/BlogCard";
 import Share from "../components/Share";
 import { useCommentApi } from "../context/commentProvider";
+import { IMG_URL } from "../config";
 const contentStyle = {
   color: "#fff",
   lineHeight: "160px",
@@ -41,15 +42,14 @@ function Post() {
     const getData = async () => {
       setLoading(true);
       singlePost(id).then((res) => {
-        setpost(res.data.response);
+        setpost(res?.data);
         setLoading(false);
       });
     };
     const relatedData = async () => {
       setLoading(true);
       relatedPost(id).then((res) => {
-        // console.log(res.data.response);
-        let rPost = res.data.response.filter((element) => element._id !== id);
+        let rPost = res?.data.filter((element) => element._id !== id);
         setRelatedPosts(rPost);
         setLoading(false);
       });
@@ -60,23 +60,21 @@ function Post() {
     }
   }, [id]);
 
-  //convert post description to html content
-  const wrapperRef = useCallback(
-    (wrapper) => {
-      if (wrapper == null) return;
-      wrapper.innerHTML = post?.text;
-      const editor = document.createElement("div");
-      wrapper.append(editor);
-    },
-    [post.text]
-  );
   const scrollToComments = () => {
     const element = document.getElementById("comment-section");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  const renderDocumentLinks = () => {
+    return post?.documents?.map((document, index) => (
+      <div key={index}>
+        <a href={document} target="_blank" rel="noopener noreferrer">
+          View Document {index + 1}
+        </a>
+      </div>
+    ));
+  };
   return (
     <>
       <div className="container">
@@ -85,7 +83,6 @@ function Post() {
           {/* top content like date share and title */}
           <Skeleton active loading={loading} paragraph={{ rows: 2 }}>
             <div className="mainheading">
-
               <Share post={post} />
               <div className="post-heading">
                 <span className="post-date">
@@ -117,7 +114,7 @@ function Post() {
                       style={{
                         maxHeight: "500px",
                       }}
-                      src={item}
+                      src={`${IMG_URL}/images/${item}`}
                       alt="tn"
                       className="d-block w-100 img"
                     />
@@ -127,14 +124,38 @@ function Post() {
           </Skeleton>
           <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
             <div className="mainheading">
-              <h1 className="posttitle">{post?.title}</h1>
+              <h1 className="posttitle">{post?.name}</h1>
             </div>
           </Skeleton>
+          {/* products features */}
+          <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
+            {/* Features table */}
+            {post?.features?.length > 0 && (
+              <div className="features-table">
+                <h2>Features</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {post?.features?.map((feature, index) => (
+                      <tr key={index}>
+                        <td>{feature.name}</td>
+                        <td>{feature.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </Skeleton>
+
           {/* blog description */}
           <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
-            <div className="article-post" ref={wrapperRef}>
-              {" "}
-            </div>
+            <p>{post?.description}</p>
           </Skeleton>
           {/* ags like category and subcategory */}
           <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
@@ -165,16 +186,35 @@ function Post() {
               </ul>
             </div>
           </Skeleton>
+   {/*  Documents preview */}
+   {post?.documents?.length > 0 && (
+              <div>
+                <h3>Product Documents:</h3>
+                <ul>
+                  {post?.documents?.map((document, index) => (
+                    <li key={index}>
+                      <a
+                        href={`${IMG_URL}/docs/${document}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: "none",color:'blueviolet' }}
+                      >
+                        {document}
+                      </a>
+                      {/* Download button */}
 
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           {/* List comments component */}
 
           <ListComments />
-
         </div>
         {/* Related contents */}
         <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
           <div classNameName="related-content">
-
             <div className="container">
               <h3 className="text-center">Related Content</h3>
 
@@ -184,7 +224,6 @@ function Post() {
                 <p className="text-center">No Related Post Found</p>
               )}
             </div>
-
           </div>
         </Skeleton>
       </div>

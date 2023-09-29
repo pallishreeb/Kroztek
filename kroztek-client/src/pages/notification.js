@@ -10,9 +10,9 @@ import authContext from "../context";
 import { usePostApi } from "../context/PostProvider";
 // import { toast } from 'react-toastify'
 import imgPlaceholder from "../img/no-image.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { IMG_URL } from "../config";
 function Notification() {
-    const navigate = useNavigate();
     const { token, loadUser } = useContext(authContext);
     const { state, dispatch } = usePostApi();
     const { notifications } = state;
@@ -42,7 +42,7 @@ function Notification() {
             // console.log("removed notifications", res)
         });
     };
-    const navigateToDetails = (id) => navigate(`/post/${id}`);
+
     return (
         <div>
             {loading ? (
@@ -65,7 +65,7 @@ function Notification() {
                                             <div class="notification-list_detail">
                                                 <p>
                                                     <b>{n?.createdBy?.name}</b> replied to your comment on
-                                                    post - {n?.postId?.title}
+                                                    post - {n?.postId?.name}
                                                 </p>
                                                 <p class="text-muted">{n?.replyId?.reply}</p>
                                                 {/* <p class="text-muted"><small>10 mins ago</small></p> */}
@@ -79,7 +79,7 @@ function Notification() {
                                         <div class="notification-list_feature-img">
                                             <Link to={`/post/${n?.commentId?.postId}`}>
                                                 <img
-                                                    src={n?.postId?.images[0] || imgPlaceholder}
+                                                    src={`${IMG_URL}/images/${n?.postId?.images[0]}` || imgPlaceholder}
                                                     alt="Feature"
                                                 />
                                             </Link>

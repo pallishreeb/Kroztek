@@ -55,8 +55,9 @@ const apiReducer = (state, action) => {
                 ...state,
                 isSearching: true,
                 posts: state.posts.filter(
-                    (post) => post.title.toLowerCase().includes(action.payload.toLowerCase())
-                ),
+                    (post) => `${post?.name.toLowerCase()} ${post?.description.toLowerCase()}`.includes(action.payload.toLowerCase()
+                    )
+                ),              
             };
         case "CLEAR_FILTERS":
             return {
@@ -82,7 +83,7 @@ const apiReducer = (state, action) => {
             return {
                 ...state,
                 isSearching: true,
-                posts: state.posts.filter(
+                posts: state.posts?.filter(
                     (post) => post?.subcategory && post?.subcategory?._id === action.payload)
                 ,
             };

@@ -90,6 +90,24 @@
 .text-center {
   text-align: center;
 }
+.features-table {
+  margin-top: 20px; /* Add margin to separate it from other content */
+}
+
+/* Style the table for responsiveness */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px; /* Add padding to table cells */
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+
+
 @media (min-width: 1200px) {
   .blog-content {
     margin: auto 90px;
@@ -106,5 +124,17 @@
   }
   .share {
     flex-direction: column;
+  }
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 768px) {
+  .product-details-container {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .features-table {
+    margin-top: 10px;
   }
 }

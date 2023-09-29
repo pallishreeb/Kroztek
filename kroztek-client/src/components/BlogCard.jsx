@@ -4,10 +4,10 @@ import "../css/card.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeSavedPost, savePost, savedPost } from "../networkCalls/post";
-import { htmlToText } from "html-to-text";
 import imgPlaceholder from "../img/no-image.jpg";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import {IMG_URL}  from "../config"
 
 const BlogCard = ({ posts }) => {
   const navigate = useNavigate();
@@ -68,6 +68,14 @@ const BlogCard = ({ posts }) => {
     // console.log(savedPostId);
   };
   const navigateToDetails = (id) => navigate(`/post/${id}`);
+
+  function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength - 3) + '...';
+    }
+    return text;
+  }
+  
   return (
     <div className="custom-card-grid">
       {posts?.length > 0 &&
@@ -79,11 +87,11 @@ const BlogCard = ({ posts }) => {
                 onClick={() => navigateToDetails(post?._id)}
               >
                 <img
-                  src={post?.images[0] || imgPlaceholder}
+                  src={`${IMG_URL}/images/${post?.images[0]}` || imgPlaceholder}
                   alt="Blog Thumbnail"
                 />
                 <h2 className="blog-title">
-                  {post.title.trim().slice(0, 30)}...
+                  {truncateText(post?.name.trim(), 30)}
                 </h2>
               </div>
               <div className="card-content">
@@ -91,7 +99,7 @@ const BlogCard = ({ posts }) => {
                   className="blog-details"
                   onClick={() => navigateToDetails(post?._id)}
                 >
-                  {htmlToText(post?.text).split("", 180)}.....
+                  {truncateText(post?.description, 180)}
                 </p>
                 <div className="card-info">
                   <span className="blog-date">

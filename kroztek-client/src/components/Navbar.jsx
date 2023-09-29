@@ -6,13 +6,13 @@ import React, { useState, useEffect } from "react";
 import {
   MenuOutlined,
   SearchOutlined,
-  ReadOutlined,
   UserOutlined,
   BellOutlined,
   MailOutlined,
   LogoutOutlined,
   CloseOutlined,
   LoginOutlined,
+  AppstoreOutlined
 } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Badge } from "antd";
@@ -28,8 +28,8 @@ const Navbar = () => {
   const menusNotLoggedIn = [
     {
       path: "/",
-      icon: <ReadOutlined className="icon" />,
-      name: "Stories",
+      icon: <AppstoreOutlined className="icon" />,
+      name: "Products",
     },
     {
       path: "/contact",
@@ -40,8 +40,8 @@ const Navbar = () => {
   const menusLoggedIn = [
     {
       path: "/",
-      icon: <ReadOutlined className="icon" />,
-      name: "Stories",
+      icon: <AppstoreOutlined className="icon" />,
+      name: "Products",
     },
     {
       path: "/profile",

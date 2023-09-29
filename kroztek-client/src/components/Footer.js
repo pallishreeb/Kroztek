@@ -64,7 +64,7 @@ function AppFooter() {
 						<ul>
 							<li>
 								<strong>Office Location:</strong> <EnvironmentOutlined />{" "}
-								Odisha
+								759001,Dhenkanal,Odisha
 							</li>
 							<li>
 								<strong>Call Us at:</strong>{" "}

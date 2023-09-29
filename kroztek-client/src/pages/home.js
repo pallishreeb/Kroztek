@@ -18,7 +18,7 @@ function Home() {
   const location = useLocation();
 
   const { state, dispatch } = usePostApi();
-  const { posts, isSearching, metadata } = state;
+  const { posts, isSearching } = state;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
   const [mostViewedPosts, setMostViewedPosts] = useState([]);
@@ -66,7 +66,7 @@ function Home() {
     };
 
     mostViewedPost().then((res) => {
-      setMostViewedPosts(res.data.response);
+      setMostViewedPosts(res?.data);
     });
     getMeta();
     getData();
@@ -78,7 +78,7 @@ function Home() {
     dispatch({
       type: "CLEAR_FILTERS",
     });
-    navigate("/");
+    navigate(-1);
   };
 
   const onPageChange = (page) => {
@@ -90,6 +90,7 @@ function Home() {
   const offset = (currentPage - 1) * pageSize;
   const postsToRender = posts?.slice(offset, offset + pageSize);
   // Get the posts to render based on the current page and page size
+
 
   return (
     <>
@@ -135,7 +136,7 @@ function Home() {
               }}
             >
               <h2 id="all-stories">
-                <span>All Stories</span>
+                <span>All Products</span>
               </h2>
             </div>
 

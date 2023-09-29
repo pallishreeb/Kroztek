@@ -8,7 +8,7 @@ import { API_URL as url } from "../config"
 export const singlePost = async (id) => {
   try {
     return await axios.get(
-      `${url}/post/singlepost?postId=${id}`,
+      `${url}/product/singlepost?productId=${id}`,
     );
   } catch (error) {
     console.log(error)
@@ -19,11 +19,10 @@ export const singlePost = async (id) => {
 export const AllPosts = async () => {
   try {
     const res = await axios.get(
-      `${url}/post/allPost`,
-
-    );
+      `${url}/product/allPost`,
+       );
     // console.table(res.data.response);
-    return res.data.response;
+    return res.data;
   } catch (error) {
     console.log(error)
     toast.error("Error in Fetching Posts")
@@ -33,7 +32,7 @@ export const AllPosts = async () => {
 export const mostViewedPost = async () => {
   try {
     return await axios.get(
-      `${url}/post/most-viewed`,
+      `${url}/product/most-viewed`,
     );
   } catch (error) {
     console.log(error)
@@ -41,11 +40,10 @@ export const mostViewedPost = async () => {
   }
 }
 
-
 export const relatedPost = async (id) => {
   try {
     return await axios.get(
-      `${url}/post/related-post?postId=${id}`,
+      `${url}/product/related-post?productId=${id}`,
     );
   } catch (error) {
     console.log(error)
@@ -54,22 +52,10 @@ export const relatedPost = async (id) => {
   }
 }
 
-
-// export const featuredPost = async (id, authtoken) =>
-// axios.post(
-//   `${url}/singlepost?id=${id}`,
-
-//   {
-//     headers: {
-//       Authorization: authtoken,
-//     },
-//   }
-// );
-
 export const filterByCategory = async (id, authtoken) => {
   try {
     return await axios.get(
-      `${url}/post/filterByCategory?categoryId=${id}`,
+      `${url}/product/filterByCategory?categoryId=${id}`,
       {
         headers: {
           Authorization: authtoken,
@@ -86,14 +72,14 @@ export const filterByCategory = async (id, authtoken) => {
 export const savePost = async (id, authtoken) => {
   try {
     const res = await axios.get(
-      `${url}/post/save-post?postId=${id}`,
+      `${url}/product/save-post?postId=${id}`,
       {
         headers: {
           Authorization: authtoken,
         },
       }
     );
-    toast.success("Post Saved..")
+    toast.success("Product Saved..")
     return res;
   } catch (error) {
     console.log(error)
@@ -105,7 +91,7 @@ export const savePost = async (id, authtoken) => {
 export const savedPost = async (authtoken) => {
   try {
     return await axios.get(
-      `${url}/post/savedpost`,
+      `${url}/product/savedpost`,
       {
         headers: {
           Authorization: authtoken,
@@ -122,14 +108,14 @@ export const savedPost = async (authtoken) => {
 export const removeSavedPost = async (authtoken, savedPostId) => {
   try {
     const res = await axios.delete(
-      `${url}/post/remove-saved-post?savedPostId=${savedPostId}`,
+      `${url}/product/remove-saved-post?savedPostId=${savedPostId}`,
       {
         headers: {
           Authorization: authtoken,
         },
       }
     );
-    toast.success("Post Removed From SavedPost")
+    toast.success("Product Removed From SavedPost")
     return res;
   } catch (error) {
     console.log(error)
