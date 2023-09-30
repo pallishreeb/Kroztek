@@ -76,6 +76,11 @@ const BlogCard = ({ posts }) => {
     return text;
   }
   
+  function stripHtmlTags(htmlString) {
+    const tempElement = document.createElement("div");
+    tempElement.innerHTML = htmlString;
+    return tempElement.textContent || tempElement.innerText || "";
+  }
   return (
     <div className="custom-card-grid">
       {posts?.length > 0 &&
@@ -90,18 +95,18 @@ const BlogCard = ({ posts }) => {
                   src={`${IMG_URL}/images/${post?.images[0]}` || imgPlaceholder}
                   alt="Blog Thumbnail"
                 />
-                <h2 className="blog-title">
-                  {truncateText(post?.name.trim(), 30)}
-                </h2>
               </div>
               <div className="card-content">
+                <h3>
+                  {truncateText(post?.name.trim(), 30)}
+                </h3>
                 <p
                   className="blog-details"
                   onClick={() => navigateToDetails(post?._id)}
                 >
-                  {truncateText(post?.description, 180)}
+                 <div>{truncateText(stripHtmlTags(post?.description), 180)}</div>
                 </p>
-                <div className="card-info">
+                {/* <div className="card-info">
                   <span className="blog-date">
                     {" "}
                     {new Date(post?.createdAt).toLocaleString("en-GB", {
@@ -126,7 +131,7 @@ const BlogCard = ({ posts }) => {
                       style={{ fontSize: "24px", color: "#001529" }}
                     />
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           

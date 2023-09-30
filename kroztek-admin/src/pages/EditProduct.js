@@ -311,7 +311,7 @@ function EditProduct() {
               onChange={handleInputChange}
               fullWidth
               multiline
-              rows={2}
+              rows={4}
               margin="normal"
             />
 

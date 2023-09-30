@@ -1,17 +1,13 @@
 /** @format */
 import React, { useState, useEffect, useContext } from "react";
 import "../css/post.css";
-import { Link, useParams, useLocation,useNavigate } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import authContext from "../context";
 import { singlePost, relatedPost } from "../networkCalls/post";
 import { Carousel, Skeleton } from "antd";
-
-import {
-  CalendarOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+// import { CalendarOutlined, EyeOutlined } from "@ant-design/icons";
+import { Modal, Image } from "antd";
 import BlogCard from "../components/BlogCard";
-
 import { IMG_URL } from "../config";
 const contentStyle = {
   color: "#fff",
@@ -21,6 +17,7 @@ const contentStyle = {
   background: "#000",
   position: "relative",
 };
+
 function Post() {
   const params = useParams();
   const navigate = useNavigate();
@@ -30,8 +27,18 @@ function Post() {
   const [post, setpost] = useState({});
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
 
+  const openModal = (image) => {
+    setCurrentImage(image);
+    setModalVisible(true);
+  };
 
+  const closeModal = () => {
+    setCurrentImage(null);
+    setModalVisible(false);
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -58,27 +65,29 @@ function Post() {
     }
   }, [id]);
 
-  const modifyDocumentName = (document,i) =>{
- 
+  const modifyDocumentName = (document, i) => {
     let index = i + 1;
     const filename = `${post?.name}-${document}-${index}`;
     const parts = filename.split("-");
     const lastIndex = parts.length - 2;
-   return parts.slice(0, lastIndex).join("-") + `-${index}` + parts[lastIndex].substring(parts[lastIndex].lastIndexOf("."));
-  }
+    return (
+      parts.slice(0, lastIndex).join("-") +
+      `-${index}` +
+      parts[lastIndex].substring(parts[lastIndex].lastIndexOf("."))
+    );
+  };
 
   return (
     <>
-     {pathname !== "/" && (
-        <button className=" btn btn-link" onClick={() =>  navigate(-1)}>
+      {pathname !== "/" && (
+        <button className=" btn btn-link" onClick={() => navigate(-1)}>
           {" "}
           Go Back
         </button>
       )}
       <div className="container">
         {/* Blog details content */}
-        <div className="blog-content" style={{marginTop:'25px'}}>
-
+        <div className="blog-content" style={{ marginTop: "25px" }}>
           {/* blog carousel images */}
           <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
             <Carousel autoplay effect="scrollx">
@@ -91,14 +100,23 @@ function Post() {
                       }}
                       src={`${IMG_URL}/images/${item}`}
                       alt="tn"
-                      className="d-block w-100 img"
+                      className="d-block w-100 h-100 img"
+                      onClick={() => openModal(item)}
                     />
                   </div>
                 ))}
             </Carousel>
+            <Modal
+          visible={modalVisible}
+          onCancel={closeModal}
+          footer={null}
+          centered
+        >
+          <Image src={`${IMG_URL}/images/${currentImage}`} alt="Maximized Image" />
+        </Modal>
           </Skeleton>
-                  {/* top content like date share and title */}
-                  <Skeleton active loading={loading} paragraph={{ rows: 2 }}>
+          {/* top content like date share and title */}
+          {/* <Skeleton active loading={loading} paragraph={{ rows: 2 }}>
             <div className="mainheading">
               <div className="post-heading">
                 <span className="post-date">
@@ -114,16 +132,15 @@ function Post() {
                 <span className="views">
                   <EyeOutlined /> {post?.views} views
                 </span>
-                
               </div>
             </div>
-          </Skeleton>
+          </Skeleton> */}
           <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
             <div className="mainheading">
               <h1 className="posttitle">{post?.name}</h1>
             </div>
           </Skeleton>
-          
+
           {/* products features */}
           <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
             {/* Features table */}
@@ -152,8 +169,9 @@ function Post() {
 
           {/* blog description */}
           <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
-          <b style={{marginTop:'15px'}}>Product Description</b>
-            <p>{post?.description}</p>
+            <b style={{ marginTop: "15px" }}>Product Description</b>
+            {/* <p>{post?.description}</p> */}
+            <div dangerouslySetInnerHTML={{ __html: post?.description }}></div>
           </Skeleton>
           {/* ags like category and subcategory */}
           <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
@@ -184,37 +202,33 @@ function Post() {
               </ul>
             </div>
           </Skeleton>
-   {/*  Documents preview */}
-   {post?.documents?.length > 0 && (
-              <div>
-                <h3>Product Documents:</h3>
-                <ul>
-                  {post?.documents?.map((document, index) => (
-                    <li key={index}>
-                      <a
-                        href={`${IMG_URL}/docs/${document}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none",color:'blueviolet' }}
-                      >
-                        {modifyDocumentName(document,index)}
-                      </a>
-                      {/* Download button */}
-
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-
-         
+          {/*  Documents preview */}
+          {post?.documents?.length > 0 && (
+            <div>
+              <h3>Product Documents:</h3>
+              <ul>
+                {post?.documents?.map((document, index) => (
+                  <li key={index}>
+                    <a
+                      href={`${IMG_URL}/docs/${document}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none", color: "blueviolet" }}
+                    >
+                      {modifyDocumentName(document, index)}
+                    </a>
+                    {/* Download button */}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         {/* Related contents */}
         <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
           <div classNameName="related-content">
             <div className="container">
-              <h3 className="text-center">Related Content</h3>
+              <h3 className="text-center">Related Products</h3>
 
               {relatedPosts.length > 0 ? (
                 <BlogCard posts={relatedPosts} token={token} />

@@ -35,6 +35,11 @@ const Navbar = () => {
       icon: <MailOutlined className="icon" />,
       name: "Contact",
     },
+    {
+      path: "#",
+      icon: <PhoneOutlined className="icon" />,
+      name: "+918637214899",
+    },
   ];
   const menusLoggedIn = [
     {

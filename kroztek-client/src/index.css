@@ -93,3 +93,8 @@ ul {
   border-radius: 25px;
   cursor: pointer;
 }
+
+/* Change the color of active dots */
+.slick-active button {
+  background-color: #ff0000; /* Change to your desired color */
+}

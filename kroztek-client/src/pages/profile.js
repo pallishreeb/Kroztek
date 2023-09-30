@@ -4,21 +4,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { Tabs, Skeleton } from "antd";
 import ViewProfile from "../components/ViewProfile";
 import EditProfile from "../components/EditProfile";
-import { savedPost, removeSavedPost } from "../networkCalls/post";
-import { useNavigate } from "react-router-dom";
+// import { savedPost, removeSavedPost } from "../networkCalls/post";
+// import { useNavigate } from "react-router-dom";
 import authContext from "../context";
-import imgPlaceholder from "../img/no-image.jpg";
-import { HeartFilled } from "@ant-design/icons";
-import nodata from "../img/no-data.png"
+// import imgPlaceholder from "../img/no-image.jpg";
+// import { HeartFilled } from "@ant-design/icons";
+// import nodata from "../img/no-data.png"
 import "../css/profile.css"
-import { IMG_URL } from "../config";
+// import { IMG_URL } from "../config";
 
 
 function Profile() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { token, user, loadUser } = useContext(authContext);
-  const [posts, setposts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [posts, setposts] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (token !== null && user === null) {
@@ -27,25 +27,25 @@ function Profile() {
   }, [token, user]);
 
 
-  useEffect(() => {
-    token && getData();
-  }, [token]);
+  // useEffect(() => {
+  //   token && getData();
+  // }, [token]);
 
-  const getData = async () => {
-    setLoading(true);
-    savedPost(token).then((res) => {
-      setposts(res.data.response);
-      // console.log(res.data.response);
-      setLoading(false);
-    });
-  };
+  // const getData = async () => {
+  //   setLoading(true);
+  //   savedPost(token).then((res) => {
+  //     setposts(res.data.response);
+  //     // console.log(res.data.response);
+  //     setLoading(false);
+  //   });
+  // };
 
-  const removeSavePost = async (savedPostId) => {
-    removeSavedPost(token, savedPostId).then((res) => {
-      getData(token);
-    });
-  };
-  const navigateToDetails = (id) => navigate(`/post/${id}`);
+  // const removeSavePost = async (savedPostId) => {
+  //   removeSavedPost(token, savedPostId).then((res) => {
+  //     getData(token);
+  //   });
+  // };
+  // const navigateToDetails = (id) => navigate(`/post/${id}`);
   const items = [
     {
       label: "View",
@@ -58,12 +58,19 @@ function Profile() {
       children: <EditProfile />,
     },
   ];
-  function truncateText(text, maxLength) {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength - 3) + '...';
-    }
-    return text;
-  }
+  // function truncateText(text, maxLength) {
+  //   if (text.length > maxLength) {
+  //     return text.slice(0, maxLength - 3) + '...';
+  //   }
+  //   return text;
+  // }
+
+  // function stripHtmlTags(htmlString) {
+  //   const tempElement = document.createElement("div");
+  //   tempElement.innerHTML = htmlString;
+  //   return tempElement.textContent || tempElement.innerText || "";
+  // }
+  
   return (
     <>
       {/* User profile details and edit tab */}
@@ -77,7 +84,7 @@ function Profile() {
         </div>
 
         {/* Saved posts for an user */}
-        <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
+        {/* <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
           <div class="saved-posts">
             <h1 class="text-center">My Saved Post</h1>
             {posts?.length > 0 ?
@@ -102,7 +109,7 @@ function Profile() {
                         className="blog-details"
                         onClick={() => navigateToDetails(post?.postId._id)}
                       >
-                        {truncateText(post?.postId?.description, 180)}
+                <div>{truncateText(stripHtmlTags(post?.postId?.description), 180)}</div>
                       </p>
                       <div className="card-info">
                         <span className="blog-date">
@@ -136,7 +143,7 @@ function Profile() {
             }
 
           </div>
-        </Skeleton>
+        </Skeleton> */}
       </div>
     </>
   );

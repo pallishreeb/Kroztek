@@ -5,7 +5,7 @@ import OtpCountdown from '../components/OtpCountdown'
 import authContext from '../context'
 const Verification = () => {
   const navigate = useNavigate()
-  const [otp, setOtp] = useState(0)
+  const [otp, setOtp] = useState(null)
   const [secondsLeft, setSecondsLeft] = useState(120);
   const { verifyEmail, isverified, token } = useContext(authContext)
   const handleSubmit = (e) => {
