@@ -5,9 +5,10 @@ function Contact() {
     <div style={styles.container}>
       <div style={styles.centered}>
         <h1 style={styles.title}>Post your Query</h1> {/* Centered Header */}
+    
         <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLScNgpvZuKBgk95D3I7wgEQHPOwlIz-kElbJCqdy6okZAn1N7Q/viewform?embedded=true"
-          title="myform"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSd1YgKd0inxdaq9G5yWI6ONNbsr5fNwgwr33hui1X3uAsKLkw/viewform?embedded=true"
+          title="Contact Information Kroztek"
           width="100%"
           height="614"
           frameBorder="0"

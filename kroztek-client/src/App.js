@@ -1,5 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css'
 import Home from "./pages/home";
 import AppFooter from "./components/Footer";
 import Post from "./pages/post";
@@ -9,7 +10,6 @@ import PrivateRoute from './pages/privateRoute';
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Notification from "./pages/notification";
 import Verification from "./pages/verification";
 import Forgotpassword from "./pages/forgotPassword";
 import Resetpassword from "./pages/resetpassword";
@@ -24,7 +24,7 @@ function App() {
       <Navbar />
 
       <ToastContainer />
-
+<div className='app-container'>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/contact" element={<Contact />} />
@@ -34,9 +34,6 @@ function App() {
         <Route exact path="/profile" element={<PrivateRoute />}>
           <Route exact path="/profile" element={<Profile />} />
         </Route>
-        <Route exact path="/notification" element={<PrivateRoute />}>
-          <Route exact path="/notification" element={<Notification />} />
-        </Route>
         <Route exact path="/forgot-password" element={<Forgotpassword />} />
         <Route exact path="/reset-password" element={<Resetpassword />} />
         <Route exact path="/login" element={<Login />} />
@@ -44,7 +41,7 @@ function App() {
         <Route exact path="/verify" element={<Verification />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-
+      </div>
       <div class="whatsapp-button" style={{
         position: `fixed`,
         top:700,

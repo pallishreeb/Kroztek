@@ -4,10 +4,12 @@
  * @format
  */
 
+
 .navbar {
   background: #001529;
   color: white;
   padding: 17px 40px;
+  margin: 0;
 }
 
 .navbar-content {

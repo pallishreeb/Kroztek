@@ -7,15 +7,14 @@ import {
   MenuOutlined,
   SearchOutlined,
   UserOutlined,
-  BellOutlined,
   MailOutlined,
   LogoutOutlined,
   CloseOutlined,
   LoginOutlined,
-  AppstoreOutlined
+  AppstoreOutlined,
+  PhoneOutlined
 } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Badge } from "antd";
 import { useAuthApi } from "../context/authState";
 import { usePostApi } from "../context/PostProvider";
 import Menu from "./Menu";
@@ -49,16 +48,9 @@ const Navbar = () => {
       name: "Profile",
     },
     {
-      path: "/notification",
-      icon:
-        user && user.notificationCount > 0 ? (
-          <Badge count={user?.notificationCount}>
-            <BellOutlined className="icon" />
-          </Badge>
-        ) : (
-          <BellOutlined className="icon" />
-        ),
-      name: "Notification",
+      path: "#",
+      icon: <PhoneOutlined className="icon" />,
+      name: "+918637214899",
     },
     {
       path: "/contact",

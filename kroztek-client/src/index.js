@@ -6,7 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom"
 import AuthState from './context/authState';
-import { CommentApiProvider } from './context/commentProvider'
 import { PostApiProvider } from './context/PostProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,9 +14,7 @@ root.render(
     <BrowserRouter>
       <AuthState>
       <PostApiProvider>
-          <CommentApiProvider>
             <App />
-          </CommentApiProvider>
       </PostApiProvider>
       </AuthState>
     </BrowserRouter>

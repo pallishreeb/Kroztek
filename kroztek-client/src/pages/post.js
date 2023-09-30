@@ -1,19 +1,17 @@
 /** @format */
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/post.css";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation,useNavigate } from "react-router-dom";
 import authContext from "../context";
 import { singlePost, relatedPost } from "../networkCalls/post";
 import { Carousel, Skeleton } from "antd";
-import ListComments from "../components/ListComments";
+
 import {
   CalendarOutlined,
   EyeOutlined,
-  CommentOutlined,
 } from "@ant-design/icons";
 import BlogCard from "../components/BlogCard";
-import Share from "../components/Share";
-import { useCommentApi } from "../context/commentProvider";
+
 import { IMG_URL } from "../config";
 const contentStyle = {
   color: "#fff",
@@ -25,14 +23,14 @@ const contentStyle = {
 };
 function Post() {
   const params = useParams();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { id } = params;
   const { token } = useContext(authContext);
   const [post, setpost] = useState({});
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { state } = useCommentApi();
-  const { comments } = state;
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,50 +58,27 @@ function Post() {
     }
   }, [id]);
 
-  const scrollToComments = () => {
-    const element = document.getElementById("comment-section");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  const renderDocumentLinks = () => {
-    return post?.documents?.map((document, index) => (
-      <div key={index}>
-        <a href={document} target="_blank" rel="noopener noreferrer">
-          View Document {index + 1}
-        </a>
-      </div>
-    ));
-  };
+  const modifyDocumentName = (document,i) =>{
+ 
+    let index = i + 1;
+    const filename = `${post?.name}-${document}-${index}`;
+    const parts = filename.split("-");
+    const lastIndex = parts.length - 2;
+   return parts.slice(0, lastIndex).join("-") + `-${index}` + parts[lastIndex].substring(parts[lastIndex].lastIndexOf("."));
+  }
+
   return (
     <>
+     {pathname !== "/" && (
+        <button className=" btn btn-link" onClick={() =>  navigate(-1)}>
+          {" "}
+          Go Back
+        </button>
+      )}
       <div className="container">
         {/* Blog details content */}
-        <div className="blog-content">
-          {/* top content like date share and title */}
-          <Skeleton active loading={loading} paragraph={{ rows: 2 }}>
-            <div className="mainheading">
-              <Share post={post} />
-              <div className="post-heading">
-                <span className="post-date">
-                  <CalendarOutlined />{" "}
-                  {new Date(post?.createdAt).toLocaleString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                  })}
-                </span>
-                <span className="views">
-                  <EyeOutlined /> {post?.views} views
-                </span>
-                <span className="comments" onClick={scrollToComments}>
-                  <CommentOutlined /> {comments?.length} comments
-                </span>
-              </div>
-            </div>
-          </Skeleton>
+        <div className="blog-content" style={{marginTop:'25px'}}>
+
           {/* blog carousel images */}
           <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
             <Carousel autoplay effect="scrollx">
@@ -122,17 +97,39 @@ function Post() {
                 ))}
             </Carousel>
           </Skeleton>
+                  {/* top content like date share and title */}
+                  <Skeleton active loading={loading} paragraph={{ rows: 2 }}>
+            <div className="mainheading">
+              <div className="post-heading">
+                <span className="post-date">
+                  <CalendarOutlined />{" "}
+                  {new Date(post?.createdAt).toLocaleString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                  })}
+                </span>
+                <span className="views">
+                  <EyeOutlined /> {post?.views} views
+                </span>
+                
+              </div>
+            </div>
+          </Skeleton>
           <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
             <div className="mainheading">
               <h1 className="posttitle">{post?.name}</h1>
             </div>
           </Skeleton>
+          
           {/* products features */}
           <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
             {/* Features table */}
             {post?.features?.length > 0 && (
               <div className="features-table">
-                <h2>Features</h2>
+                <h3>Features</h3>
                 <table>
                   <thead>
                     <tr>
@@ -155,6 +152,7 @@ function Post() {
 
           {/* blog description */}
           <Skeleton active loading={loading} paragraph={{ rows: 4 }}>
+          <b style={{marginTop:'15px'}}>Product Description</b>
             <p>{post?.description}</p>
           </Skeleton>
           {/* ags like category and subcategory */}
@@ -199,7 +197,7 @@ function Post() {
                         rel="noopener noreferrer"
                         style={{ textDecoration: "none",color:'blueviolet' }}
                       >
-                        {document}
+                        {modifyDocumentName(document,index)}
                       </a>
                       {/* Download button */}
 
@@ -208,9 +206,9 @@ function Post() {
                 </ul>
               </div>
             )}
-          {/* List comments component */}
 
-          <ListComments />
+
+         
         </div>
         {/* Related contents */}
         <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
