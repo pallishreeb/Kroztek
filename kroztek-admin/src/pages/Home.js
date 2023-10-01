@@ -3,7 +3,7 @@ import { HeaderCard } from "../components";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth/AuthProvider";
 // import { PostContext } from "../context/PostProvider"
-import { getStatisticsData } from "../apis/post";
+import { getStatisticsData } from "../apis/product";
 const Home = () => {
   const navigate = useNavigate();
   const [statistics, setStatistics] = useState(null);

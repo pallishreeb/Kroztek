@@ -7,7 +7,7 @@ import { getPost, deleteImg, editPost, deleteDoc } from "../apis/product";
 import { AuthContext } from "../context/auth/AuthProvider";
 import { toast } from "react-toastify";
 import { IMG_URL } from "../config";
-
+import ProductDescriptionEditor from './Editor'; // Import the component
 function EditProduct() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function EditProduct() {
   const [selectedDocumentCount, setSelectedDocumentCount] = useState(0);
   const fileInputRef = useRef(null);
   const docfileInputRef = useRef(null);
-
+ const [loading , setLoading] = useState(false)
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -42,6 +42,7 @@ function EditProduct() {
   useEffect(() => {
     // Fetch the existing product data based on the productId
     if (productId) {
+      setLoading(true)
       getPost(productId, token)
         .then((res) => {
           const productData = res?.data;
@@ -63,6 +64,7 @@ function EditProduct() {
           setDocs(
             productData?.documents?.length > 0 ? productData?.documents : []
           );
+          setLoading(false)
           // console.log("category", product?.category)
           // console.log("images",productData?.images)
         })
@@ -101,6 +103,13 @@ function EditProduct() {
     setProduct({
       ...product,
       [name]: value,
+    });
+  };
+  // Function to handle changes in the description field
+  const handleDescriptionChange = (description) => {
+    setProduct({
+      ...product,
+      description, // Update the description in the product state
     });
   };
 
@@ -242,6 +251,10 @@ function EditProduct() {
       });
   };
 
+if(loading){
+  return(<h3 className="text-center">Loading product for Edit...</h3>)
+}
+
   return (
     <div className="container mt-3">
       <Grid container spacing={3}>
@@ -304,7 +317,7 @@ function EditProduct() {
               margin="normal"
             />
             {/* Description */}
-            <TextField
+            {/* <TextField
               label="Description"
               name="description"
               value={product.description}
@@ -313,8 +326,11 @@ function EditProduct() {
               multiline
               rows={4}
               margin="normal"
-            />
-
+            /> */}
+ <ProductDescriptionEditor
+            value={product.description} // Pass the description value
+            onChange={handleDescriptionChange} // Pass the change handler
+          />
             {/* Features */}
             {product.features.map((feature, index) => (
               <Grid container spacing={2} key={index}>

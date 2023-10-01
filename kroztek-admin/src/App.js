@@ -9,7 +9,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
-import Category from "./pages/Category";
 import Users from "./pages/Users";
 import Metadata from "./pages/Metadata";
 import DisplayMetadata from "./pages/DisplayMetadata";
@@ -19,6 +18,8 @@ import { Nav, Topbar } from "./components/index";
 
 //context
 import { AuthContext } from "./context/auth/AuthProvider";
+import CategoryPage from "./pages/CategoryPage";
+import SubcategoryPage from "./pages/SubcategoryPage";
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -60,7 +61,8 @@ function App() {
                 />
                 <Route path="/products" element={<Products />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/categories" element={<Category />} />
+                <Route path="/categories" element={<CategoryPage />} />
+                <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />
@@ -80,7 +82,8 @@ function App() {
                   element={<EditProduct />}
                 />
                 <Route path="/users" element={<Users />} />
-                <Route path="/categories" element={<Category />} />
+                <Route path="/categories" element={<CategoryPage />} />
+                <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />
@@ -100,7 +103,8 @@ function App() {
                   element={<EditProduct />}
                 />
                 <Route path="/users" element={<Users />} />
-                <Route path="/categories" element={<Category />} />
+                <Route path="/categories" element={<CategoryPage />} />
+                <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />

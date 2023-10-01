@@ -6,6 +6,7 @@ import { getCategories, getSubCategories } from "../apis/category";
 import { AuthContext } from "../context/auth/AuthProvider";
 import { toast } from "react-toastify";
 import { PostContext } from "../context/PostProvider";
+import ProductDescriptionEditor from './Editor'; 
 function AddProduct() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -62,6 +63,13 @@ function AddProduct() {
     setProduct({
       ...product,
       [name]: value,
+    });
+  };
+  // Function to handle changes in the description field
+  const handleDescriptionChange = (description) => {
+    setProduct({
+      ...product,
+      description, // Update the description in the product state
     });
   };
 
@@ -230,7 +238,7 @@ function AddProduct() {
               margin="normal"
             />
             {/* Description */}
-            <TextField
+            {/* <TextField
               label="Description*"
               name="description"
               value={product.description}
@@ -239,8 +247,11 @@ function AddProduct() {
               multiline
               rows={4}
               margin="normal"
-            />
-
+            /> */}
+    <ProductDescriptionEditor
+            value={product.description} // Pass the description value
+            onChange={handleDescriptionChange} // Pass the change handler
+          />
             {/* Features */}
             {product.features.map((feature, index) => (
               <Grid container spacing={2} key={index}>

@@ -27,9 +27,10 @@ const CategoryProvider = (props) => {
   const getAllCategories = async (token) => {
     setLoading(true);
     try {
-      const res = await getCategories(token);
-      setCategories(res?.data?.response);
-      setLoading(false);
+      getCategories(token).then((res) => {
+        setCategories(res?.data?.response);
+        setLoading(false);
+      });
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -41,51 +42,51 @@ const CategoryProvider = (props) => {
 
   // create Category
   const createCategory = (form, token) => {
-    try {
-      addCategory(token, form);
-      setCategory({});
-      getAllCategories(token);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in creating category"
-      );
-    }
+    addCategory(token, form)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        setCategory(null);
+        getAllCategories(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in creating category"
+        );
+      });
   };
   // update category
-  const updateCategory = (form, token) => {
-    try {
-      const res = editCategory(token, form);
-      console.log(res.data);
-      setCategory({});
-      getAllCategories(token);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in updating category"
-      );
-    }
+  const updateCategory = async (form, token) => {
+    editCategory(token, form)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        setCategory({});
+        getAllCategories(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in updating category"
+        );
+      });
   };
-  // get category by Id
-  //    const getCategory = (id , token ) =>{
-  //     try {
-
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  //    }
 
   // delete category
-  const removeCategory = (id, token) => {
-    try {
-      const res = deleteCategory(id, token);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in deleting category"
-      );
-    }
+  const removeCategory = async (id, token) => {
+    deleteCategory(id, token)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        const updatedCategories = categories.filter(
+          (category) => category._id !== id
+        );
+        setCategories(updatedCategories);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in deleting category"
+        );
+      });
   };
 
   // get subcategories
@@ -106,31 +107,33 @@ const CategoryProvider = (props) => {
   };
   // create subcategories
   const createSubcategory = (form, token) => {
-    try {
-      const res = addSubCategory(form, token);
-      console.log(res.data);
-      setSubcategory({});
-      allSubcategores(token);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in creating subcategory"
-      );
-    }
+    addSubCategory(form, token)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        setSubcategory({});
+        allSubcategores(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in creating subcategory"
+        );
+      });
   };
   // update subcategory
   const updateSubcategory = (form, token) => {
-    try {
-      const res = editSubCategory(form, token);
-      console.log(res.data);
-      setSubcategory({});
-      allSubcategores(token);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in updating subcategory"
-      );
-    }
+    editSubCategory(form, token)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        setSubcategory({});
+        allSubcategores(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in updating subcategory"
+        );
+      });
   };
   // get subcategory by categoryId
   const getSubcategoryByCategoryId = (id, token) => {
@@ -147,15 +150,17 @@ const CategoryProvider = (props) => {
   };
   // delete subcategory
   const removeSubcategory = (id, token) => {
-    try {
-      const res = deleteSubCategory(id, token);
-      console.log(res.data.log);
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        error?.response?.data?.message || "Error in deleteing subcategory"
-      );
-    }
+    deleteSubCategory(id, token)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        getAllSubCategories(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in deleteing subcategory"
+        );
+      });
   };
   return (
     <CategoryContext.Provider
@@ -168,7 +173,7 @@ const CategoryProvider = (props) => {
         getSubcategoryByCategoryId,
         updateSubcategory,
         createSubcategory,
-        allSubcategores,
+        allSubcategories: allSubcategores,
         categories,
         subcategories,
         setCategory,

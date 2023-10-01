@@ -14,6 +14,7 @@ import {
   Category,
   Logout,
   Groups2,
+ Folder
 } from "@mui/icons-material";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { AuthApiProvider } from "../../context/auth/AuthProvider";
@@ -30,11 +31,11 @@ const MenuItem = ({ open, navigate }) => {
       icon: <Category color="white" />,
       path: "/categories",
     },
-    // {
-    //   name: "Create",
-    //   icon: <NoteAdd />,
-    //   path: "/add-product",
-    // },
+    {
+      name: "Subcategories",
+      icon: <Folder color="white" />,
+      path: "/subcategories",
+    },
     {
       name: "Products",
       icon: <InventoryIcon color="white" />,
