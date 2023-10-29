@@ -6,8 +6,7 @@ function Carousel() {
     <div className="hero-container">
       <img src={hero} alt="Hero" className="hero-image" />
       <div className="hero-text">
-        <h1>Welcome to Kroztek Integrates Solution</h1>
-        <p>Industrial Business</p>
+        <h1>Industrial Business Solution</h1>
       </div>
     </div>
   );
