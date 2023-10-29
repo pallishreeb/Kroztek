@@ -28,10 +28,9 @@ const BlogCard = ({ posts }) => {
       {posts?.length > 0 &&
         posts.map((post, index) => (
        
-            <div key={index} className="blog-card">
+            <div key={index} className="blog-card" onClick={() => navigateToDetails(post?._id)}>
               <div
                 className="card-image"
-                onClick={() => navigateToDetails(post?._id)}
               >
 
                 <img
@@ -45,7 +44,6 @@ const BlogCard = ({ posts }) => {
                 </h3>
                 <p
                   className="blog-details"
-                  onClick={() => navigateToDetails(post?._id)}
                 >
                  <div>{truncateText(stripHtmlTags(post?.description), 180)}</div>
                 </p>

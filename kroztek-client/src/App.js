@@ -10,15 +10,18 @@ import Navbar from './components/Navbar';
 import WhatsappImg from './img/whatsapp.png'
 import Header from './components/Header';
 import Products from './pages/products';
+import ScrollButton from './components/ScrollButton';
 function App() {
-  // const params = useParams()
   return (
     <div className="App">
+      <div className='top-navs' id="target-section">
       <Header/>
       <Navbar />
+      </div>
+   
 
       <ToastContainer />
-<div className='app-container'>
+     <div className='app-container'>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/products" element={<Products />} />
@@ -30,9 +33,10 @@ function App() {
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       </div>
+     <ScrollButton/>
       <div class="whatsapp-button" style={{
         position: `fixed`,
-        top:650,
+        top:660,
         right:30,       
         }}>
         <a href="https://wa.me/+918637214899" target="_blank" rel="noopener noreferrer">

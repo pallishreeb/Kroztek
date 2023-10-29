@@ -1,0 +1,14 @@
+/* ScrollButton.css */
+#scroll-button {
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    transition: opacity 0.3s;
+  }
+  
+  #scroll-button.visible {
+    display: block;
+    opacity: 1;
+  }
+  

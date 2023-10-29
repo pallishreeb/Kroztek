@@ -3,7 +3,9 @@
 *{
  font-family:  'Roboto', sans-serif;
 }
-
+html, body {
+  scroll-behavior: smooth;
+}
 a {
   text-decoration: none;
   color: inherit;

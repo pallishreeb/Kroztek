@@ -15,7 +15,22 @@ function Header() {
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo-img" />
       </div>
+      <div className="small-screen-gst">
+      <span className="contact-info">
+          <p>
+            <b className="heading">GSTIN :  21EOUPS1807D1ZX</b>
+
+             </p>
+        </span>
+      </div>
       <div className="contact-container">
+      <span className="contact-info">
+          <p>
+            <b className="heading">GSTIN..</b>
+            <br />
+            21EOUPS1807D1ZX
+          </p>
+        </span>
         <span className="contact-info">
           <p>
             <b className="heading">CALL US   <PhoneOutlined /></b>

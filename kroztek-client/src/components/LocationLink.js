@@ -19,9 +19,9 @@ function LocationLink({size}) {
      <a href="#" onClick={handleOpenLocation}>
      <span className="contact-info">
        <p><b className="heading">LOCATION <EnvironmentOutlined/></b>  <br/>
-       Plot No. 1983/4085, Badasathiabatia, 
+       Plot No. 113, Gayatrinagar 
        <br/>
-       Near SaiShree Eye Hospital, 759001, Dhenkanal, Odisha</p>
+       Nuasasan 759001, Dhenkanal, Odisha</p>
      </span>
      </a>
    </p>
