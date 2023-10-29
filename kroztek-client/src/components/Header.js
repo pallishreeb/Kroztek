@@ -16,7 +16,7 @@ function Header() {
           <p>EMAIL US<br />kroztekintegratedsolution@gmail.com</p>
         </span>
         <span className="contact-info">
-          <p>Location<br />Plot No. 1983/4085, Badasathiabatia, 
+          <p>LOCATION <br />Plot No. 1983/4085, Badasathiabatia, 
           <br/>
           Near SaiShree Eye Hospital, 759001, Dhenkanal, Odisha</p>
         </span>
