@@ -16,7 +16,7 @@ function AppFooter() {
 	const { state } = usePostApi();
 	const { metadata } = state;
 	return (
-		<Footer style={{ backgroundColor: "#001529", color: "#fff" }}>
+		<Footer style={{ backgroundColor: "#005BAB", color: "#fff" }}>
 			<div className="footer-container">
 				<Row gutter={[16, 16]} justify="center" align="middle">
 					{/* Quick Links */}

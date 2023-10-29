@@ -1,0 +1,33 @@
+/* HeroSection.css */
+.hero-container {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  background-color: #333;
+  height: 300px; /* Set a fixed height for the hero container */
+}
+
+.hero-image {
+  width: 100%; /* Set the width to auto to maintain aspect ratio */
+  height: 100%; /* Set the height to 100% to fill the container vertically */
+  display: inline-block; /* Prevent images from being treated as inline elements */
+  opacity: 0.7; /* Adjust the image opacity as needed */
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin: 10px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin: 10px;
+}

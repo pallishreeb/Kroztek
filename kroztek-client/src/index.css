@@ -8,6 +8,9 @@ a {
 ul {
   list-style-type: none;
 }
+h2{
+  color: #005BAB;
+}
 .replies {
   height: 100%;
   max-height: 300px;

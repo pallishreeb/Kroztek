@@ -1,72 +1,14 @@
 /** @format */
 
 import "../css/card.css";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { removeSavedPost, savePost, savedPost } from "../networkCalls/post";
 import imgPlaceholder from "../img/no-image.jpg";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
-import { toast } from "react-toastify";
+
 import {IMG_URL}  from "../config"
 
 const BlogCard = ({ posts }) => {
   const navigate = useNavigate();
-  const [savedPosts, setSavedPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const token = JSON.parse(localStorage.getItem("token"));
-  useEffect(() => {
-    token && getSavedData(token);
-  }, [token]);
 
-  const getSavedData = async (token) => {
-    setLoading(true);
-    savedPost(token)
-      .then((res) => {
-        setSavedPosts(res?.data?.response);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error, "error in getting saved post from home page cards");
-      });
-  };
-  const savePostForUser = (postId) => {
-    if (!token) {
-      toast.error("Please Login To Save Post");
-    }
-    if (token) {
-      savePost(postId, token)
-        .then((res) => {
-          // console.log(res.data)
-          getSavedData(token);
-        })
-        .catch((err) => console.log("error in save post", err));
-    }
-  };
-
-  const isSaved = (postId) => {
-    return !!savedPosts?.find((post) => post.postId?._id === postId)
-      ? true
-      : false;
-  };
-
-  const removeSavePost = async (savedPostId) => {
-    removeSavedPost(token, savedPostId)
-      .then((res) => {
-        // console.log("Remoed from saved post", res)
-        getSavedData(token);
-      })
-      .catch((err) => {
-        console.log("error in removing saved post", err);
-      });
-  };
-  const removeSavedPostId = (postId) => {
-    //return the id from array of savedPosts which contains the postId as item.postId._id
-    const savedPostId = savedPosts.findIndex(
-      (item) => item.postId?._id === postId
-    );
-    removeSavePost(savedPosts[savedPostId]._id);
-    // console.log(savedPostId);
-  };
   const navigateToDetails = (id) => navigate(`/post/${id}`);
 
   function truncateText(text, maxLength) {
@@ -91,8 +33,9 @@ const BlogCard = ({ posts }) => {
                 className="card-image"
                 onClick={() => navigateToDetails(post?._id)}
               >
+
                 <img
-                  src={`${IMG_URL}/images/${post?.images[0]}` || imgPlaceholder}
+                  src={ post?.images[0] ? `${IMG_URL}/images/${post?.images[0]}` :imgPlaceholder}
                   alt="Blog Thumbnail"
                 />
               </div>

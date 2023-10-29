@@ -187,14 +187,14 @@ function Post() {
               >
                 <Link
                   style={{ textDecoration: "none" }}
-                  to={`/post/category/${post?.category?._id}`}
+                  to={`/post/category/${post?.category?._id}/${post?.category?.categoryName}`}
                 >
                   <li>{post?.category?.categoryName}</li>
                 </Link>
                 {post?.subcategory && (
                   <Link
                     style={{ textDecoration: "none" }}
-                    to={`/post/subcategory/${post?.subcategory?._id}`}
+                    to={`/post/subcategory/${post?.subcategory?._id}/${post?.subcategory?.subcategoryName}`}
                   >
                     <li>{post?.subcategory?.subcategoryName}</li>
                   </Link>

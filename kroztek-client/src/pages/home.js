@@ -1,9 +1,8 @@
 /** @format */
 
 import React, { useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import authContext from "../context";
-import { AllPosts, mostViewedPost } from "../networkCalls/post";
+import { AllPosts} from "../networkCalls/post";
 import { getMetadata } from "../networkCalls/metadata";
 import { Pagination, Skeleton } from "antd";
 import { usePostApi } from "../context/PostProvider";
@@ -13,15 +12,11 @@ import Hero from "../components/Hero";
 
 function Home() {
   const { token } = useContext(authContext);
-  const { categoryId, subcategoryId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const { state, dispatch } = usePostApi();
-  const { posts, isSearching } = state;
+  const { posts } = state;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
-  const [mostViewedPosts, setMostViewedPosts] = useState([]);
+
   // const [metadatas, setMetadatas] = useState({})
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -47,17 +42,6 @@ function Home() {
           type: "FETCH_POSTS",
           payload: res,
         });
-        if (categoryId) {
-          dispatch({
-            type: "FILTER_POSTS_BY_CATEGORY",
-            payload: categoryId
-          })
-        } else if (subcategoryId) {
-          dispatch({
-            type: "FILTER_POSTS_BY_SUBCATEGORY",
-            payload: subcategoryId,
-          });
-        }
         setLoading(false);
       }).catch(error => {
         toast.error("We Some Issue In Fetching Posts")
@@ -65,21 +49,9 @@ function Home() {
       })
     };
 
-    mostViewedPost().then((res) => {
-      setMostViewedPosts(res?.data);
-    });
     getMeta();
     getData();
-  }, [categoryId, subcategoryId]);
-
-
-  const Clearfilters = () => {
-    console.log("clear filter called");
-    dispatch({
-      type: "CLEAR_FILTERS",
-    });
-    navigate(-1);
-  };
+  }, [dispatch]);
 
   const onPageChange = (page) => {
     setCurrentPage(page);
@@ -94,39 +66,8 @@ function Home() {
 
   return (
     <>
-      {location.pathname !== "/" && (
-        <button className=" btn btn-link" onClick={() => Clearfilters()}>
-          {" "}
-          Go Back
-        </button>
-      )}
       <div className="home-container">
-
-        {isSearching === false && (
-          <>
-            <Skeleton active loading={loading}>
-              <Hero />
-            </Skeleton>
-
-            <section class="featured-posts">
-              <Skeleton active loading={loading}>
-                <div
-                  class="section-title"
-                  style={{
-                    margin: "auto 16px",
-                  }}
-                >
-                  <h2>
-                    <span>Most Viewed</span>
-                  </h2>
-                </div>
-                <BlogCard token={token} posts={mostViewedPosts} postLoading={loading} />
-              </Skeleton>
-            </section>
-          </>
-
-        )}
-
+         <Hero />
         <section class="recent-posts">
           <Skeleton active loading={loading}>
             <div

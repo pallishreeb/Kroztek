@@ -80,12 +80,12 @@
   list-style-type: none;
   text-decoration: none;
   padding: 5px 10px;
-  background-color: #001529;
+  background-color: #005BAB;
   color: white;
 }
 .after-post-tags li:hover{
-  background-color: #FFC84D;
-  color: #001529;
+  background-color: #001529;
+  color: #fff;
 }
 .text-center {
   text-align: center;

@@ -6,7 +6,8 @@
 
 
 .navbar {
-  background: #001529;
+  /* background: #001529; */
+  background: #005BAB;
   color: white;
   padding: 17px 40px;
   margin: 0;
@@ -96,12 +97,12 @@
   color: white;
   /* margin-right: 20px; */
 }
-.menu-item:hover{
-   color:#FFC84D;
+/* .menu-item:hover{
+   color:#138b4d;
 }
 .menu-item-vertical:hover{
   color:#FFC84D ;
-}
+} */
 .icon {
   margin-right: 5px;
 }

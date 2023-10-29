@@ -13,7 +13,6 @@ const Menu = () => {
         allCategories()
             .then((res) => {
                 setCategories(res);
-                console.log("categories", res);
             })
             .catch((err) => {
                 console.log("Error in fetch catgory", err);
@@ -21,11 +20,11 @@ const Menu = () => {
     }, []);
 
     const menu = () => (
-        <Menu1>
+        <Menu1 style={{maxHeight:"450px", overflowY: "auto"}}>
             {categories?.length > 0 &&
                 categories?.map((category) => (
                     <Link
-                        to={`/post/category/${category._id}`}
+                        to={`/post/category/${category._id}/${category?.categoryName}`}
                         key={category._id}
                         onClick={() => {
                             dispatch({

@@ -20,11 +20,11 @@
 
 }
 .footer-container ul{
-    color: gray;
+    color: #fff;
     
 }
 .footer-container a {
-  color: gray !important;
+  color: #fff !important;
   text-decoration: none;
   cursor: pointer;
 }

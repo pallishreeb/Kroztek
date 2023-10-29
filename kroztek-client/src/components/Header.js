@@ -1,25 +1,69 @@
 import React from "react";
+import {
+  PhoneOutlined,
+  MailOutlined
+} from "@ant-design/icons";
+
 import Logo from "../img/logo-cg.png";
 import "../css/Header.css"; // Import the CSS file
-
+import LocationLink from "./LocationLink";
 function Header() {
   return (
-    <div className="header-container"> {/* Use the CSS class names */}
+    <div className="header-container">
+      {" "}
+      {/* Use the CSS class names */}
       <div className="logo-container">
         <img src={Logo} alt="Logo" className="logo-img" />
       </div>
       <div className="contact-container">
         <span className="contact-info">
-          <p>CALL US<br />+918637214899</p>
+          <p>
+            <b className="heading">CALL US   <PhoneOutlined /></b>
+            <br />
+            <a href="tel:+918637214899"> +918637214899</a>
+          </p>
         </span>
         <span className="contact-info">
-          <p>EMAIL US<br />kroztekintegratedsolution@gmail.com</p>
+          <p>
+            <b className="heading">EMAIL US{" "} <MailOutlined />  </b> <br />
+            <a
+              href={`mailto:${"kroztekintegratedsolution@gmail.com"}?subject=Email%20Subject&body=Hello%2C%20I%20want%20to%20email`}
+            >
+              kroztekintegratedsolution@gmail.com
+            </a>
+          </p>
+        </span>
+
+        <LocationLink size={"big"} />
+      </div>
+      <div className="small-screen">
+        <span className="contact-info">
+          <p>
+            {" "}
+            <b className="heading">
+              {" "}
+              CALL US{" "}
+              <a href="tel:+918637214899">
+                <PhoneOutlined />
+              </a>
+            </b>{" "}
+          </p>
         </span>
         <span className="contact-info">
-          <p>LOCATION <br />Plot No. 1983/4085, Badasathiabatia, 
-          <br/>
-          Near SaiShree Eye Hospital, 759001, Dhenkanal, Odisha</p>
+          <p>
+            {" "}
+            <b className="heading">
+              {" "}
+              EMAIL US
+              <a
+                href={`mailto:${"kroztekintegratedsolution@gmail.com"}?subject=Email%20Subject&body=Hello%2C%20I%20want%20to%20email`}
+              >{" "}
+                <MailOutlined />
+              </a>
+            </b>
+          </p>
         </span>
+        <LocationLink size={"small"} />
       </div>
     </div>
   );
