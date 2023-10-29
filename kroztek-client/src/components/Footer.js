@@ -64,7 +64,9 @@ function AppFooter() {
 						<ul>
 							<li>
 								<strong>Office Location:</strong> <EnvironmentOutlined />{" "}
-								759001,Dhenkanal,Odisha
+								Plot No. 1983/4085, Badasathiabatia, 
+							
+                                 Near SaiShree Eye Hospital, 759001, Dhenkanal, Odisha
 							</li>
 							<li>
 								<strong>Call Us at:</strong>{" "}

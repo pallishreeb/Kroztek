@@ -17,10 +17,12 @@ import NotFoundPage from './pages/notFoundPage';
 import Contact from './pages/contact';
 import Navbar from './components/Navbar';
 import WhatsappImg from './img/whatsapp.png'
+import Header from './components/Header';
 function App() {
   // const params = useParams()
   return (
     <div className="App">
+      <Header/>
       <Navbar />
 
       <ToastContainer />
