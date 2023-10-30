@@ -19,7 +19,8 @@ const {
   mostViewedProducts,
   removeImg,
   removeDoc,
-  editProductStatus
+  editProductStatus,
+  getProductsForAdmin
 } = require("../controllers/product");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -65,6 +66,7 @@ router.get("/singlePost", getProductDetails);
 
 //GET Products
 router.get("/allPost", getProducts);
+router.get("/allproducts", getProductsForAdmin);
 //mostviewdproducts
 router.get("/most-viewed", mostViewedProducts);
 

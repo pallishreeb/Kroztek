@@ -137,6 +137,20 @@ exports.getProducts = async (req,res) =>{
         res.status(500).json({ error: 'Internal server error' });
       }
 }
+
+exports.getProductsForAdmin = async (req,res) =>{
+  try {
+      const products = await Product.find({})
+      .sort({ createdAt: -1 })
+      .populate("category")
+      .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property
+  
+      res.json(products);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+}
 //get details of  a single product with category,subcategory based on productId
 exports.getProductDetails = async (req,res) =>{
     try {
