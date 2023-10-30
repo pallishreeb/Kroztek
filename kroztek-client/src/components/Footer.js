@@ -15,6 +15,17 @@ const { Footer } = Layout;
 function AppFooter() {
 	const { state } = usePostApi();
 	const { metadata } = state;
+		const latitude = 20.66249607748869;
+		const longitude = 85.59409979447742;
+	  
+		const handleOpenLocation = () => {
+		  // Construct the Google Maps URL with the coordinates
+		  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+		
+		// Open the URL in a new window or tab
+		window.open(googleMapsUrl, "_blank");
+	  }
+	  
 	return (
 		<Footer style={{ backgroundColor: "#005BAB", color: "#fff" }}>
 			<div className="footer-container">
@@ -64,9 +75,11 @@ function AppFooter() {
 						<ul>
 							<li>
 								<strong>Office Location:</strong> <EnvironmentOutlined />{" "}
-								Plot No. 1983/4085, Badasathiabatia, 
+								<a href="#" onClick={handleOpenLocation}>
+								113,gayatrinagar, Nuasasan
 							
-                                 Near SaiShree Eye Hospital, 759001, Dhenkanal, Odisha
+                                 Near Saishree Eye Hospital, 759001, Dhenkanal, Odisha
+								 </a>
 							</li>
 							<li>
 								<strong>Call Us at:</strong>{" "}

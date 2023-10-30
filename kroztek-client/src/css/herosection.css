@@ -107,6 +107,18 @@
     flex-direction: column-reverse;
   }
 
+  .text-4xl {
+    font-size: 1.8rem;
+  }
+  .md\:w-1\/2 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+ .text-4xl {
+    font-size: 0.1rem;
+  }
   .md\:w-1\/2 {
     width: 100%;
   }
