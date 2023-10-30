@@ -20,6 +20,14 @@ export const editPost = async (id, token, form) => {
         headers,
     });
 };
+export const editStatus= async (id, token, status) => {
+    const headers = {
+        authorization: token,
+    };
+    return await axios.put(`${API_URL}/product/editstatus?productId=${id}`, {status}, {
+        headers,
+    });
+};
 export const getPost = async (id, token) => {
     const headers = {
         authorization: token,

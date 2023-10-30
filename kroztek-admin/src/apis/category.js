@@ -32,6 +32,24 @@ export const editCategory = async (token,form) => {
         headers
     });
 }
+export const editCategoryStatus = async (token,form) => {
+
+    const headers = {
+        authorization: token
+    }
+    return await axios.put(API_URL + '/category/editstatus', form, {
+        headers
+    });
+}
+export const editSubCategoryStatus = async (token,form) => {
+
+    const headers = {
+        authorization: token
+    }
+    return await axios.put(API_URL + '/category/editsubstatus', form, {
+        headers
+    });
+}
 export const deleteCategory = async (id,token) => {
 
     const headers = {

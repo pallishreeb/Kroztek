@@ -10,18 +10,43 @@ import {
 } from "@mui/icons-material";
 import { PostContext } from "../../context/PostProvider";
 import { Link } from "react-router-dom";
-import { IconButton, Tooltip } from "@mui/material";
-import { APP_URL,IMG_URL } from "../../config";
+import {
+  IconButton,
+  Tooltip,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+import { APP_URL, IMG_URL } from "../../config";
+import { toast } from "react-toastify";
+import { editStatus } from "../../apis/product";
 
 export default function ProductTable({ token }) {
   const postContext = useContext(PostContext);
-  const {  deleteSinglePost, loading ,products ,setProducts} = postContext;
+  const { deleteSinglePost, loading, products, setProducts, getAllPosts } =
+    postContext;
   const [selectedRows, setselectedRows] = useState([]);
+
+  const handleToggle = (status, id) => {
+    editStatus(id, token, !status)
+      .then((response) => {
+        if (response.status !== 200) {
+          toast.error("Error in updating status");
+        } else {
+          getAllPosts(token);
+          toast.success("Status updated");
+        }
+      })
+      .catch((error) => {
+        // Handle any network error
+        console.error("Error:", error);
+      });
+  };
+
   const columns = [
     {
       field: "Image",
       headerName: "Image",
-      width: 130,
+      width: 120,
       renderCell: (params) => {
         return (
           <div
@@ -39,7 +64,7 @@ export default function ProductTable({ token }) {
                   width: "45px",
                   borderRadius: "50%",
                   objectFit: "cover",
-                  margin:"20px"
+                  margin: "20px",
                 }}
                 alt="img-thumb"
               />
@@ -97,7 +122,6 @@ export default function ProductTable({ token }) {
             }}
           >
             <p>{params.row?.documents[0]}</p>
-           
           </div>
         );
       },
@@ -105,7 +129,7 @@ export default function ProductTable({ token }) {
     {
       field: "edit",
       headerName: "Edit",
-      width: 80,
+      width: 40,
       renderCell: (params) => {
         return (
           <div
@@ -136,7 +160,7 @@ export default function ProductTable({ token }) {
     {
       field: "view",
       headerName: "view",
-      width: 80,
+      width: 40,
       renderCell: (params) => {
         return (
           <div
@@ -157,22 +181,59 @@ export default function ProductTable({ token }) {
         );
       },
     },
+    {
+      field: "isActive",
+      headerName: "Active",
+      width: 100, // Adjust the width as needed
+      renderCell: (params) => {
+        return (
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <ToggleButtonGroup
+              value={params.row?.isActive}
+              exclusive
+              onChange={() =>
+                handleToggle(params.row?.isActive, params.row?._id)
+              }
+              size="small"
+            >
+              {params.row.isActive === true ? (
+                <ToggleButton
+                  value={true}
+                  style={{ backgroundColor: "greenyellow" }}
+                >
+                  On
+                </ToggleButton>
+              ) : (
+                <ToggleButton
+                  value={false}
+                  style={{ backgroundColor: "red", color: "#fff" }}
+                >
+                  Off
+                </ToggleButton>
+              )}
+            </ToggleButtonGroup>
+          </div>
+        );
+      },
+    },
   ];
 
   const onRowsSelectionHandler = (ids) => {
     const selectedRowsData = ids.map((id) =>
-    products.find((row) => row._id === id)
+      products.find((row) => row._id === id)
     );
     setselectedRows(selectedRowsData);
   };
   const deleteHandler = () => {
-    const confirmed = window.confirm("Are you sure you want to delete this product?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     if (confirmed) {
-    selectedRows.forEach((item) => {
-      setProducts(products.filter((row) => row._id !== item._id));
-      deleteSinglePost(token, item._id);
-    });
-  }
+      selectedRows.forEach((item) => {
+        setProducts(products.filter((row) => row._id !== item._id));
+        deleteSinglePost(token, item._id);
+      });
+    }
   };
   if (loading) {
     return <LoadingTable />;

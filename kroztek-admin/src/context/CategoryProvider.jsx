@@ -12,6 +12,8 @@ import {
   editSubCategory,
   deleteCategory,
   deleteSubCategory,
+  editCategoryStatus,
+  editSubCategoryStatus,
 } from "../apis/category";
 
 export const CategoryContext = createContext();
@@ -71,6 +73,33 @@ const CategoryProvider = (props) => {
       });
   };
 
+  const updateCategoryStatus = async (form, token) => {
+    editCategoryStatus(token, form)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        getAllCategories(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in updating status"
+        );
+      });
+  };
+
+  const updateSubCategoryStatus = async (form, token) => {
+    editSubCategoryStatus(token, form)
+      .then((res) => {
+        toast.success(res?.data?.message);
+        allSubcategores(token);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "Error in updating status"
+        );
+      });
+  };
   // delete category
   const removeCategory = async (id, token) => {
     deleteCategory(id, token)
@@ -183,6 +212,8 @@ const CategoryProvider = (props) => {
         setSubcategories,
         setCategories,
         loading,
+        updateCategoryStatus,
+        updateSubCategoryStatus
       }}
     >
       {props.children}
