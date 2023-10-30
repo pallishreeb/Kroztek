@@ -90,6 +90,9 @@ exports.editProduct = async (req,res) =>{
         if (updatedFields.features) {
           existingProduct.features = JSON.parse(updatedFields.features);
         }
+        if(updatedFields.status){
+          existingProduct.isActive = updatedFields.status
+        }
     
         // Handle document and image uploads if provided
         if (req.files && req.files.documents) {

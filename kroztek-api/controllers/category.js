@@ -23,7 +23,7 @@ module.exports = {
   },
   createCategory: async (req, res) => {
     try {
-      const { category } = req.body;
+      const { category,rank } = req.body;
       const isExist = await Category.findOne({ categoryName: category });
       if (isExist) {
         return res.status(403).json({
@@ -34,6 +34,7 @@ module.exports = {
       }
       const newCategory = await new Category({
         categoryName: category,
+        rank
       });
       await newCategory.save();
       return res.status(200).json({
@@ -76,7 +77,7 @@ module.exports = {
   updateCategory: async (req, res) => {
     console.log("body", req.body);
     try {
-      const { categoryId, categoryName } = req.body;
+      const { categoryId, categoryName ,rank, status} = req.body;
     
       const category = await Category.findById({_id:ObjectId(categoryId)});
       if (!category) {
@@ -88,6 +89,12 @@ module.exports = {
       }
       if (categoryName) {
         category.categoryName = categoryName;
+      }
+      if(rank){
+        category.rank = rank
+      }
+      if(status){
+        category.isActive = status
       }
       await category.save();
       return res.status(200).json({
@@ -124,7 +131,7 @@ module.exports = {
   },
   createSubCategory: async (req, res) => {
     try {
-      const { subcategory, categoryId } = req.body;
+      const { subcategory, categoryId,rank } = req.body;
       const isExist = await SubCategory.findOne({
         subcategoryName: subcategory,
       });
@@ -138,6 +145,7 @@ module.exports = {
       const newSubCategory = await new SubCategory({
         subcategoryName: subcategory,
         categoryId,
+        rank
       });
       await newSubCategory.save();
       return res.status(200).json({
@@ -194,7 +202,7 @@ module.exports = {
   },
   updateSubCategory: async (req, res) => {
     try {
-      const { categoryId, subcategoryName, subId } = req.body;
+      const { categoryId, subcategoryName, subId ,rank,status} = req.body;
       const subcategory = await SubCategory.findById({ _id: ObjectId(subId) });
       if (!subcategory) {
         return res.status(404).json({
@@ -209,6 +217,13 @@ module.exports = {
       if (categoryId) {
         subcategory.categoryId = categoryId;
       }
+      if(rank){
+        subcategory.rank = rank
+      }
+      if(status){
+        subcategory.isActive = status
+      }
+      
       await subcategory.save();
       return res.status(200).json({
         success: true,

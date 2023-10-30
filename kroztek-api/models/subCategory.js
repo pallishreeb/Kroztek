@@ -9,6 +9,13 @@ const subcategorySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "category",
     },
+    rank:{
+        type: Number
+    },
+    isActive:{
+        type: Boolean,
+        default: true
+    },
     createdAt:{
         type: Date,
         default: Date.now 

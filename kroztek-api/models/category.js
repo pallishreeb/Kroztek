@@ -5,6 +5,13 @@ const categorySchema = new Schema({
     categoryName:{
         type: String
     },
+    rank:{
+        type: Number
+    },
+    isActive:{
+        type: Boolean,
+        default: true
+    },
     createdAt:{
         type: Date,
         default: Date.now 
