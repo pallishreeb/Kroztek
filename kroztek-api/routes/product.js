@@ -18,7 +18,8 @@ const {
   filterByCategory,
   mostViewedProducts,
   removeImg,
-  removeDoc
+  removeDoc,
+  editProductStatus
 } = require("../controllers/product");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -79,6 +80,13 @@ router.put(
   editProduct
 );
 
+//UPDATE Product status
+router.put(
+  "/editstatus",
+  passport.authenticate("jwt", { session: false }),
+  isAdmin,
+  editProductStatus
+);
 //DELETE Product
 router.delete(
   "/delete",

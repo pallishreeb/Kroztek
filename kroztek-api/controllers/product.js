@@ -413,3 +413,29 @@ exports.removeDoc = async(req,res) =>{
     res.status(500).json({ message: "Internal server error" });
   }
 }
+
+exports.editProductStatus = async (req,res) =>{
+  try {
+      const productId = req.query.productId;
+      const {status} = req.body; 
+  
+      // Find the product by productId
+      const existingProduct = await Product.findById(productId);
+  
+      if (!existingProduct) {
+        return res.status(404).json({ error: 'Product not found.' });
+      }
+  
+      // Update the product status  
+      if(status){
+        existingProduct.isActive = status
+      } 
+      // Save the updated product
+      await existingProduct.save();
+  
+      res.json(existingProduct);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+}
