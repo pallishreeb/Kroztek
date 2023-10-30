@@ -7,7 +7,7 @@ module.exports = {
   //category
   getAllCategory: async (_, res) => {
     try {
-      const category = await Category.find({isActive: true}).sort({ rank: 1 }).exec();
+      const category = await Category.find({}).sort({ rank: 1 }).exec();
       return res.status(200).json({
         success: true,
         message: `${category.length} Category found`,
@@ -137,7 +137,7 @@ module.exports = {
 
   getAllSubCategory: async (_, res) => {
     try {
-      const subcategory = await SubCategory.find({isActive: true}).sort({ rank: 1 }).populate("categoryId")
+      const subcategory = await SubCategory.find({}).sort({ rank: 1 }).populate("categoryId")
       // sort({ createdAt: -1 }).exec().
       return res.status(200).json({
         success: true,
