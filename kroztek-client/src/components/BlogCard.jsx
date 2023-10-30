@@ -26,7 +26,7 @@ const BlogCard = ({ posts }) => {
   return (
     <div className="custom-card-grid">
       {posts?.length > 0 &&
-        posts.map((post, index) => (
+        posts?.filter((item) => item.isActive).map((post, index) => (
        
             <div key={index} className="blog-card" onClick={() => navigateToDetails(post?._id)}>
               <div

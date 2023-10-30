@@ -11,7 +11,7 @@
   text-align: center;
   color: #fff;
   background-color: #333;
-  height: 500px; /* Set a fixed height for the hero container */
+  height: 550px; /* Set a fixed height for the hero container */
 }
 .hero-image {
   width: 100%; /* Set the width to auto to maintain aspect ratio */

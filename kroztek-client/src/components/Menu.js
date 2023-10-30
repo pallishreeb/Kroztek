@@ -22,7 +22,7 @@ const Menu = () => {
     const menu = () => (
         <Menu1 style={{maxHeight:"450px", overflowY: "auto"}}>
             {categories?.length > 0 &&
-                categories?.map((category) => (
+                categories?.filter((item) => item.isActive).map((category) => (
                     <Link
                         to={`/post/category/${category._id}/${category?.categoryName}`}
                         key={category._id}
