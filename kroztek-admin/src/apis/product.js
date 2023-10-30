@@ -21,6 +21,7 @@ export const editPost = async (id, token, form) => {
     });
 };
 export const editStatus= async (id, token, status) => {
+
     const headers = {
         authorization: token,
     };
@@ -42,7 +43,7 @@ export const getPosts = async (token) => {
         authorization: token,
     };
 
-    return await axios.get(`${API_URL}/product/allPost`, { headers });
+    return await axios.get(`${API_URL}/product/allproducts`, { headers });
 };
 
 export const deletePost = async (token, id) => {
