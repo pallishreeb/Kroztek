@@ -427,9 +427,7 @@ exports.editProductStatus = async (req,res) =>{
       }
   
       // Update the product status  
-      if(status){
-        existingProduct.isActive = status
-      } 
+     existingProduct.isActive = status
       // Save the updated product
       await existingProduct.save();
   

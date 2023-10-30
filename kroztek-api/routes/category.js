@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const {
   createCategory, getAllCategory, getAllSubCategory, getSubCategoryForCategory, deleteCategory, deleteSubCategory,
-  createSubCategory, updateCategory, updateSubCategory
+  createSubCategory, updateCategory, updateSubCategory, editCategoryStatus, editSubCategoryStatus
 } = require("../controllers/category");
 
 //isAdmin
@@ -49,6 +49,20 @@ router.put(
   "/sub/edit",
   passport.authenticate("jwt", { session: false }),
   updateSubCategory
+);
+//UPDATE Product status
+router.put(
+  "/editstatus",
+  passport.authenticate("jwt", { session: false }),
+  isAdmin,
+  editCategoryStatus
+);
+//UPDATE Product status
+router.put(
+  "/editsubstatus",
+  passport.authenticate("jwt", { session: false }),
+  isAdmin,
+  editSubCategoryStatus
 );
 
 //DELETE category

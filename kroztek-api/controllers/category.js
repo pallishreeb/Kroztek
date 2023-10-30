@@ -77,7 +77,7 @@ module.exports = {
   updateCategory: async (req, res) => {
     console.log("body", req.body);
     try {
-      const { categoryId, categoryName ,rank, status} = req.body;
+      const { categoryId, categoryName ,rank} = req.body;
     
       const category = await Category.findById({_id:ObjectId(categoryId)});
       if (!category) {
@@ -93,9 +93,6 @@ module.exports = {
       if(rank){
         category.rank = rank
       }
-      if(status){
-        category.isActive = status
-      }
       await category.save();
       return res.status(200).json({
         success: true,
@@ -109,7 +106,30 @@ module.exports = {
       });
     }
   },
-
+editCategoryStatus: async (req,res) =>{
+    try {
+      const { categoryId, status} = req.body;
+    
+      const category = await Category.findById({_id:ObjectId(categoryId)});
+      if (!category) {
+        return res.status(404).json({
+          success: false,
+          message: "Invalid id, category not found",
+          response: {},
+        });
+      }
+    
+        // Update the category status  
+        category.isActive = status
+        // Save the updated category
+        await category.save();
+    
+        res.json(category);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+  },
   //subactegory
 
   getAllSubCategory: async (_, res) => {
@@ -202,12 +222,12 @@ module.exports = {
   },
   updateSubCategory: async (req, res) => {
     try {
-      const { categoryId, subcategoryName, subId ,rank,status} = req.body;
+      const { categoryId, subcategoryName, subId ,rank} = req.body;
       const subcategory = await SubCategory.findById({ _id: ObjectId(subId) });
       if (!subcategory) {
         return res.status(404).json({
           success: false,
-          message: "Invalid id, category not found",
+          message: "Invalid id, subcategory not found",
           response: {},
         });
       }
@@ -220,10 +240,7 @@ module.exports = {
       if(rank){
         subcategory.rank = rank
       }
-      if(status){
-        subcategory.isActive = status
-      }
-      
+   
       await subcategory.save();
       return res.status(200).json({
         success: true,
@@ -236,5 +253,28 @@ module.exports = {
         error: error.message,
       });
     }
+  },
+  editSubCategoryStatus: async (req,res) =>{
+    try {
+      const {  subId ,status} = req.body;
+      const subcategory = await SubCategory.findById({ _id: ObjectId(subId) });
+      if (!subcategory) {
+        return res.status(404).json({
+          success: false,
+          message: "Invalid id, subcategory not found",
+          response: {},
+        });
+      }
+    
+        // Update the category status  
+        subcategory.isActive = status
+        // Save the updated category
+        await subcategory.save();
+    
+        res.json(subcategory);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+      }
   },
 };
