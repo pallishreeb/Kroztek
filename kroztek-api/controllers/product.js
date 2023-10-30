@@ -126,7 +126,7 @@ exports.editProduct = async (req,res) =>{
 //get all products with associated category and subcategory details
 exports.getProducts = async (req,res) =>{
     try {
-        const products = await Product.find({})
+        const products = await Product.find({isActive: true})
         .sort({ createdAt: -1 })
         .populate("category")
         .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property

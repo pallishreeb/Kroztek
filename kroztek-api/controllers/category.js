@@ -7,7 +7,7 @@ module.exports = {
   //category
   getAllCategory: async (_, res) => {
     try {
-      const category = await Category.find({}).sort({ createdAt: -1 }).exec();
+      const category = await Category.find({isActive: true}).sort({ rank: 1 }).exec();
       return res.status(200).json({
         success: true,
         message: `${category.length} Category found`,
@@ -106,7 +106,7 @@ module.exports = {
       });
     }
   },
-editCategoryStatus: async (req,res) =>{
+ editCategoryStatus: async (req,res) =>{
     try {
       const { categoryId, status} = req.body;
     
@@ -123,7 +123,10 @@ editCategoryStatus: async (req,res) =>{
         category.isActive = status
         // Save the updated category
         await category.save();
-    
+        await Product.updateMany(
+          { category: ObjectId(categoryId) }, // Match products with the specified category
+          { $set: { isActive: false } } // Update isActive to false
+        );
         res.json(category);
       } catch (error) {
         console.error(error);
@@ -134,7 +137,7 @@ editCategoryStatus: async (req,res) =>{
 
   getAllSubCategory: async (_, res) => {
     try {
-      const subcategory = await SubCategory.find({}).populate("categoryId")
+      const subcategory = await SubCategory.find({isActive: true}).sort({ rank: 1 }).populate("categoryId")
       // sort({ createdAt: -1 }).exec().
       return res.status(200).json({
         success: true,
@@ -270,7 +273,10 @@ editCategoryStatus: async (req,res) =>{
         subcategory.isActive = status
         // Save the updated category
         await subcategory.save();
-    
+        await Product.updateMany(
+          { subcategory: ObjectId(subId) }, // Match products with the specified category
+          { $set: { isActive: false } } // Update isActive to false
+        );
         res.json(subcategory);
       } catch (error) {
         console.error(error);
