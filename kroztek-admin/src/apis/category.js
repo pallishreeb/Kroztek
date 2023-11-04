@@ -76,7 +76,7 @@ export const getAllSubCategories = async ( token) => {
     const headers = {
         Authorization: token
     }
-    return await axios.get(API_URL + `/category/subs`, {
+    return await axios.get(API_URL + `/category/allsubs`, {
         headers
     })
 }

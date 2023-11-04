@@ -72,7 +72,7 @@ const addProduct = (product,token,navigate) =>{
   formData.append("subcategory", product.subcategory);
   formData.append("websiteLink", product?.websiteLink);
   formData.append("youtubeLink", product?.youtubeLink);
-
+  formData.append("rank", product?.rank);
   // Append features as JSON string
   formData.append("features", JSON.stringify(product?.features));
 

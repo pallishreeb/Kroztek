@@ -44,6 +44,15 @@ export default function ProductTable({ token }) {
 
   const columns = [
     {
+      field: "rank",
+      headerName: "Rank",
+      width: 80,
+
+      renderCell: (params) => {
+        return <span>{params.row?.rank}</span>;
+      },
+    },
+    {
       field: "Image",
       headerName: "Image",
       width: 120,
@@ -76,7 +85,7 @@ export default function ProductTable({ token }) {
     {
       field: "name",
       headerName: "Name",
-      width: 220,
+      width: 200,
       renderCell: (params) => {
         return (
           <div
@@ -94,7 +103,7 @@ export default function ProductTable({ token }) {
     {
       field: "category",
       headerName: "Category",
-      width: 190,
+      width: 180,
 
       renderCell: (params) => {
         return <span>{params.row.category.categoryName}</span>;
@@ -103,7 +112,7 @@ export default function ProductTable({ token }) {
     {
       field: "subcategory",
       headerName: "SubCategory",
-      width: 190,
+      width: 180,
       renderCell: (params) => {
         return <span>{params.row.subcategory?.subcategoryName}</span>;
       },
@@ -111,7 +120,7 @@ export default function ProductTable({ token }) {
     {
       field: "documents",
       headerName: "Document",
-      width: 220,
+      width: 200,
       renderCell: (params) => {
         return (
           <div
@@ -184,7 +193,7 @@ export default function ProductTable({ token }) {
     {
       field: "isActive",
       headerName: "Active",
-      width: 100, // Adjust the width as needed
+      width: 80, // Adjust the width as needed
       renderCell: (params) => {
         return (
           <div style={{ display: "flex", justifyContent: "space-between" }}>

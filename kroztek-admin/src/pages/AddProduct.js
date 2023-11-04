@@ -6,7 +6,7 @@ import { getCategories, getSubCategories } from "../apis/category";
 import { AuthContext } from "../context/auth/AuthProvider";
 import { toast } from "react-toastify";
 import { PostContext } from "../context/PostProvider";
-import ProductDescriptionEditor from './Editor'; 
+import ProductDescriptionEditor from "./Editor";
 function AddProduct() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ function AddProduct() {
     documents: [],
     websiteLink: "",
     youtubeLink: "",
+    rank:0
   });
   useEffect(() => {
     !isAuthenticated && navigate("/login");
@@ -161,19 +162,19 @@ function AddProduct() {
     ) {
       toast.warning("Please fill up all the star marked Inputs");
       return;
-    }  
-      // Filter out empty feature objects
-  const filteredFeatures = product.features.filter((feature) => {
-    return feature.name.trim() !== "" || feature.value.trim() !== "";
-  });
+    }
+    // Filter out empty feature objects
+    const filteredFeatures = product.features.filter((feature) => {
+      return feature.name.trim() !== "" || feature.value.trim() !== "";
+    });
 
-  // Create a new product object without empty features
-  const productToSend = {
-    ...product,
-    features: filteredFeatures,
-  }; 
+    // Create a new product object without empty features
+    const productToSend = {
+      ...product,
+      features: filteredFeatures,
+    };
 
-    addProduct( productToSend, token, navigate);
+    addProduct(productToSend, token, navigate);
   };
 
   return (
@@ -184,6 +185,16 @@ function AddProduct() {
         </Grid>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit}>
+            {/* Rank */}
+            <TextField
+              label="Rank"
+              name="rank"
+              type="number"
+              value={product.rank}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+            />
             {/* Categories */}
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -237,21 +248,11 @@ function AddProduct() {
               fullWidth
               margin="normal"
             />
-            {/* Description */}
-            {/* <TextField
-              label="Description*"
-              name="description"
-              value={product.description}
-              onChange={handleInputChange}
-              fullWidth
-              multiline
-              rows={4}
-              margin="normal"
-            /> */}
-    <ProductDescriptionEditor
-            value={product.description} // Pass the description value
-            onChange={handleDescriptionChange} // Pass the change handler
-          />
+
+            <ProductDescriptionEditor
+              value={product.description} // Pass the description value
+              onChange={handleDescriptionChange} // Pass the change handler
+            />
             {/* Features */}
             {product.features.map((feature, index) => (
               <Grid container spacing={2} key={index}>
@@ -428,11 +429,16 @@ function AddProduct() {
                         Document {index + 1}
                       </a>
                       {/* Remove button */}
-                      <button onClick={() => removeDocument(index)}   className="m-2" style={{
-                        background: "red",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",}}>
+                      <button
+                        onClick={() => removeDocument(index)}
+                        className="m-2"
+                        style={{
+                          background: "red",
+                          color: "white",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
                         Remove
                       </button>
                     </div>

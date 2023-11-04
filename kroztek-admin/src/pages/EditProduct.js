@@ -33,6 +33,7 @@ function EditProduct() {
     documents: [],
     websiteLink: "",
     youtubeLink: "",
+    rank:0
   });
 
   useEffect(() => {
@@ -55,8 +56,9 @@ function EditProduct() {
             features: productData?.features,
             images: [],
             documents: [],
-            websiteLink: productData.websiteLink,
-            youtubeLink: productData.youtubeLink,
+            websiteLink: productData?.websiteLink,
+            youtubeLink: productData?.youtubeLink,
+            rank:productData?.rank
           });
           setImgUrls(
             productData?.images?.length > 0 ? productData?.images : []
@@ -219,6 +221,7 @@ function EditProduct() {
     formData.append("subcategory", product.subcategory);
     formData.append("websiteLink", product?.websiteLink);
     formData.append("youtubeLink", product?.youtubeLink);
+    formData.append("rank", product?.rank);
     // Filter out empty feature objects
     const filteredFeatures = product.features.filter((feature) => {
       return feature.name.trim() !== "" || feature.value.trim() !== "";
@@ -263,6 +266,16 @@ if(loading){
         </Grid>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit}>
+              {/* Rank */}
+              <TextField
+              label="Rank"
+              name="rank"
+              type="number"
+              value={product?.rank}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+            />
             {/* Categories */}
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>

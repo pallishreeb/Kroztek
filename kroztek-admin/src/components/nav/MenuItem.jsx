@@ -47,6 +47,11 @@ const MenuItem = ({ open, navigate }) => {
       icon: <Groups2 color="white" />,
       path: "/users",
     },
+    {
+      name: "Client",
+      icon: <ListAlt color="white" />,
+      path: "/client",
+    },
   
     {
       name: "Metadata",

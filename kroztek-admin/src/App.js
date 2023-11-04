@@ -14,6 +14,7 @@ import Metadata from "./pages/Metadata";
 import DisplayMetadata from "./pages/DisplayMetadata";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import ClientForm from "./pages/ClientForm";
 import { Nav, Topbar } from "./components/index";
 
 //context
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
+                <Route path="/client" element={<ClientForm />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />
                 <Route path="/login" element={<Login />} />
@@ -85,6 +87,7 @@ function App() {
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
+                <Route path="/client" element={<ClientForm />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />
                 <Route path="/login" element={<Login />} />
@@ -106,6 +109,7 @@ function App() {
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />
                 <Route path="/metadata" element={<Metadata />} />
+                <Route path="/client" element={<ClientForm />} />
                 <Route path="/showmetadata" element={<DisplayMetadata />} />
                 <Route path="/metadata/:metadataId" element={<Metadata />} />
                 <Route path="/login" element={<Login />} />
