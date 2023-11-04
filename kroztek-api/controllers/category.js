@@ -137,9 +137,33 @@ module.exports = {
 
   getAllSubCategory: async (_, res) => {
     try {
-      const subcategory = await SubCategory.find({}).sort({ rank: 1 }).populate("categoryId")
-      // sort({ createdAt: -1 }).exec().
-      return res.json(subcategory);
+      const categories = await SubCategory.aggregate([
+        {
+          $group: {
+            _id: '$categoryId',
+            categoryName: { $first: '$categoryName' },
+          },
+        },
+        { $sort: { rank: 1 } },
+      ]);
+  
+      const subcategories = await SubCategory.find().sort({ rank: 1 });
+  
+      const result = categories.map((category) => {
+        const subcategoryData = subcategories
+          .filter((sub) => sub.categoryId.toString() === category._id.toString())
+          .map((sub) => ({
+            subcategoryId: sub._id,
+            subcategoryName: sub.subcategoryName,
+          }));
+  
+        return {
+          name: category.categoryName,
+          subcategories: subcategoryData,
+        };
+      });
+  
+      res.json(result);
     } catch (error) {
       return res.status(500).json({
         success: false,
