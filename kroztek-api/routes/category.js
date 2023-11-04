@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const {
   createCategory, getAllCategory, getAllSubCategory, getSubCategoryForCategory, deleteCategory, deleteSubCategory,
-  createSubCategory, updateCategory, updateSubCategory, editCategoryStatus, editSubCategoryStatus
+  createSubCategory, updateCategory, updateSubCategory, editCategoryStatus, editSubCategoryStatus, getAllSubCategoryAdmin
 } = require("../controllers/category");
 
 //isAdmin
@@ -32,7 +32,7 @@ router.get(
 
 //GET subcategories
 router.get("/subs", getAllSubCategory);
-router.get("/allsubs", getAllSubCategory);
+router.get("/allsubs", getAllSubCategoryAdmin);
 
 //GET subcategories for category
 router.get("/subs/category", getSubCategoryForCategory);
