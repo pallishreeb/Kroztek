@@ -141,7 +141,6 @@ module.exports = {
         {
           $group: {
             _id: '$categoryId',
-            categoryName: { $first: '$categoryName' },
           },
         },
         { $sort: { rank: 1 } },
@@ -149,11 +148,23 @@ module.exports = {
   
       const subcategories = await SubCategory.find().sort({ rank: 1 });
   
-      const result = categories.map((category) => ({
-        name: category.categoryName,
-        subcategories: subcategories
+      const result = categories.map((category) => {
+        const categoryName = subcategories.find(
+          (sub) => sub._id.toString() === category._id.toString()
+        ).categoryName;
+  
+        const subcategoryData = subcategories
           .filter((sub) => sub.categoryId.toString() === category._id.toString())
-      }));
+          .map((sub) => ({
+            subcategoryId: sub._id,
+            subcategoryName: sub.subcategoryName,
+          }));
+  
+        return {
+          name: categoryName,
+          subcategories: subcategoryData,
+        };
+      });
   
       res.json(result);
     } catch (error) {
