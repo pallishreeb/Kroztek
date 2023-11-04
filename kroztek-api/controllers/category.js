@@ -137,22 +137,11 @@ module.exports = {
 
   getAllSubCategory: async (_, res) => {
     try {
-      const categories = await SubCategory.aggregate([
-        {
-          $group: {
-            _id: '$categoryId',
-          },
-        },
-        { $sort: { rank: 1 } },
-      ]);
-  
+      const categories = await Category.find().sort({ rank: 1 });
+
       const subcategories = await SubCategory.find().sort({ rank: 1 });
   
       const result = categories.map((category) => {
-        const categoryName = subcategories.find(
-          (sub) => sub._id.toString() === category._id.toString()
-        ).categoryName;
-  
         const subcategoryData = subcategories
           .filter((sub) => sub.categoryId.toString() === category._id.toString())
           .map((sub) => ({
@@ -161,7 +150,7 @@ module.exports = {
           }));
   
         return {
-          name: categoryName,
+          name: category.categoryName, // Assuming categoryName exists in the Category model
           subcategories: subcategoryData,
         };
       });
