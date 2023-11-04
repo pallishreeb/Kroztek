@@ -39,6 +39,9 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  rank:{
+    type: Number
+ },
   createdAt:{
     type: Date,
     default: Date.now 

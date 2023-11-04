@@ -46,6 +46,7 @@ exports.addProduct = async (req,res) =>{
           websiteLink: req.body.websiteLink || '',
           documents: docsFilenames, // Get the document filename from multer
           images: imageFilenames, // Store image filenames in the 'images' field
+          rank:req.body?.rank
         });
     
         // Save the product to the database
@@ -93,7 +94,9 @@ exports.editProduct = async (req,res) =>{
         if(updatedFields.status){
           existingProduct.isActive = updatedFields.status
         }
-    
+        if(updatedFields.rank){
+          existingProduct.rank = updatedFields.rank
+        }
         // Handle document and image uploads if provided
         if (req.files && req.files.documents) {
           const docFilenames = [];
@@ -127,7 +130,7 @@ exports.editProduct = async (req,res) =>{
 exports.getProducts = async (req,res) =>{
     try {
         const products = await Product.find({isActive: true})
-        .sort({ 'category.rank':1 })
+        .sort({ rank:1})
         .populate("category")
         .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property
     
