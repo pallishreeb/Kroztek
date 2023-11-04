@@ -141,7 +141,7 @@ module.exports = {
         {
           $group: {
             _id: '$categoryId',
-            categoryName: { $first: '$categoryName' },
+            categoryName:  '$categoryName',
           },
         },
         { $sort: { rank: 1 } },
