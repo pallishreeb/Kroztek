@@ -32,6 +32,7 @@ router.get(
 
 //GET subcategories
 router.get("/subs", getAllSubCategory);
+router.get("/allsubs", getAllSubCategory);
 
 //GET subcategories for category
 router.get("/subs/category", getSubCategoryForCategory);

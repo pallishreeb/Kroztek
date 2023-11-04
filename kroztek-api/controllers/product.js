@@ -143,7 +143,7 @@ exports.getProducts = async (req,res) =>{
 
 exports.getProductsForAdmin = async (req,res) =>{
   try {
-      const products = await Product.find({})
+      const products = await Product.find({}).sort({ rank: 1 })
       .sort({ createdAt: -1 })
       .populate("category")
       .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property
@@ -459,7 +459,7 @@ exports.filterBySubCategory= async (req,res)=>{
   try {
 
       const { subcategoryId } = req.query;
-      const posts = await Product.find({ subcategory: ObjectId(subcategoryId) });
+      const posts = await Product.find({ subcategory: ObjectId(subcategoryId) }).sort({ rank: 1 });
       return res.json(posts)
     } catch (error) {
       return res.status(500).json({
