@@ -87,7 +87,7 @@ function Category() {
               <ul className="pl-4">
                 {category.subcategories.length > 0 ? (
                   category.subcategories.map((subcategory, subIndex) => (
-                    <li key={subIndex}   onClick={() =>{
+                    <li className="cursor-pointer"  key={subIndex}   onClick={() =>{
                         setSubcategoryId(subcategory?.subcategoryId)
                         scrollToAllStories()
                     }
