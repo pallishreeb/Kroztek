@@ -18,8 +18,7 @@ function LocationLink({size}) {
      <p>
      <a href="#" onClick={handleOpenLocation}>
      <span className="contact-info">
-       <p><b className="heading">LOCATION <EnvironmentOutlined/></b>  <br/>
-       113, Gayatrinagar,Nuasasan
+       <p><b className="heading">LOCATION <EnvironmentOutlined/></b>
        <br/>
         759001, Dhenkanal, Odisha</p>
      </span>

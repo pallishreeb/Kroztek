@@ -15,3 +15,17 @@ export const allCategories= async () => {
         return;
     }
 }
+
+export const allSubCategories= async () => {
+    try {
+        const res = await axios.get(
+            `${url}/category/subs`,
+
+        );
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        toast.error("Error in Fetching subcategories")
+        return;
+    }
+}

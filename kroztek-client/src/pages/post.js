@@ -228,7 +228,7 @@ function Post() {
         <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
           <div classNameName="related-content">
             <div className="container">
-              <h3 className="text-center">Related Products</h3>
+              <h3 className="text-center" style={{marginTop:"10px"}}>Related Products</h3>
 
               {relatedPosts.length > 0 ? (
                 <BlogCard posts={relatedPosts} token={token} />

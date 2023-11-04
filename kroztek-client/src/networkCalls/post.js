@@ -68,7 +68,18 @@ export const filterByCategory = async (id, authtoken) => {
     return;
   }
 }
-
+export const filterBySubCategory = async (id) => {
+  try {
+    const res = await axios.get(
+      `${url}/product/filterBySubCategory?subcategoryId=${id}`,
+       );
+    return res.data;
+  } catch (error) {
+    console.log(error)
+    toast.error("Error in Fetching Posts")
+    return;
+  }
+}
 export const savePost = async (id, authtoken) => {
   try {
     const res = await axios.get(

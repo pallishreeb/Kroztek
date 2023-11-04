@@ -8,6 +8,7 @@ const initialState = {
     duplicatesPosts: [],
     notifications: [],
     metadata: {},
+    subs: [],
     isSearching: false,
     isSaved: false
 };
@@ -18,6 +19,11 @@ export const PostContext = createContext(initialState);
 // create the reducer to update the state based on the action type
 const apiReducer = (state, action) => {
     switch (action.type) {
+        case "FETCH_SUBS":
+            return {
+                ...state,
+                subs: action.payload,
+            };
         case "FETCH_METADATA":
             return {
                 ...state,

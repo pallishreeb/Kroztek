@@ -37,7 +37,7 @@ function ScrollButton() {
       className={isVisible ? "visible" : ""}
       onClick={scrollToSection}
     >
-         <i className="fa fa-arrow-up" style={{ fontSize: "24px", color: "#1890ff" }} />
+         <i className="fa fa-arrow-up" style={{ fontSize: "30px", color: "#1890ff" }} />
     </button>
   );
 }

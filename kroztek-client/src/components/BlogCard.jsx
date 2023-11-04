@@ -47,32 +47,6 @@ const BlogCard = ({ posts }) => {
                 >
                  <div>{truncateText(stripHtmlTags(post?.description), 180)}</div>
                 </p>
-                {/* <div className="card-info">
-                  <span className="blog-date">
-                    {" "}
-                    {new Date(post?.createdAt).toLocaleString("en-GB", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                    })}
-                  </span>
-
-                  {savedPosts?.length > 0 && isSaved(post?._id) === true ? (
-                    <HeartFilled
-                      onClick={() => removeSavedPostId(post?._id)}
-                      className="save-icon"
-                      style={{ fontSize: "24px", color: "#001529" }}
-                    />
-                  ) : (
-                    <HeartOutlined
-                      onClick={() => savePostForUser(post?._id)}
-                      className="save-icon"
-                      style={{ fontSize: "24px", color: "#001529" }}
-                    />
-                  )}
-                </div> */}
               </div>
             </div>
           

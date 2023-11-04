@@ -1,0 +1,47 @@
+/* CSS for a responsive grid */
+.category-container{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
+}
+.products-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    flex: 0 0 calc(33.33% - 10px); /* Three cards per row with 10px margin between cards */
+    margin: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-details h3 {
+    font-size: 18px;
+}
+
+.product-details p {
+    font-size: 14px;
+}
+
+
+/* CSS for small screens */
+@media (max-width: 768px) {
+    .category-container{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .product-card {
+        flex: 0 0 100%; /* One card per row for smaller screens */
+    }
+}

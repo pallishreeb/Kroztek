@@ -26,7 +26,7 @@ function Header() {
       <div className="contact-container">
       <span className="contact-info">
           <p>
-            <b className="heading">GSTIN..</b>
+            <b className="heading">GSTIN :</b>
             <br />
             21EOUPS1807D1ZX
           </p>

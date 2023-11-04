@@ -51,9 +51,12 @@ const Menu = () => {
                 class="nav-item"
             >
                 <div onClick={(e) => e.preventDefault()}>
-                    <Space>
+                    <Space >
+                    <Link
+                        to={`/category`}>
                         Categories
                         <i className="fa fa-arrow-down" />
+                        </Link>
                     </Space>
                 </div>
             </Dropdown>
