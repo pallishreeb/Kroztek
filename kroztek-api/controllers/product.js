@@ -454,3 +454,18 @@ exports.editProductStatus = async (req,res) =>{
       res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+exports.filterBySubCategory= async (req,res)=>{
+  try {
+
+      const { subcategoryId } = req.query;
+      const posts = await Product.find({ subcategory: ObjectId(subcategoryId) });
+      return res.json(posts)
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+}

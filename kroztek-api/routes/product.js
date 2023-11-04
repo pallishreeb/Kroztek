@@ -20,7 +20,8 @@ const {
   removeImg,
   removeDoc,
   editProductStatus,
-  getProductsForAdmin
+  getProductsForAdmin,
+  filterBySubCategory
 } = require("../controllers/product");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -109,7 +110,7 @@ router.get(
 
 //filter by catergory products
 router.get("/filterByCategory", filterByCategory);
-
+router.get("/filterBySubCategory", filterBySubCategory);
 //get all the saved products for an user
 router.get(
   "/savedpost",
