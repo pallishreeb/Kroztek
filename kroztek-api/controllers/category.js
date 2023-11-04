@@ -137,7 +137,7 @@ module.exports = {
 
   getAllSubCategory: async (_, res) => {
     try {
-      const subcategory = await SubCategory.find({}).sort({ rank: 1 }).populate("categoryId")
+      const subcategory = await SubCategory.find({}).sort({'categoryId.rank':1, rank: 1 }).populate("categoryId")
       // sort({ createdAt: -1 }).exec().
       return res.status(200).json({
         success: true,

@@ -44,13 +44,12 @@ app.get("/", (_,res) =>{
 })
 //api routes
 app.use("/dev/api/v1/user", require("./routes/user"));
-app.use("/dev/api/v1/post", require("./routes/post"));
 app.use("/dev/api/v1/product", require("./routes/product"));
 app.use("/dev/api/v1/category", require("./routes/category"));
 app.use("/dev/api/v1/comment", require("./routes/comment"));
 app.use("/dev/api/v1/notification", require("./routes/notification"));
 app.use("/dev/api/v1/metadata", require("./routes/metadata"));
-
+app.use("/dev/api/v1/client", require("./routes/client"));
 //Catch 404 error
 app.use((req, _, next) => {
     const error = new Error(`Unsupported Route.- ${req.originalUrl}`);
