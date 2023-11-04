@@ -139,11 +139,7 @@ module.exports = {
     try {
       const subcategory = await SubCategory.find({}).sort({ rank: 1 }).populate("categoryId")
       // sort({ createdAt: -1 }).exec().
-      return res.status(200).json({
-        success: true,
-        message: `${subcategory.length} Sub Category found`,
-        response: subcategory,
-      });
+      return res.json(subcategory);
     } catch (error) {
       return res.status(500).json({
         success: false,

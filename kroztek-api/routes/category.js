@@ -31,10 +31,10 @@ router.get(
 );
 
 //GET subcategories
-router.get("/subs", passport.authenticate("jwt", { session: false }), getAllSubCategory);
+router.get("/subs", getAllSubCategory);
 
 //GET subcategories for category
-router.get("/subs/category", passport.authenticate("jwt", { session: false }), getSubCategoryForCategory);
+router.get("/subs/category", getSubCategoryForCategory);
 
 
 //UPDATE category
