@@ -22,6 +22,12 @@ function Products() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const scrollToAllStories = () => {
+    const element = document.getElementById("all-products");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -107,6 +113,7 @@ function Products() {
                       key={subIndex}
                       onClick={() => {
                         setSubcategoryId(subcategory?.subcategoryId);
+                        scrollToAllStories()
                       }}
                     >
                       {subcategory.subcategoryName}
