@@ -9,8 +9,6 @@ const sendMail = require("../utils/sendMail");
 //Models
 const User = require("../models/userModel");
 const Notification = require("../models/notification")
-const SavedPost = require("../models/saved")
-const Comment = require("../models/commentModel")
 
 //Config
 const keys = require("../config/keys");
@@ -334,11 +332,6 @@ module.exports = {
       // Delete user's notifications
       await Notification.deleteMany({ postedTo: ObjectId(userId) });
       await Notification.deleteMany({ createdBy: ObjectId(userId) });
-      // Delete user's saved posts
-      await SavedPost.deleteMany({ userId: ObjectId(userId) });
-
-      //delete all the comments made by user
-      await Comment.deleteMany({ createdBy: ObjectId(userId) })
 
       return res
         .status(200)

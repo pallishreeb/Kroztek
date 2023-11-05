@@ -1,4 +1,4 @@
-const Product = require('../models/product');
+const Product = require('../models/service');
 const { ObjectId } = require("mongodb");
 const Notification = require("../models/notification")
 const path = require("path")
@@ -254,7 +254,6 @@ exports.deleteProduct = async (req , res) => {
           });
       }
 }
-
 
 //filter products by category
 exports.filterByCategory= async (req,res)=>{

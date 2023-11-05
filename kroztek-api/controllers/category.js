@@ -23,7 +23,7 @@ module.exports = {
   },
   createCategory: async (req, res) => {
     try {
-      const { category,rank } = req.body;
+      const { category,rank,brand } = req.body;
       const isExist = await Category.findOne({ categoryName: category });
       if (isExist) {
         return res.status(403).json({
@@ -34,6 +34,7 @@ module.exports = {
       }
       const newCategory = await new Category({
         categoryName: category,
+        brand,
         rank
       });
       await newCategory.save();
@@ -77,7 +78,7 @@ module.exports = {
   updateCategory: async (req, res) => {
     console.log("body", req.body);
     try {
-      const { categoryId, categoryName ,rank} = req.body;
+      const { categoryId, categoryName,brand ,rank} = req.body;
     
       const category = await Category.findById({_id:ObjectId(categoryId)});
       if (!category) {
@@ -92,6 +93,9 @@ module.exports = {
       }
       if(rank){
         category.rank = rank
+      }
+      if (brand) {
+        category.brand = brand;
       }
       await category.save();
       return res.status(200).json({
@@ -304,6 +308,22 @@ module.exports = {
         success: true,
         message: `${subcategory.length} Sub Category found`,
         response: subcategory,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  },
+  getAllCategoryByBrand: async (req, res) => {
+    try {
+      const category = await Category.find({brand: req.query.brand}).sort({ rank: 1 }).exec();
+      return res.status(200).json({
+        success: true,
+        message: `${category.length} Category found`,
+        response: category,
       });
     } catch (error) {
       return res.status(500).json({

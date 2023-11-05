@@ -46,7 +46,7 @@ app.get("/", (_,res) =>{
 app.use("/dev/api/v1/user", require("./routes/user"));
 app.use("/dev/api/v1/product", require("./routes/product"));
 app.use("/dev/api/v1/category", require("./routes/category"));
-app.use("/dev/api/v1/comment", require("./routes/comment"));
+app.use("/dev/api/v1/service", require("./routes/service"));
 app.use("/dev/api/v1/notification", require("./routes/notification"));
 app.use("/dev/api/v1/metadata", require("./routes/metadata"));
 app.use("/dev/api/v1/client", require("./routes/client"));

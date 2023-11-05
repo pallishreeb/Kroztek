@@ -19,7 +19,7 @@ const {
   editProductStatus,
   getProductsForAdmin,
   filterBySubCategory
-} = require("../controllers/product");
+} = require("../controllers/service");
 
 const { getStatitics } = require("../controllers/dashboard");
 //isAdmin middleware
@@ -97,7 +97,6 @@ router.delete(
 
 //related products
 router.get("/related-post", relatedProducts);
-
 
 //filter by catergory products
 router.get("/filterByCategory", filterByCategory);

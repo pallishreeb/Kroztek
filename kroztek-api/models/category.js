@@ -5,6 +5,9 @@ const categorySchema = new Schema({
     categoryName:{
         type: String
     },
+    brand:{
+        type: String
+    },
     rank:{
         type: Number
     },
