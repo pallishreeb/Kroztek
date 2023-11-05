@@ -23,11 +23,8 @@ module.exports = {
   },
   createCategory: async (req, res) => {
     try {
-      console.log("reqbodt", req.body)
-      console.log("reqbodt", req.body.category)
       const { category,rank,brand } = req.body;
       const isExist = await Category.findOne({ categoryName: category });
-      console.log(isExist?.categoryName)
       if (isExist) {
         return res.status(403).json({
           success: false,
@@ -322,7 +319,7 @@ module.exports = {
   },
   getAllCategoryByBrand: async (req, res) => {
     try {
-      const category = await Category.find({brand: req.query.brand}).sort({ rank: 1 }).exec();
+      const category = await Category.find({brand: req.query.brand, isActive: true}).sort({ rank: 1 }).exec();
       return res.status(200).json({
         success: true,
         message: `${category.length} Category found`,
