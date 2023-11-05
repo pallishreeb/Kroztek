@@ -41,18 +41,16 @@ const MenuItem = ({ open, navigate }) => {
       icon: <InventoryIcon color="white" />,
       path: "/products",
     },
-
+    {
+      name: "Services",
+      icon: <InventoryIcon color="white" />,
+      path: "/services",
+    },
     {
       name: "Users",
       icon: <Groups2 color="white" />,
       path: "/users",
     },
-    {
-      name: "Client",
-      icon: <ListAlt color="white" />,
-      path: "/client",
-    },
-  
     {
       name: "Metadata",
       icon: <ListAlt color="white" />,

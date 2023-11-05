@@ -34,7 +34,7 @@ const HeaderCard = ({ statistics }) => {
     <div class="row ">
       {data.map((item) => (
         <div class="col-sm-6 col-md-3 col-lg-3 mt-3 " key={item.title}>
-          <div class="card" style={{ color: "#511", border: "1px solid #511" }}>
+          <div class="card" style={{ color: "#005BAB", border: "1px solid #005BAB" }}>
             <div
               class="card-body d-flex"
               style={{ justifyContent: "space-evenly", alignItems: "center" }}

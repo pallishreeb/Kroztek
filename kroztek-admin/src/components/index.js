@@ -1,6 +1,7 @@
 import Topbar from "./topbar/Topbar";
 import Nav from "./nav/nav"
 import ProductTable from "./tables/ProductTable"
+import ServiceTable from "./tables/ServiceTable"
 import HeaderCard from "./cards/HeaderCard"
 import UserTable from "./tables/UserList";
 export {
@@ -8,5 +9,7 @@ export {
     Nav,
     ProductTable,
     HeaderCard,
-    UserTable
+    UserTable,
+    ServiceTable
+    
 }

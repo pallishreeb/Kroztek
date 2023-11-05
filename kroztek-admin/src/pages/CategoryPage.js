@@ -35,6 +35,7 @@ function CategoryPage() {
 
   // State for category input field
   const [categoryName, setCategoryName] = useState("");
+  const [brand, setBrand] = useState("");
   const [rank, setRank] = useState(0);
 
   // State for currently editing category (if any)
@@ -46,7 +47,7 @@ function CategoryPage() {
     } else {
       getAllCategories(token);
     }
-  }, [isAuthenticated, token, categories?.length, categoryName]);
+  }, [isAuthenticated, token, categories?.length]);
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -59,16 +60,25 @@ function CategoryPage() {
       let form = {
         categoryId: categories[editingCategory]._id,
         categoryName,
+        brand,
         rank,
       };
       updateCategory(form, token);
       setCategoryName("");
+      setBrand("")
       setRank(0);
       setEditingCategory(null);
     } else {
+      let form = {
+        category: categoryName,
+        brand,
+        rank,
+      };
       // Add a new category to your context
-      createCategory({ categoryName, rank }, token);
+
+      createCategory(form, token);
       setCategoryName("");
+      setBrand("")
       setRank(0);
     }
   };
@@ -78,6 +88,7 @@ function CategoryPage() {
     setCategoryName(categories[index].categoryName);
     setEditingCategory(index);
     setRank(categories[index]?.rank || 0);
+    setBrand(categories[index]?.brand || "")
   };
 
   // Function to handle category deletion
@@ -110,6 +121,13 @@ function CategoryPage() {
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
         />
+           <TextField
+          label="Brand Name"
+          variant="outlined"
+          fullWidth
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
+        />
         <TextField
           label="Rank"
           variant="outlined"
@@ -134,7 +152,8 @@ function CategoryPage() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Rank</TableCell>
+            <TableCell>Rank</TableCell>
+             <TableCell>Brand</TableCell>           
               <TableCell>Category Name</TableCell>
               <TableCell>Edit</TableCell>
               <TableCell>Delete</TableCell>
@@ -149,6 +168,7 @@ function CategoryPage() {
                 {categories.map((category, index) => (
                   <TableRow key={category._id}>
                     <TableCell>{category?.rank || 0}</TableCell>
+                    <TableCell>{category?.brand || "NA"}</TableCell>
                     <TableCell>{category.categoryName}</TableCell>
                     <TableCell>
                       <Button

@@ -34,7 +34,7 @@ function DrawerAppBar(props) {
       onClick={handleDrawerToggle}
       sx={{
         textAlign: "center",
-        background: "#511",
+        background: "#005BAB",
         height: "100vh",
         color: "tan",
       }}
@@ -70,7 +70,7 @@ function DrawerAppBar(props) {
       <AppBar
         component="nav"
         sx={{
-          backgroundColor: "#511",
+          backgroundColor: "#005BAB",
           color: "tan",
         }}
       >

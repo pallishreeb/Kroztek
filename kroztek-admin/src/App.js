@@ -8,12 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
+import Services from "./pages/Services";
 import Login from "./pages/Login";
 import Users from "./pages/Users";
 import Metadata from "./pages/Metadata";
 import DisplayMetadata from "./pages/DisplayMetadata";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import AddService from "./pages/AddService";
+import EditService from "./pages/EditService";
 import ClientForm from "./pages/ClientForm";
 import { Nav, Topbar } from "./components/index";
 
@@ -60,7 +63,13 @@ function App() {
                   path="/edit-product/:productId"
                   element={<EditProduct />}
                 />
+                  <Route path="/add-service" element={<AddService />} />
+                <Route
+                  path="/edit-service/:productId"
+                  element={<EditService />}
+                />
                 <Route path="/products" element={<Products />} />
+                <Route path="/services" element={<Services />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />
@@ -83,6 +92,12 @@ function App() {
                   path="/edit-product/:productId"
                   element={<EditProduct />}
                 />
+                   <Route path="/add-service" element={<AddService />} />
+                <Route
+                  path="/edit-service/:productId"
+                  element={<EditService />}
+                />
+                <Route path="/services" element={<Services />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />
@@ -105,6 +120,12 @@ function App() {
                   path="/edit-product/:productId"
                   element={<EditProduct />}
                 />
+                   <Route path="/add-service" element={<AddService />} />
+                <Route
+                  path="/edit-service/:productId"
+                  element={<EditService />}
+                />
+                <Route path="/services" element={<Services />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/subcategories" element={<SubcategoryPage />} />

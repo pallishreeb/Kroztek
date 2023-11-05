@@ -23,7 +23,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  background: "#511",
+  background: "#005BAB",
   color: "tan",
 });
 const closedMixin = (theme) => ({
@@ -32,7 +32,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  background: "#511",
+  background: "#005BAB",
   color: "tan",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {

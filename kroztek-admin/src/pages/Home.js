@@ -36,11 +36,11 @@ const Home = () => {
         <div className="col-sm-12 col-md-12 col-lg-12 col-xs-7">
           <div
             style={{
-              borderBottom: "2px solid #511",
+              borderBottom: "2px solid #005BAB",
               padding: "0.9rem 1.3rem",
               fontSize: "2rem",
               fontWeight: "bolder",
-              color: "#511",
+              color: "#005BAB",
             }}
           >
             Dashboard

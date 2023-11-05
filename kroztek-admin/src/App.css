@@ -6,11 +6,11 @@ body {
 }
 .btn-b {
   background-color: inherit;
-  border: 1px solid #511;
-  color: #511;
+  border: 1px solid #005BAB;
+  color: #005BAB;
 }
 .btn:hover {
-  background-color: #511 !important;
+  background-color: #005BAB !important;
   color: white !important;
   border: none;
 }
@@ -24,7 +24,7 @@ body {
 .heading-login {
   opacity: 1;
   font-size: 2rem;
-  color: #511;
+  color: #005BAB;
   padding-bottom: 0.7rem;
 }
 .form {
@@ -55,7 +55,7 @@ body {
   padding-bottom: 5px;
   padding-left: 15px;
   padding-right: 10px;
-  color: #511;
+  color: #005BAB;
   line-height: 0;
   display: flex;
   gap: 5px;
@@ -79,7 +79,7 @@ body {
   padding: 5px 20px;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #511;
+  color: #005BAB;
   opacity: 0.9;
 }
 

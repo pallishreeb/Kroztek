@@ -14,12 +14,12 @@ export const getCategories = async (token) => {
     })
 }
 
-export const addCategory = async (token,name) => {
-let category = name;
+export const addCategory = async (token,form) => {
+
     const headers = {
         authorization: token
     }
-    return await axios.post(API_URL + '/category/add',{category} ,{
+    return await axios.post(API_URL + '/category/add',form ,{
         headers
     });
 }
