@@ -129,7 +129,11 @@ module.exports = {
         await category.save();
         await Product.updateMany(
           { category: ObjectId(categoryId) }, // Match products with the specified category
-          { $set: { isActive: false } } // Update isActive to false
+          { $set: { isActive: status } } // Update isActive to false
+        );
+        await SubCategory.updateMany(
+          { categoryId: ObjectId(categoryId) }, // Match products with the specified category
+          { $set: { isActive: status } } // Update isActive to false
         );
         res.json(category);
       } catch (error) {
@@ -139,11 +143,12 @@ module.exports = {
   },
   //subactegory
 
-  getAllSubCategory: async (_, res) => {
+  getAllSubCategory: async (req, res) => {
     try {
-      const categories = await Category.find().sort({ rank: 1 });
+      const {brand} = req.query
+      const categories = await Category.find({brand: { $regex: new RegExp(brand, 'i') }, isActive: true}).sort({ rank: 1 });
 
-      const subcategories = await SubCategory.find().sort({ rank: 1 });
+      const subcategories = await SubCategory.find({isActive:true}).sort({ rank: 1 });
   
       const result = categories.map((category) => {
         const subcategoryData = subcategories
@@ -316,21 +321,5 @@ module.exports = {
         error: error.message,
       });
     }
-  },
-  getAllCategoryByBrand: async (req, res) => {
-    try {
-      const category = await Category.find({brand: req.query.brand, isActive: true}).sort({ rank: 1 }).exec();
-      return res.status(200).json({
-        success: true,
-        message: `${category.length} Category found`,
-        response: category,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: "Internal Server Error",
-        error: error.message,
-      });
-    }
-  },
+  }
 };
