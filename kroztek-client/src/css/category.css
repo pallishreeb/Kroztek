@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    justify-content: center;
 }
 .products-list {
     display: flex;
@@ -39,7 +38,6 @@
         display: flex;
         justify-content: space-between;
         flex-direction: column;
-        justify-content: center;
     }
     .product-card {
         flex: 0 0 100%; /* One card per row for smaller screens */

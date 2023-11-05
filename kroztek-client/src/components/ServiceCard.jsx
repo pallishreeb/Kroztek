@@ -3,13 +3,11 @@
 import "../css/card.css";
 import { useNavigate } from "react-router-dom";
 import imgPlaceholder from "../img/no-image.jpg";
-
 import {IMG_URL}  from "../config"
 
-const BlogCard = ({ posts }) => {
+const ServiceCard = ({ posts }) => {
   const navigate = useNavigate();
-
-  const navigateToDetails = (id) => navigate(`/post/${id}`);
+  const navigateToDetails = (id) => navigate(`/service/${id}`);
 
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
@@ -55,4 +53,4 @@ const BlogCard = ({ posts }) => {
   );
 };
 
-export default BlogCard;
+export default ServiceCard;

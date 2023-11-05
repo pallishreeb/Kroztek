@@ -7,10 +7,11 @@ import {
   MenuOutlined,
   MailOutlined,
   CloseOutlined,
-  AppstoreOutlined,
-  ContainerOutlined
+
+  ThunderboltOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import CategoryDropdown from "./CategoryDropdown"
 
 const Navbar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -19,15 +20,15 @@ const Navbar = () => {
   const menusLoggedIn = [
 
     {
-      path: "/products",
-      icon: <AppstoreOutlined className="icon" />,
-      name: "Products",
+      path: "/services",
+      icon: <ThunderboltOutlined className="icon" />,
+      name: "Services",
     },
-  {
-      path: "/category",
-      icon: <ContainerOutlined className="icon" />,
-      name: "Categories",
-    },
+    // {
+    //   path: "/category",
+    //   icon: <ContainerOutlined className="icon" />,
+    //   name: "Categories",
+    // },
     {
       path: "/contact",
       icon: <MailOutlined className="icon" />,
@@ -114,7 +115,9 @@ const renderMenusInLargeScreen = () => {
             </div> */}
 
             <div className="menu-items">
-            
+            <div className="menu-item">
+                <CategoryDropdown />
+              </div>
               {renderMenusInLargeScreen()}
           
             </div>
@@ -124,7 +127,9 @@ const renderMenusInLargeScreen = () => {
       {menuVisible && isSmallScreen && (
         <nav className="mobile-menu">
           <div className="menu-items-vertical">
-      
+          <div className="menu-item">
+                <CategoryDropdown />
+              </div>
             {renderMenusInSmallScreen()}
           </div>
         </nav>

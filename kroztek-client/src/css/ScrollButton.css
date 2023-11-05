@@ -2,7 +2,7 @@
 #scroll-button {
     display: none;
     position: fixed;
-    bottom: 85px;
+    top: 680px;
     right: 85px;
     transition: opacity 0.3s;
   }
@@ -11,4 +11,12 @@
     display: block;
     opacity: 1;
   }
-  
+  @media (max-width: 590px) {
+    #scroll-button {
+      display: none;
+      position: fixed;
+      bottom: 224px;
+      right: 85px;
+      transition: opacity 0.3s;
+    }
+  }

@@ -3,18 +3,11 @@ import {
   PhoneOutlined,
   MailOutlined
 } from "@ant-design/icons";
-
-import Logo from "../img/logo-cg.png";
 import "../css/Header.css"; // Import the CSS file
 import LocationLink from "./LocationLink";
 function Header() {
   return (
     <div className="header-container">
-      {" "}
-      {/* Use the CSS class names */}
-      <div className="logo-container">
-        <img src={Logo} alt="Logo" className="logo-img" />
-      </div>
       <div className="small-screen-gst">
       <span className="contact-info">
           <p>

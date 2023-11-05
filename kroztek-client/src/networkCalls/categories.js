@@ -16,10 +16,10 @@ export const allCategories= async () => {
     }
 }
 
-export const allSubCategories= async () => {
+export const allSubCategories= async (brand) => {
     try {
         const res = await axios.get(
-            `${url}/category/subs`,
+            `${url}/category/subs?brand=${brand}`,
 
         );
         return res.data;

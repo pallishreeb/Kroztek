@@ -3,12 +3,11 @@ import React, { createContext, useReducer, useContext } from "react";
 // create the initial state for comments and replies
 const initialState = {
     posts: [],
-    savedPosts: [],
+    services: [],
     featuredPosts: [],
     duplicatesPosts: [],
     notifications: [],
     metadata: {},
-    subs: [],
     isSearching: false,
     isSaved: false
 };
@@ -19,11 +18,6 @@ export const PostContext = createContext(initialState);
 // create the reducer to update the state based on the action type
 const apiReducer = (state, action) => {
     switch (action.type) {
-        case "FETCH_SUBS":
-            return {
-                ...state,
-                subs: action.payload,
-            };
         case "FETCH_METADATA":
             return {
                 ...state,
@@ -33,22 +27,12 @@ const apiReducer = (state, action) => {
             return {
                 ...state,
                 posts: action.payload,
-                duplicatesPosts: action.payload
             };
-        case "ADD_TO_SAVE_POST":
-            return {
-                ...state,
-                savedPosts: [...state.savedPosts, action.payload],
-            };
-        case "REMOVE_FROM_SAVE_POST":
-            return {
-                ...state,
-                savedPosts: state.savedPosts.filter(
-                    (post) => post._id !== action.payload
-                ),
-            };
-
-
+            case "FETCH_SERVICES":
+                return {
+                    ...state,
+                    services: action.payload,
+                };
         case "FETCH_FEATURED_POSTS":
             return {
                 ...state,
@@ -69,7 +53,7 @@ const apiReducer = (state, action) => {
             return {
                 ...state,
                 isSearching: false,
-                posts: state.duplicatesPosts,
+                posts: [],
             };
         case "CLEAR_FILTERS_PARTLY":
             return {

@@ -7,7 +7,7 @@ function ScrollButton() {
   useEffect(() => {
     // Function to toggle the button's visibility
     const toggleButtonVisibility = () => {
-      if (window.scrollY > 200) {
+      if (window.scrollY > 100) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -37,7 +37,7 @@ function ScrollButton() {
       className={isVisible ? "visible" : ""}
       onClick={scrollToSection}
     >
-         <i className="fa fa-arrow-up" style={{ fontSize: "30px", color: "#1890ff" }} />
+         <i className="fa fa-arrow-up bg-slate-200" style={{ fontSize: "35px", color: "#1890ff"  }} />
     </button>
   );
 }

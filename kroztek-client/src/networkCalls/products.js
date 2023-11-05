@@ -12,7 +12,7 @@ export const singlePost = async (id) => {
     );
   } catch (error) {
     console.log(error)
-    toast.error("Error in Fetching Post")
+    toast.error("Error in Fetching Products")
     return;
   }
 }
@@ -25,7 +25,7 @@ export const AllPosts = async () => {
     return res.data;
   } catch (error) {
     console.log(error)
-    toast.error("Error in Fetching Posts")
+    toast.error("Error in Fetching Products")
     return;
   }
 }
@@ -36,7 +36,7 @@ export const mostViewedPost = async () => {
     );
   } catch (error) {
     console.log(error)
-    toast.error("Error in Fetching Most Viwed Post Posts")
+    toast.error("Error in Fetching Most Viwed Products")
   }
 }
 
@@ -47,7 +47,7 @@ export const relatedPost = async (id) => {
     );
   } catch (error) {
     console.log(error)
-    toast.error("Error in Fetching Related Post")
+    toast.error("Error in Fetching Related Products")
     return;
   }
 }
@@ -64,7 +64,7 @@ export const filterByCategory = async (id, authtoken) => {
     );
   } catch (error) {
     console.log(error)
-    toast.error("Error in Filter Post By Category")
+    toast.error("Error in Filter Product By Category")
     return;
   }
 }
@@ -76,61 +76,45 @@ export const filterBySubCategory = async (id) => {
     return res.data;
   } catch (error) {
     console.log(error)
-    toast.error("Error in Fetching Posts")
+    toast.error("Error in Fetching Products")
     return;
   }
 }
-export const savePost = async (id, authtoken) => {
+
+export const AllServices = async () => {
   try {
     const res = await axios.get(
-      `${url}/product/save-post?postId=${id}`,
-      {
-        headers: {
-          Authorization: authtoken,
-        },
-      }
-    );
-    toast.success("Product Saved..")
-    return res;
+      `${url}/service/allPost`,
+       );
+    // console.table(res.data.response);
+    return res.data;
   } catch (error) {
     console.log(error)
-    toast.error(error.response.data.message)
+    toast.error("Error in Fetching Services")
     return;
   }
 }
 
-export const savedPost = async (authtoken) => {
+export const singleService = async (id) => {
   try {
     return await axios.get(
-      `${url}/product/savedpost`,
-      {
-        headers: {
-          Authorization: authtoken,
-        },
-      }
+      `${url}/service/singlepost?productId=${id}`,
     );
   } catch (error) {
     console.log(error)
-    toast.error(error.response.data.message)
+    toast.error("Error in Fetching Service")
     return;
   }
 }
 
-export const removeSavedPost = async (authtoken, savedPostId) => {
+export const relatedServices = async (id) => {
   try {
-    const res = await axios.delete(
-      `${url}/product/remove-saved-post?savedPostId=${savedPostId}`,
-      {
-        headers: {
-          Authorization: authtoken,
-        },
-      }
+    return await axios.get(
+      `${url}/service/related-post?productId=${id}`,
     );
-    toast.success("Product Removed From SavedPost")
-    return res;
   } catch (error) {
     console.log(error)
-    toast.error(error.response.data.message)
+    toast.error("Error in Fetching Related Services")
     return;
   }
 }

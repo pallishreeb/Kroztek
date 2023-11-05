@@ -1,13 +1,13 @@
 /** @format */
 import React, { useState, useEffect, useContext } from "react";
 import "../css/post.css";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import {useParams, useLocation, useNavigate } from "react-router-dom";
 import authContext from "../context";
-import { singlePost, relatedPost } from "../networkCalls/post";
+import { singlePost, relatedPost } from "../networkCalls/products";
 import { Carousel, Skeleton } from "antd";
 // import { CalendarOutlined, EyeOutlined } from "@ant-design/icons";
 import { Modal, Image } from "antd";
-import BlogCard from "../components/BlogCard";
+import ServiceCard from "../components/ServiceCard";
 import { IMG_URL } from "../config";
 const contentStyle = {
   color: "#fff",
@@ -18,7 +18,7 @@ const contentStyle = {
   position: "relative",
 };
 
-function Post() {
+function ProductDetails() {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -174,34 +174,6 @@ function Post() {
             <div dangerouslySetInnerHTML={{ __html: post?.description }}></div>
           </Skeleton>
           {/* ags like category and subcategory */}
-          <Skeleton active loading={loading} paragraph={{ rows: 1 }}>
-            <div className="after-post-tags">
-              <ul
-                className="tags"
-                style={{
-                  display: "flex",
-                  gap: "15px",
-                  cursor: "pointer",
-                  textDecoration: "none",
-                }}
-              >
-                <Link
-                  style={{ textDecoration: "none" }}
-                  to={`/post/category/${post?.category?._id}/${post?.category?.categoryName}`}
-                >
-                  <li>{post?.category?.categoryName}</li>
-                </Link>
-                {post?.subcategory && (
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={`/post/subcategory/${post?.subcategory?._id}/${post?.subcategory?.subcategoryName}`}
-                  >
-                    <li>{post?.subcategory?.subcategoryName}</li>
-                  </Link>
-                )}
-              </ul>
-            </div>
-          </Skeleton>
           {/*  Documents preview */}
           {post?.documents?.length > 0 && (
             <div>
@@ -228,12 +200,12 @@ function Post() {
         <Skeleton active loading={loading} paragraph={{ rows: 3 }}>
           <div classNameName="related-content">
             <div className="container">
-              <h3 className="text-center" style={{marginTop:"10px"}}>Related Products</h3>
 
-              {relatedPosts.length > 0 ? (
-                <BlogCard posts={relatedPosts} token={token} />
-              ) : (
-                <p className="text-center">No Related Post Found</p>
+              {relatedPosts?.length > 0 && (
+               <>
+               <h3 className="text-center" style={{marginTop:"10px"}}>Related Products</h3>
+                 <ServiceCard posts={relatedPosts} token={token} />
+               </>
               )}
             </div>
           </div>
@@ -243,4 +215,4 @@ function Post() {
   );
 }
 
-export default Post;
+export default ProductDetails;
