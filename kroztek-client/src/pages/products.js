@@ -107,7 +107,6 @@ function Products() {
                       key={subIndex}
                       onClick={() => {
                         setSubcategoryId(subcategory?.subcategoryId);
-                        toggleMenu()
                       }}
                     >
                       {subcategory.subcategoryName}
