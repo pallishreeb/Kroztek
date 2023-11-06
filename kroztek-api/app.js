@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path')
 const app = express();
 const config = require("./config/config")
 const cors = require('cors')
@@ -21,7 +22,7 @@ app.use(hpp());  // HTTP parameter pollution (HPP)
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-
+app.use(express.static('build')); 
 //No clickjacking protection configured
 app.use(helmet.frameguard());
 
@@ -39,9 +40,17 @@ require("./config/passport")(passport);
 //connect to DB
 connectDb()
 app.use('/uploads', express.static('uploads'));
-app.get("/", (_,res) =>{
-    res.send("Welcome to Kroztek integrated solution!")
-})
+
+// Handle React routing (return React app for all other routes)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+  
+
+// app.get("/", (_,res) =>{
+//     res.send("Welcome to Kroztek integrated solution!")
+// })
+
 //api routes
 app.use("/dev/api/v1/user", require("./routes/user"));
 app.use("/dev/api/v1/product", require("./routes/product"));
