@@ -30,28 +30,6 @@ function AppFooter() {
 		<Footer style={{ backgroundColor: "#005BAB", color: "#fff" }}>
 			<div className="footer-container">
 				<Row gutter={[16, 16]} justify="center" align="middle">
-					{/* Quick Links */}
-					{/* <Col className='links' xs={24} sm={24} md={8} lg={8}>
-						<h3>Quick Links</h3>
-						<ul>
-							<li>
-
-								About Us
-
-							</li>
-							<li>
-
-								FAQs
-
-							</li>
-							<li>
-
-								Terms and Conditions
-
-							</li>
-						</ul>
-					</Col> */}
-
 					{/* Direct Contact */}
 					<Col xs={24} sm={24} md={8} lg={7}>
 						<h3>Direct Contact</h3>

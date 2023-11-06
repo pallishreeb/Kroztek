@@ -7,7 +7,6 @@ import {
   MenuOutlined,
   MailOutlined,
   CloseOutlined,
-
   ThunderboltOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -24,11 +23,6 @@ const Navbar = () => {
       icon: <ThunderboltOutlined className="icon" />,
       name: "Services",
     },
-    // {
-    //   path: "/category",
-    //   icon: <ContainerOutlined className="icon" />,
-    //   name: "Categories",
-    // },
     {
       path: "/contact",
       icon: <MailOutlined className="icon" />,

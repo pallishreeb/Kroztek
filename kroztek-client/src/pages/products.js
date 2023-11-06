@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { allSubCategories } from "../networkCalls/categories";
 import { filterBySubCategory } from "../networkCalls/products";
 import { usePostApi } from "../context/PostProvider";
 import "../css/category.css";
-import imgPlaceholder from "../img/no-image.jpg";
 import BusinessDescription from "../components/BusinessDescription"
-import { IMG_URL } from "../config";
+import ProductCard from "../components/ProductCard";
 
 function Products() {
-  const navigate = useNavigate();
   const { brand } = useParams();
   const { state, dispatch } = usePostApi();
   const { posts } = state;
@@ -55,21 +53,6 @@ function Products() {
       });
     }
   }, [subcategoryId, dispatch]);
-
-  const navigateToDetails = (id) => navigate(`/product/${id}`);
-
-  function truncateText(text, maxLength) {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength - 3) + "...";
-    }
-    return text;
-  }
-
-  function stripHtmlTags(htmlString) {
-    const tempElement = document.createElement("div");
-    tempElement.innerHTML = htmlString;
-    return tempElement.textContent || tempElement.innerText || "";
-  }
 
 
   return (
@@ -135,33 +118,7 @@ function Products() {
       <div className="md:flex-1 p-4 md:pl-8" id="all-products">
        
             {posts?.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {posts?.map((product, index) => (
-                  <div
-                    key={index}
-                    className="border p-4 cursor-pointer"
-                    onClick={() => navigateToDetails(product?._id)}
-                  >
-                    <div className="mb-2">
-                      <img
-                        src={
-                          product?.images[0]
-                            ? `${IMG_URL}/images/${product?.images[0]}`
-                            : imgPlaceholder
-                        }
-                        alt={product.name}
-                        className="w-full h-auto"
-                      />
-                    </div>
-                    <div className="text-lg font-bold">
-                      {truncateText(product?.name.trim(), 30)}
-                    </div>
-                    <p className="text-gray-600">
-                      {truncateText(stripHtmlTags(product?.description), 180)}
-                    </p>
-                  </div>
-                ))}
-              </div>
+           <ProductCard products={posts}/>
             ) : (
               <h2 className="text-center">
                 {productloading && <h2 className="text-center"> Loading Products</h2>}
@@ -170,6 +127,7 @@ function Products() {
             )}
          
       </div>
+
     </div>
   );
 }

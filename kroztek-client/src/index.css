@@ -21,84 +21,11 @@ ul {
 h2{
   color: #005BAB;
 }
-.replies {
-  height: 100%;
-  max-height: 300px;
-  overflow-y: scroll;
-  line-height: 0;
-  padding: 10px 25px;
-  background-color: whitesmoke;
-  color: #001529;
-}
-
-.single-reply {
-  padding: 5px !important;
-  line-height: 1;
-  gap: 0;
-  color: #001529 !important;
-}
-.single-reply p {
-  line-height: 1;
-  margin-top: 0px;
-  padding-top: 0px;
-  font-size: 1.1rem;
-}
-.single-reply-meta {
-  display: flex;
-  align-items: center;
-}
-.single-reply button {
-  color: #001529 !important;
-}
-
-.single-reply button:hover {
-  color: blue !important;
-}
-
-.show-comments button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  outline: 0 !important;
-  margin-left: 15px;
-  padding: 0 20px;
-  margin-bottom: 10px;
-  font-size: 0.9rem;
-  color: #001529;
-}
-.show-comments button:hover {
-  color: blue !important;
-  border-radius: 30px;
-}
-.show-comments .comment-text {
-  margin-top: 15px;
-  margin-left: 35px;
-  line-height: 1;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-}
-.show-comments {
-  border: 0.5px solid grey;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  background-color: whitesmoke;
-  color: #001529;
-}
-
-.show-comments .comment-text p {
-  font-size: 1.1rem;
-  /* color: #001529; */
-}
-
-.commentedBy {
-  margin: 5px 35px;
-  color: blue;
-}
 
 .btn-link {
   border: none;
-  background-color: #001529;
-  font-size: 1rem;
+  background-color: #005BAB;
+  font-size: 0.9rem;
   color: #fff;
   margin-top: 15px;
   margin-left: 10px;

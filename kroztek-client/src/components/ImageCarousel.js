@@ -1,5 +1,5 @@
 
-import React, { useState ,useEffect} from "react";
+import React, { useState ,useEffect,useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/ImageCarousel.css"; // Import your Tailwind CSS styles
 import hero from "../img/Slider.png";
@@ -14,9 +14,9 @@ const ImageCarousel = () => {
 
   const navigateToDetails = () => navigate(`/products`);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setCurrentImage((currentImage + 1) % images.length);
-  };
+  },[currentImage, images.length]);
 
   const prevImage = () => {
     setCurrentImage((currentImage - 1 + images.length) % images.length);
