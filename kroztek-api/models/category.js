@@ -15,6 +15,9 @@ const categorySchema = new Schema({
         type: Boolean,
         default: true
     },
+    type:{
+        type: String
+    },
     createdAt:{
         type: Date,
         default: Date.now 

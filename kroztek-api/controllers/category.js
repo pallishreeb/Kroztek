@@ -23,7 +23,7 @@ module.exports = {
   },
   createCategory: async (req, res) => {
     try {
-      const { category,rank,brand } = req.body;
+      const { category,rank,brand,type } = req.body;
       const isExist = await Category.findOne({ categoryName: category });
       if (isExist) {
         return res.status(403).json({
@@ -35,7 +35,8 @@ module.exports = {
       const newCategory = await new Category({
         categoryName: category,
         brand,
-        rank
+        rank,
+        type
       });
       await newCategory.save();
       return res.status(200).json({
@@ -78,7 +79,7 @@ module.exports = {
   updateCategory: async (req, res) => {
     console.log("body", req.body);
     try {
-      const { categoryId, categoryName,brand ,rank} = req.body;
+      const { categoryId, categoryName,brand ,rank,type} = req.body;
     
       const category = await Category.findById({_id:ObjectId(categoryId)});
       if (!category) {
@@ -96,6 +97,9 @@ module.exports = {
       }
       if (brand) {
         category.brand = brand;
+      }
+      if(type){
+        category.type = type
       }
       await category.save();
       return res.status(200).json({
@@ -145,8 +149,8 @@ module.exports = {
 
   getAllSubCategory: async (req, res) => {
     try {
-      const {brand} = req.query
-      const categories = await Category.find({brand: { $regex: new RegExp(brand, 'i') }, isActive: true}).sort({ rank: 1 });
+      const {brand,type} = req.query
+      const categories = await Category.find({brand: { $regex: new RegExp(brand, 'i') },type: type, isActive: true}).sort({ rank: 1 });
 
       const subcategories = await SubCategory.find({isActive:true}).sort({ rank: 1 });
   
@@ -296,7 +300,7 @@ module.exports = {
         await subcategory.save();
         await Product.updateMany(
           { subcategory: ObjectId(subId) }, // Match products with the specified category
-          { $set: { isActive: false } } // Update isActive to false
+          { $set: { isActive: status } } // Update isActive to false
         );
         res.json(subcategory);
       } catch (error) {
