@@ -150,8 +150,14 @@ module.exports = {
   getAllSubCategory: async (req, res) => {
     try {
       const {brand,type} = req.query
-      const categories = await Category.find({brand: { $regex: new RegExp(brand, 'i') },type: type, isActive: true}).sort({ rank: 1 });
+      let categories = null;
+      if(brand){
+        categories = await Category.find({brand: { $regex: new RegExp(brand, 'i') },type: type, isActive: true}).sort({ rank: 1 });
+      }
 
+      categories = await Category.find({type: type, isActive: true}).sort({ rank: 1 });
+
+     
       const subcategories = await SubCategory.find({isActive:true}).sort({ rank: 1 });
   
       const result = categories.map((category) => {
