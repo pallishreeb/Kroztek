@@ -6,6 +6,7 @@ import { usePostApi } from "../context/PostProvider";
 import "../css/category.css";
 import BusinessDescription from "../components/BusinessDescription"
 import ProductCard from "../components/ProductCard";
+import Carousel from "../components/Carousel";
 
 function Products() {
   const { brand } = useParams();
@@ -29,7 +30,7 @@ function Products() {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      allSubCategories(brand)
+      allSubCategories(brand,"Product")
         .then((res) => {
           setCategoriesData(res);
           setLoading(false);
@@ -56,6 +57,11 @@ function Products() {
 
 
   return (
+    <>
+       <section>
+          <Carousel/>
+        </section>
+
     <div className="min-h-screen category-container">
 
       <div className="md:w-1/4 p-4 bg-gray-100 border-r">
@@ -129,6 +135,7 @@ function Products() {
       </div>
 
     </div>
+    </>
   );
 }
 

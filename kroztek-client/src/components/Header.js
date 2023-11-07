@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  PhoneOutlined,
-  MailOutlined
-} from "@ant-design/icons";
-import "../css/Header.css"; // Import the CSS file
+import "../css/Header.css"; 
 import LocationLink from "./LocationLink";
 function Header() {
   return (
@@ -26,14 +22,14 @@ function Header() {
         </span>
         <span className="contact-info">
           <p>
-            <b className="heading">CALL US   <PhoneOutlined /></b>
+            <b className="heading">CALL US  <i className="fa fa-phone"></i></b>
             <br />
             <a href="tel:+918637214899"> +918637214899</a>
           </p>
         </span>
         <span className="contact-info">
           <p>
-            <b className="heading">EMAIL US{" "} <MailOutlined />  </b> <br />
+            <b className="heading">EMAIL US{" "}  <i className="fa fa-envelope"></i>   </b> <br />
             <a
               href={`mailto:${"kroztekintegratedsolution@gmail.com"}?subject=Email%20Subject&body=Hello%2C%20I%20want%20to%20email`}
             >
@@ -52,7 +48,7 @@ function Header() {
               {" "}
               CALL US{" "}
               <a href="tel:+918637214899">
-                <PhoneOutlined />
+              <i className="fa fa-phone"></i>
               </a>
             </b>{" "}
           </p>
@@ -66,7 +62,7 @@ function Header() {
               <a
                 href={`mailto:${"kroztekintegratedsolution@gmail.com"}?subject=Email%20Subject&body=Hello%2C%20I%20want%20to%20email`}
               >{" "}
-                <MailOutlined />
+               <i className="fa fa-envelope"></i> 
               </a>
             </b>
           </p>

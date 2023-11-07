@@ -118,3 +118,16 @@ export const relatedServices = async (id) => {
     return;
   }
 }
+
+export const filterServiceBySubCategory = async (id) => {
+  try {
+    const res = await axios.get(
+      `${url}/service/filterBySubCategory?subcategoryId=${id}`,
+       );
+    return res.data;
+  } catch (error) {
+    console.log(error)
+    toast.error("Error in Fetching Products")
+    return;
+  }
+}

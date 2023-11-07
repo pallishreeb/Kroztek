@@ -36,7 +36,7 @@ const ServiceCard = ({ posts }) => {
                     : imgPlaceholder
                 }
                 alt="Product Thumbnail"
-                className="object-cover w-full h-full"
+                className=" w-full h-full"
               />
             </div>
             <div className="mt-4">

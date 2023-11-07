@@ -12,7 +12,7 @@ const ImageCarousel = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const navigate = useNavigate();
 
-  const navigateToDetails = () => navigate(`/products`);
+  const navigateToDetails = () => navigate(`/products/CG`);
 
   const nextImage = useCallback(() => {
     setCurrentImage((currentImage + 1) % images.length);

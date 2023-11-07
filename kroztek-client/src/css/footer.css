@@ -28,3 +28,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.bg-blue-900{
+  background-color: #005BAB;
+}
