@@ -5,12 +5,11 @@ import "../css/Navbar.css";
 import React, { useState, useEffect } from "react";
 import {
   MenuOutlined,
-  MailOutlined,
   CloseOutlined,
-  ThunderboltOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import CategoryDropdown from "./CategoryDropdown"
+import FormDropdown from "./FormDropdown";
 
 const Navbar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -20,14 +19,8 @@ const Navbar = () => {
 
     {
       path: "/services",
-      icon: <ThunderboltOutlined className="icon" />,
       name: "Services",
-    },
-    {
-      path: "/contact",
-      icon: <MailOutlined className="icon" />,
-      name: "Contact",
-    },
+    }
   ];
 const renderMenusInLargeScreen = () => {
  return menusLoggedIn.map((item) => (
@@ -111,9 +104,11 @@ const renderMenusInLargeScreen = () => {
             <div className="menu-items">
             <div className="menu-item">
                 <CategoryDropdown />
-              </div>
+            </div>
               {renderMenusInLargeScreen()}
-          
+              <div className="menu-item">
+                <FormDropdown />
+            </div>
             </div>
           </nav>
         )}
@@ -125,6 +120,9 @@ const renderMenusInLargeScreen = () => {
                 <CategoryDropdown />
               </div>
             {renderMenusInSmallScreen()}
+            <div className="menu-item">
+                <FormDropdown />
+            </div>
           </div>
         </nav>
       )}

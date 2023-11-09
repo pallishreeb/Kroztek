@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import {
-    AppstoreOutlined
-  } from "@ant-design/icons";
-
-  import { usePostApi } from "../context/PostProvider";
+import { usePostApi } from "../context/PostProvider";
 const DropdownMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { dispatch } = usePostApi();
@@ -27,7 +23,7 @@ const DropdownMenu = () => {
   return (
     <div className="relative inline-block text-left" onMouseEnter={handleMouseEnter} >
       <span onClick={toggleMenu} className="cursor-pointer ml-2">
-      <AppstoreOutlined className="icon" /> Products
+      Products
       </span>
       {isOpen && (
         <div className="z-10 origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" onMouseLeave={handleMouseLeave}>

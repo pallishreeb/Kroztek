@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/services" element={<Services />} />
-        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/requirement/:formType" element={<Contact />} />
         <Route exact path="/products/:brand" element={<Products />} />
         <Route exact path="/product/:id" element={<ProductDetails />} />
         <Route exact path="/service/:id" element={<ServiceDetails />} />
