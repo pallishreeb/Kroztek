@@ -4,20 +4,27 @@ const passport = require("passport");
 
 
 const {
-    getClients, createClient,editClient,getSingleClient
+    getClients, createClient,editClient,getSingleClient,sendRequirementForm
 } = require("../controllers/client");
 
 //isAdmin
 const isAdmin = require("../middleware/auth")
 
-//CREATE Metadata
+
+//send  form requirement to mail
+router.post(
+    "/requirement",
+   sendRequirementForm
+);
+
+
+//save Client record
 router.post(
     "/add",
     passport.authenticate("jwt", { session: false }),
     isAdmin,
     createClient
 );
-
 
 //GET metadata
 router.get("/", getClients);
@@ -32,7 +39,7 @@ router.put(
     editClient
 );
 
-//DELETE metadata
+
 
 
 

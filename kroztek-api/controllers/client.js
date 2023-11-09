@@ -1,6 +1,6 @@
 //import client from models
 const ClientModel = require("../models/client");
-
+const sendMail = require("../utils/sendMail");
 //create client record with all data from request body
 const createClient = (req, res) => {
   const newClient = req.body;
@@ -62,10 +62,73 @@ const getSingleClient = async (req, res) => {
   }
 };
 
+//send form requirements to mail
+const sendRequirementForm = async(req,res) =>{
+  try {
+    const formType = req.body.formType;
+    const formData = req.body.formData;
+    const userData = req.body.userData;
+    
+    // Form HTML body
+    const userTable = `
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <th>User Details</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>${userData.firstName} ${userData.lastName}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>${userData.email}</td>
+        </tr>
+        <tr>
+          <td>Phone Number</td>
+          <td>${userData.phoneNumber}</td>
+        </tr>
+      </table>
+    
+    `;
+    
+    const requirementsTable = `
+      <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        ${Object.entries(formData)
+          .map(([key, value]) => `<tr><td>${key}</td><td>${value}</td></tr>`)
+          .join("")}
+      </table>
+    `;
+    
+    const htmlBody = `
+      <p>You have received a new Requirement for ${formType}. Here are the details:</p>
+      ${userTable}
+      <br/>
+      <br/>
+      ${requirementsTable}
+    `;
+    
+
+    // Send email
+    sendMail("kroztekintegratedsolution@gmail.com", "New Requirement From Kroztek", htmlBody);
+
+    res.status(200).json({ success: true, message: "Form submitted successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+
 //exports
 module.exports = {
     createClient,
     getClients,
     editClient,
-    getSingleClient
+    getSingleClient,
+    sendRequirementForm
     }
