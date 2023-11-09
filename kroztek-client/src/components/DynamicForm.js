@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import formFields from '../formFields';
-// import {API_URL} from "../config"
-const API_URL = 'http://localhost:8000/dev/api/v1'
+import {API_URL} from "../config"
+
 const AlertBox = ({ message, isSuccess, onClose }) => {
   const alertBgColor = isSuccess ? 'bg-green-500' : 'bg-red-500';
 
