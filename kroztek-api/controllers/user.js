@@ -1,9 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
-
-
-//SEND GRID
 const sendMail = require("../utils/sendMail");
 
 //Models
@@ -384,6 +381,35 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+  updatePermission : async (req, res) => {
+    const { userId, permission } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const hasPermission = user.permissions.includes(permission);
+
+        if (hasPermission) {
+            // Remove the permission if it's already present
+            await User.findByIdAndUpdate(userId, { $pull: { permissions: permission } });
+        } else {
+            // Add the permission if it's not present
+            await User.findByIdAndUpdate(userId, { $addToSet: { permissions: permission } });
+        }
+
+        // Fetch the updated user
+        const updatedUser = await User.findById(userId);
+
+        res.status(200).json({ message: 'Permission updated successfully', user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
     }
   }
 };

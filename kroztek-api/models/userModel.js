@@ -42,13 +42,6 @@ const userSchema = new Schema({
         type: Number,
         length: 10
     },
-    gender: {
-        type: String,
-        enum: ["Male", "Female", "Other"]
-    },
-    dob: {
-        type: Date,
-    },
     notificationCount: {
         type: Number,
         default: 0
@@ -60,6 +53,10 @@ const userSchema = new Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    permissions: {
+        type: [String],
+        default: [],    
     },
     createdAt: {
         type: Date,
