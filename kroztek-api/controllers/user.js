@@ -341,30 +341,9 @@ module.exports = {
       });
     }
   },
-  deactiveOrBlockUser: async (req, res) => {
-    try {
-      const userId = req.query.userId;
-      const user = await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      // Set the user's 'active' field to false
-      user.active = false;
-
-      // Save the updated user
-      await user.save();
-
-      res.status(200).json({ message: 'User deactivated successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
   activeOrUnblockUser: async (req, res) => {
     try {
-      const userId = req.query.userId;
+      const {userId, status }= req.query.userId;
       const user = await User.findById(userId);
 
       if (!user) {
@@ -372,7 +351,7 @@ module.exports = {
       }
 
       // Set the user's 'active' field to true
-      user.active = true;
+      user.active = status;
 
       // Save the updated user
       await user.save();
@@ -384,7 +363,7 @@ module.exports = {
     }
   },
   updatePermission : async (req, res) => {
-    const { userId, permission } = req.body;
+    const { userId, permission, status } = req.body;
 
     try {
         const user = await User.findById(userId);
@@ -397,10 +376,10 @@ module.exports = {
 
         if (hasPermission) {
             // Remove the permission if it's already present
-            await User.findByIdAndUpdate(userId, { $pull: { permissions: permission } });
+            await User.findByIdAndUpdate(userId, { $pull: { permissions: permission },$set: { active: status } });
         } else {
             // Add the permission if it's not present
-            await User.findByIdAndUpdate(userId, { $addToSet: { permissions: permission } });
+            await User.findByIdAndUpdate(userId, { $addToSet: { permissions: permission }, $set: { active: status } });
         }
 
         // Fetch the updated user
@@ -411,5 +390,36 @@ module.exports = {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
-  }
+  },
+  getUserToEditPermission: async (req, res) => {
+    try {
+      const { id } = req.query;
+      const user = await User.findById(ObjectId(id));
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found", response: {} });
+      }
+
+      let userRes = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isEmailVerified: user.isEmailVerified,
+        phoneNumber: user.phoneNumber,
+        notificationCount: user.notificationCount,
+        permissions: user.permissions,
+        active : user.active
+      }
+      return res
+        .status(200)
+        .json({ success: true, message: "User found", response: userRes });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  },
 };
