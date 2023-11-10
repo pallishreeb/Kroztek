@@ -34,13 +34,13 @@ router.delete('/delete', passport.authenticate('jwt', { session: false }), delet
 router.get('/allusers', passport.authenticate('jwt', { session: false }), allUser)
 
 //decativate user 
-router.put('/get-user', passport.authenticate('jwt', { session: false }), getUserToEditPermission)
+router.get('/get-user', getUserToEditPermission)
 
 //ativate user 
-router.put('/activate-user', passport.authenticate('jwt', { session: false }), activeOrUnblockUser)
+router.put('/activate-user',  activeOrUnblockUser)
 
 //update user permission
-router.put('/update-permission', passport.authenticate('jwt', { session: false }), updatePermission)
+router.put('/update-permission', updatePermission)
 
 
 module.exports = router
