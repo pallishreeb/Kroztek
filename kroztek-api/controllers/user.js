@@ -245,7 +245,8 @@ module.exports = {
         phoneNumber: user.phoneNumber,
         notificationCount: user.notificationCount,
         permissions: user.permissions,
-        active : user.active
+        active : user.active,
+        isAdmin : user.isAdmin
       }
       return res
         .status(200)
