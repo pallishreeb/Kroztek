@@ -4,7 +4,7 @@ const passport = require('passport')
 
 const { userLogin, userRegister, sendOTP,
     updatePassword, verifyEmail,
-    getUser, updateUser, allUser, deleteUser, activeOrUnblockUser, updatePermission, getUserToEditPermission } = require('../controllers/user')
+    getUser, updateUser, allUser, deleteUser, updatePermission, getUserToEditPermission } = require('../controllers/user')
 
 //USER REGISTER
 router.post('/register', userRegister)
@@ -34,13 +34,10 @@ router.delete('/delete', passport.authenticate('jwt', { session: false }), delet
 router.get('/allusers', passport.authenticate('jwt', { session: false }), allUser)
 
 //decativate user 
-router.get('/get-user', getUserToEditPermission)
-
-//ativate user 
-router.put('/activate-user',  activeOrUnblockUser)
+router.get('/get-user',passport.authenticate('jwt', { session: false }), getUserToEditPermission)
 
 //update user permission
-router.put('/update-permission', updatePermission)
+router.put('/update-permission', passport.authenticate('jwt', { session: false }),updatePermission)
 
 
 module.exports = router

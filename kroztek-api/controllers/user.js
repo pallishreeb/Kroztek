@@ -341,56 +341,50 @@ module.exports = {
       });
     }
   },
-  activeOrUnblockUser: async (req, res) => {
+  updatePermission: async (req, res) => {
+    const { userId, permission, status } = req.body;
+  
     try {
-      const {userId, status }= req.query.userId;
       const user = await User.findById(userId);
-
+  
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-
-      // Set the user's 'active' field to true
-      user.active = status;
-
-      // Save the updated user
-      await user.save();
-
-      res.status(200).json({ message: 'User activated successfully' });
+      if (Array.isArray(permission) && permission.length > 0) {
+        // Check if any of the permissions is already present
+        const existingPermissions = user.permissions || [];
+        const permissionsToAdd = permission.filter(
+          (newPermission) => !existingPermissions.includes(newPermission)
+        );
+      
+        if (permissionsToAdd.length > 0) {
+          // Add the new permissions that are not already present
+          await User.findByIdAndUpdate(userId, { $addToSet: { permissions: { $each: permissionsToAdd } } });
+        }
+      
+        // Remove any permissions that are in the existing array but not in the new array
+        const permissionsToRemove = existingPermissions.filter(
+          (existingPermission) => !permission.includes(existingPermission)
+        );
+      
+        if (permissionsToRemove.length > 0) {
+          // Remove the permissions that are not in the new array
+          await User.findByIdAndUpdate(userId, { $pull: { permissions: { $in: permissionsToRemove } } });
+        }
+      }
+  
+      // Update status
+      await User.findByIdAndUpdate(userId, { $set: { active: status } });
+  
+      // Fetch the updated user
+      const updatedUser = await User.findById(userId);
+  
+      res.status(200).json({ message: 'Permission updated successfully', user: updatedUser });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ message: 'Internal server error' });
     }
-  },
-  updatePermission : async (req, res) => {
-    const { userId, permission, status } = req.body;
-
-    try {
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const hasPermission = user.permissions.includes(permission);
-
-        if (hasPermission) {
-            // Remove the permission if it's already present
-            await User.findByIdAndUpdate(userId, { $pull: { permissions: permission },$set: { active: status } });
-        } else {
-            // Add the permission if it's not present
-            await User.findByIdAndUpdate(userId, { $addToSet: { permissions: permission }, $set: { active: status } });
-        }
-
-        // Fetch the updated user
-        const updatedUser = await User.findById(userId);
-
-        res.status(200).json({ message: 'Permission updated successfully', user: updatedUser });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-  },
+  },  
   getUserToEditPermission: async (req, res) => {
     try {
       const { id } = req.query;
