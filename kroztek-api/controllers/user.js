@@ -243,7 +243,9 @@ module.exports = {
         email: user.email,
         isEmailVerified: user.isEmailVerified,
         phoneNumber: user.phoneNumber,
-        notificationCount: user.notificationCount
+        notificationCount: user.notificationCount,
+        permissions: user.permissions,
+        active : user.active
       }
       return res
         .status(200)
