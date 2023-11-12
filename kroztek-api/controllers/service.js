@@ -1,4 +1,5 @@
 const Product = require("../models/service");
+const User = require("../models/userModel")
 const { ObjectId } = require("mongodb");
 const Notification = require("../models/notification");
 const path = require("path");
@@ -146,7 +147,7 @@ exports.editProduct = async (req, res) => {
 //get all products with associated category and subcategory details
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true })
+    const products = await Product.find({ isActive: true, status: "public"  })
       .sort({ rank: 1 })
       .populate("category")
       .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property
@@ -403,11 +404,23 @@ exports.filterBySubCategory = async (req, res) => {
 // Fetch products pending approval
 exports.getPendingApprovalProducts = async (req, res) => {
   try {
-    const pendingProducts = await Product.find({ status: 'draft' });
+    const userId = req.user._id;
+    let user = User.findById(userId);
+    let pendingProducts;
+      // Check if the user is an admin
+      if (user.isAdmin === true) {
+        pendingProducts = await Product.find({ status: "draft" });
+      } else {
+        pendingProducts = await Product.find({
+          status: "draft",
+          userId: userId,
+        });
+      }
+    pendingProducts = await Product.find({ status: "draft" });
     return res.status(200).json({ products: pendingProducts });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -424,14 +437,3 @@ exports.approveProduct = async (req, res) => {
   }
 };
 
-// Fetch products pending approval
-exports.getPendingProductsForUser = async (req, res) => {
-  try {
-    const userId = req.user._id;
-    const pendingProducts = await Product.find({ status: 'draft' , userId: userId });
-    return res.status(200).json({ products: pendingProducts });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};

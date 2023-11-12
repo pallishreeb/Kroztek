@@ -20,8 +20,7 @@ const {
   getProductsForAdmin,
   filterBySubCategory,
   approveProduct,
-  getPendingApprovalProducts,
-  getPendingProductsForUser
+  getPendingApprovalProducts
 } = require("../controllers/service");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -122,11 +121,8 @@ router.get(
 
 //get products for approve
 router.get("/pending-products", passport.authenticate("jwt", { session: false }),
-isAdmin, getPendingApprovalProducts);
+ getPendingApprovalProducts);
 
-//get  rejected product for user
-router.get("/rejected-products", passport.authenticate("jwt", { session: false }),
-isAdmin, getPendingProductsForUser);
 
 //remove img
 router.delete('/remove-img',removeImg)

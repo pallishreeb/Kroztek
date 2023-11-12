@@ -20,8 +20,7 @@ const {
   getProductsForAdmin,
   filterBySubCategory,
   approveProduct,
-  getPendingApprovalProducts,
-  getPendingProductsForUser
+  getPendingApprovalProducts
 } = require("../controllers/product");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -111,12 +110,7 @@ router.delete(
 router.get("/related-post", relatedProducts);
 
 //get products for approve
-router.get("/pending-products", passport.authenticate("jwt", { session: false }),
-isAdmin, getPendingApprovalProducts);
-
-//get  rejected product for user
-router.get("/rejected-products", passport.authenticate("jwt", { session: false }),
-isAdmin, getPendingProductsForUser);
+router.get("/pending-products", passport.authenticate("jwt", { session: false }), getPendingApprovalProducts);
 
 
 //filter by catergory products
