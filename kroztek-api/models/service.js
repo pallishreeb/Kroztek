@@ -42,6 +42,10 @@ const serviceSchema = new mongoose.Schema({
   rank:{
     type: Number
  },
+ status: {
+  type: String,
+  enum: ["draft", "approved", "rejected"],
+},
   createdAt:{
     type: Date,
     default: Date.now 

@@ -18,7 +18,10 @@ const {
   removeDoc,
   editProductStatus,
   getProductsForAdmin,
-  filterBySubCategory
+  filterBySubCategory,
+  approveProduct,
+  getPendingApprovalProducts,
+  getPendingProductsForUser
 } = require("../controllers/service");
 
 const { getStatitics } = require("../controllers/dashboard");
@@ -87,6 +90,13 @@ router.put(
   isAdmin,
   editProductStatus
 );
+//UPDATE Product status
+router.put(
+  "/approve-product",
+  passport.authenticate("jwt", { session: false }),
+  isAdmin,
+  approveProduct
+);
 //DELETE Product
 router.delete(
   "/delete",
@@ -109,6 +119,14 @@ router.get(
   isAdmin,
   getStatitics
 );
+
+//get products for approve
+router.get("/pending-products", passport.authenticate("jwt", { session: false }),
+isAdmin, getPendingApprovalProducts);
+
+//get  rejected product for user
+router.get("/rejected-products", passport.authenticate("jwt", { session: false }),
+isAdmin, getPendingProductsForUser);
 
 //remove img
 router.delete('/remove-img',removeImg)

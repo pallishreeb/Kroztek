@@ -1,53 +1,57 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "category",
-    required: true
+    required: true,
   },
   subcategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "subcategory",
-    required: true
+    required: true,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true
+    required: true,
   },
   features: [
     {
       name: String,
-      value: String
-    }
+      value: String,
+    },
   ],
   images: [],
   youtubeLink: String,
   websiteLink: String,
   documents: [], // Add a field for document
-  views: { type: Number, default: 0 } ,
-  isActive:{
+  views: { type: Number, default: 0 },
+  isActive: {
     type: Boolean,
-    default: true
+    default: true,
   },
-  rank:{
-    type: Number
- },
-  createdAt:{
+  rank: {
+    type: Number,
+  },
+  status: {
+    type: String,
+    enum: ["draft", "approved", "rejected"],
+  },
+  createdAt: {
     type: Date,
-    default: Date.now 
-},
+    default: Date.now,
+  },
 });
 
-const Product = mongoose.model('product', productSchema);
+const Product = mongoose.model("product", productSchema);
 
 module.exports = Product;
