@@ -11,14 +11,18 @@ exports.getStatitics = async(req,res) =>{
         const categoryCount = await Category.countDocuments();
         const subcategoryCount = await SubCategory.countDocuments();
         const services = await Services.countDocuments();
+        const pendingProducts = await Product.countDocuments({status: "draft"});
+        const pendingServices = await Services.countDocuments({status: "draft"});
         const statistics = {
           users: userCount,
           Products: postCount,
           categories: categoryCount,
           subcategories: subcategoryCount,
-          services:services
+          services:services,
+          pendingProducts:pendingProducts,
+          pendingServices:pendingServices
         };
-    
+       
         res.json(statistics);
       } catch (error) {
         console.error(error);
