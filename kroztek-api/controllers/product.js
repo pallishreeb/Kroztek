@@ -408,14 +408,20 @@ exports.getPendingApprovalProducts = async (req, res) => {
     let pendingProducts;
       // Check if the user is an admin
       if (user.isAdmin === true) {
-        pendingProducts = await Product.find({ status: "draft" });
+        pendingProducts = await Product.find({ status: "draft" })
+        .populate("userId")
+        .populate("category")
+        .populate("subcategory");
       } else {
         pendingProducts = await Product.find({
           status: "draft",
           userId: userId,
         });
       }
-    pendingProducts = await Product.find({ status: "draft" });
+    pendingProducts = await Product.find({ status: "draft" })
+    .populate("userId")
+    .populate("category")
+    .populate("subcategory");
     return res.status(200).json({ products: pendingProducts });
   } catch (error) {
     console.error(error);
