@@ -53,7 +53,6 @@ const upload = multer({ storage });
 router.post(
   "/add",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   upload.fields([
     { name: "images", maxCount: 5 },
     { name: "documents", maxCount: 5 },
@@ -74,7 +73,6 @@ router.get("/most-viewed", mostViewedProducts);
 router.put(
   "/edit",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   upload.fields([
     { name: "images", maxCount: 5 },
     { name: "documents", maxCount: 5},
@@ -86,21 +84,18 @@ router.put(
 router.put(
   "/editstatus",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   editProductStatus
 );
 //UPDATE Product status
 router.put(
   "/approve-product",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   approveProduct
 );
 //DELETE Product
 router.delete(
   "/delete",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   deleteProduct
 );
 
@@ -115,7 +110,6 @@ router.get("/filterBySubCategory", filterBySubCategory);
 router.get(
   "/statistics",
   passport.authenticate("jwt", { session: false }),
-  isAdmin,
   getStatitics
 );
 
