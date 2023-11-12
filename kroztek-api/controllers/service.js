@@ -62,7 +62,7 @@ exports.addProduct = async (req, res) => {
     // Check if the user is an admin
     if (user.isAdmin === true) {
       // If the user is an admin, set the status to 'public'
-      newProduct.status = "public";
+      newProduct.status = "approved";
     } else {
       // If the user is not an admin, set the status to 'draft'
       newProduct.status = "draft";
@@ -147,7 +147,7 @@ exports.editProduct = async (req, res) => {
 //get all products with associated category and subcategory details
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true, status: "public"  })
+    const products = await Product.find({ isActive: true, status: "approved"  })
       .sort({ rank: 1 })
       .populate("category")
       .populate("subcategory"); // Populate the 'subcategory' field with only the 'name' property
@@ -417,12 +417,10 @@ exports.getPendingApprovalProducts = async (req, res) => {
         pendingProducts = await Product.find({
           status: "draft",
           userId: userId,
-        });
+        }).populate("userId")
+        .populate("category")
+        .populate("subcategory");
       }
-    pendingProducts = await Product.find({ status: "draft" })
-    .populate("userId")
-    .populate("category")
-    .populate("subcategory");
     return res.status(200).json({ products: pendingProducts });
   } catch (error) {
     console.error(error);
