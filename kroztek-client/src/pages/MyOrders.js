@@ -42,14 +42,14 @@ const MyOrders = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 order-details">
+    <div className="container md:w-2/3  mx-auto p-4 order-details">
       <h1 className="text-xl font-bold mb-4">My Orders</h1>
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {orders.map((order) => (
-            <div key={order._id} className="bg-white p-4 rounded shadow-md">
+            <div key={order._id} className="bg-white p-4 rounded shadow-md border">
               <h2 className="text-xl mb-2">Order ID: {order._id}</h2>
               <p>Total Amount: ₹{order.totalAmount}</p>
               <p>Payment Status: {order.paymentStatus}</p>
@@ -57,28 +57,30 @@ const MyOrders = () => {
               <p>Created Date: {formatDate(order.createdAt)}</p>
               <p>Order Note: {order.orderNotes}</p>
               
-              <div className="products">
+              <div className="products mt-4">
                 <h3 className="text-lg font-medium mb-2">Products:</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {order.products.map(({ product, quantity }) => (
-                    <div key={product._id} className="product-item">
-                      <Link to={`/product/${product._id}`}>
-                      <img 
-                        src={product.images ? `${IMG_URL}/images/${product.images[0]}` : imgPlaceholder} 
-                        alt={product.name} 
-                        className="w-28 h-28 object-cover rounded mb-2"
-                      />
-                      <p>{product.name}</p>
-                      
+                    <div key={product._id} className="product-item flex items-center bg-white p-4 rounded shadow-sm">
+                      <Link to={`/product/${product._id}`} className="flex-shrink-0">
+                        <img 
+                          src={product.images ? `${IMG_URL}/images/${product.images[0]}` : imgPlaceholder} 
+                          alt={product.name} 
+                          className="w-32 h-32 object-cover rounded mr-4"
+                        />
                       </Link>
-                      <p>Quantity: {quantity}</p>
+                      <div className="flex-grow">
+                        <p className="text-sm font-semibold">{product.name}</p>
+                        <p>Price: ₹{product.features.find(feature => feature.name.toLowerCase() === 'price')?.value}</p>
+                        <p>Quantity: {quantity}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
               <Link to={`/order/${order._id}`} className="text-blue-500 mt-2 inline-block">
-                View Details
+               <h2 className='text-sm'>View Order Details</h2> 
               </Link>
             </div>
           ))}

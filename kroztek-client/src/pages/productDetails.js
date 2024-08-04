@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { singlePost, relatedPost } from "../networkCalls/products";
 import { IMG_URL } from "../config";
 import ProductCard from "../components/ProductCard";
+import Modal from "../components/Modal";
 import imgPlaceholder from "../img/no-image.jpg";
 import { useAuthApi } from "../context/authState";
 
@@ -17,6 +18,8 @@ function ProductDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [previewImage, setPreviewImage] = useState(null);
   const imageContainerRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -74,13 +77,15 @@ function ProductDetails() {
 
   const handleAddToCart = (product) => {
     addToCart(product);
+    setModalMessage(`${product.name} added to cart!`);
+    setModalOpen(true);
   };
 
   return (
     <div className="container mx-auto p-8 md:w-2/3">
       <div className="flex flex-col md:flex-row">
       {/* Image Section */}
-      <div className="p-2 w-full md:w-1/2">
+      <div className="md:p-2 md:w-1/2">
       <div className="mb-4">
         <img
           src={currentImage}
@@ -100,7 +105,7 @@ function ProductDetails() {
               &#9664;
             </button>
           )}
-          <div className="flex overflow-x-auto mt-2 gap-1" style={{ width: '370px' }} ref={imageContainerRef}>
+          <div className="flex overflow-x-auto mt-2 md:gap-1" style={{ width: '370px' }} ref={imageContainerRef}>
             {post?.images?.map((item, index) => (
               <img
                 key={index}
@@ -113,22 +118,12 @@ function ProductDetails() {
               />
             ))}
             {/* If images length is less than 4, duplicate existing images to fill the gap */}
-            {/* {post.images.length < 4 && (
-              Array.from({ length: 4 - post.images.length }).map((_, index) => (
-                <img
-                  key={`duplicate-${index}`}
-                  src={`${IMG_URL}/images/${post.images[index % post.images.length]}`}
-                  alt="Thumbnail"
-                  className="w-20 h-20 object-cover border border-gray-300 m-1 cursor-pointer"
-                />
-              ))
-            )} */}
             {Array.from({ length: 4 - post.images.length }).map((_, index) => (
               <img
               key={`duplicate-${index}`}
-              src={`${imgPlaceholder}`}
+              src={imgPlaceholder}
               alt="Thumbnail"
-              className="w-20 h-20 object-cover border border-gray-300 m-1 cursor-pointer"
+              className="w-20 h-20  object-cover border border-gray-300 m-1 cursor-pointer"
             />
             ))}
           </div>
@@ -222,7 +217,7 @@ function ProductDetails() {
           <ProductCard products={relatedPosts} />
         </div>
       )}
-
+      
       {/* Image Preview Modal */}
       {previewImage && (
         <div
@@ -236,6 +231,8 @@ function ProductDetails() {
           />
         </div>
       )}
+
+     <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} message={modalMessage} />
     </div>
   );
 }

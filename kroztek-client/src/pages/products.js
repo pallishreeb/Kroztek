@@ -89,13 +89,13 @@ function Products() {
         <Carousel />
       </section> */}
 
-      <div className="min-h-screen category-container">
+      <div className="md:min-h-screen category-container">
         <div className="md:w-1/4 p-4  border-r">
           {/* Show Categories Button (Only on Small Screens) */}
-          <div className="md:hidden p-2 text-center">
+          <div className="md:hidden p-2 text-left">
             <button
               onClick={toggleMenu}
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+              className="addToCart py-2 px-4 rounded hover:bg-blue-700"
             >
               Categories
             </button>

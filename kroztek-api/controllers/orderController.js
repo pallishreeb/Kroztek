@@ -2,19 +2,19 @@ const Order = require('../models/order');
 const Cart = require('../models/cart');
 
 exports.createOrder = async (req, res) => {
-  const { userId,totalAmount, paymentStatus,shippingCharge, firstName, lastName, companyName, gst, mobileNumber, country, state, city, streetAddress, pincode, orderNotes,paymentType } = req.body;
+  const { userId,totalAmount, products, paymentStatus,shippingCharge, firstName, lastName, companyName, gst, mobileNumber, country, state, city, streetAddress, pincode, orderNotes,paymentType } = req.body;
 
-  const cart = await Cart.findOne({ user: userId }).populate('products.product');
+  // const cart = await Cart.findOne({ user: userId }).populate('products.product');
 
-  if (!cart) {
-    return res.status(400).json({ error: 'No items in cart' });
-  }
+  // if (!cart) {
+  //   return res.status(400).json({ error: 'No items in cart' });
+  // }
 
   // const totalAmount = cart.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-console.log(totalAmount)
+// console.log(totalAmount)
   const order = new Order({
     user: userId,
-    products: cart.products,
+    products: products,
     paymentStatus,
     totalAmount,
     shippingCharge,

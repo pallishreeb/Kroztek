@@ -58,7 +58,10 @@ const CheckoutPage = () => {
 
     const orderData = {
       userId: user?._id,
-      products: cart,
+      products: cart.map(item => ({
+        product: item._id,
+        quantity: item.quantity
+      })),
       paymentStatus: 'Pending',
       totalAmount: getTotalAmount(),
       shippingCharge: 0, // Replace with actual shipping charge if applicable
@@ -66,21 +69,22 @@ const CheckoutPage = () => {
     };
 
     try {
-      await placeOrder(orderData);
-      navigate('/upi-payment');
+      await placeOrder(orderData,navigate);
+      // navigate('/myorders');
     } catch (error) {
       toast.error('Failed to place order');
     }
   };
 
   return (
-    <div className="container mx-auto p-4 flex">
+    <div className="container mx-auto p-4 flex flex-col md:flex-row">
       {/* Left Side: Form Fields */}
-      <div className="w-2/3 pr-4">
+      <div className="w-full md:w-2/3 pr-0 md:pr-4 mb-6 md:mb-0">
         <h1 className="text-3xl font-bold mb-4">Checkout</h1>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
-          <div className="flex mb-4">
-            <div className="w-1/2 pr-2">
+          {/* First Name and Last Name */}
+          <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="firstName">
                 First Name*
               </label>
@@ -94,7 +98,7 @@ const CheckoutPage = () => {
                 required
               />
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-full md:w-1/2 px-2">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="lastName">
                 Last Name*
               </label>
@@ -110,10 +114,11 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <div className="flex mb-4">
-            <div className="w-1/2 pr-2">
+          {/* Company Name and GST */}
+          <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="companyName">
-                Company Name*
+                Company Name
               </label>
               <input
                 type="text"
@@ -124,7 +129,7 @@ const CheckoutPage = () => {
                 className="w-full p-2 border border-gray-300 rounded"
               />
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-full md:w-1/2 px-2">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="gst">
                 GST
               </label>
@@ -139,8 +144,9 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <div className="flex mb-4">
-            <div className="w-1/2 pr-2">
+          {/* Mobile Number and Country */}
+          <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="mobileNumber">
                 Mobile Number*
               </label>
@@ -154,7 +160,7 @@ const CheckoutPage = () => {
                 required
               />
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-full md:w-1/2 px-2">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="country">
                 Country*
               </label>
@@ -170,8 +176,9 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <div className="flex mb-4">
-            <div className="w-1/2 pr-2">
+          {/* State and City */}
+          <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="state">
                 State*
               </label>
@@ -185,7 +192,7 @@ const CheckoutPage = () => {
                 required
               />
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-full md:w-1/2 px-2">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="city">
                 City*
               </label>
@@ -201,8 +208,9 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <div className="flex mb-4">
-            <div className="w-1/2 pr-2">
+          {/* Street Address and Pincode */}
+          <div className="flex flex-wrap -mx-2 mb-4">
+            <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="streetAddress">
                 Street Address*
               </label>
@@ -216,7 +224,7 @@ const CheckoutPage = () => {
                 required
               />
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-full md:w-1/2 px-2">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="pincode">
                 Pincode*
               </label>
@@ -232,25 +240,23 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          <div className="flex mb-4">
-            <div className="w-full">
-              <label className="block text-gray-700 font-bold mb-2" htmlFor="orderNotes">
-                Order Notes
-              </label>
-              <textarea
-                id="orderNotes"
-                name="orderNotes"
-                value={formData.orderNotes}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded"
-              ></textarea>
-            </div>
+          {/* Order Notes */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="orderNotes">
+              Order Notes
+            </label>
+            <textarea
+              id="orderNotes"
+              name="orderNotes"
+              value={formData.orderNotes}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded"
+            ></textarea>
           </div>
 
           <button
             type="submit"
-            className="addToCart py-2 px-4 rounded hover:bg-blue-700"
-
+            className="py-2 px-4 addToCart text-white rounded hover:bg-blue-700"
           >
             Place Order
           </button>
@@ -258,7 +264,7 @@ const CheckoutPage = () => {
       </div>
 
       {/* Right Side: Order Summary */}
-      <div className="w-1/3 pl-4">
+      <div className="w-full md:w-1/3 pl-0 md:pl-4">
         <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
         <div className="bg-white p-4 rounded shadow-sm">
           {cart.map(item => (

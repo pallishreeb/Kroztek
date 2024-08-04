@@ -1,6 +1,7 @@
 const Cart = require('../models/cart');
 const Product = require('../models/product');
-
+const mongoose = require('mongoose');
+const { ObjectId } = require("mongodb");
 exports.addToCart = async (req, res) => {
   const { userId, productId, quantity } = req.body;
   console.log(userId)
@@ -53,14 +54,14 @@ exports.removeFromCart = async (req, res) => {
     }
 
     // Check if the product exists in the cart
-    const productExists = cart.products.some(p => p.product.toString() === productId);
+    const productExists = cart.products.some(p => p.product._id === productId);
 
     if (!productExists) {
       return res.status(404).json({ error: 'Product not found in the cart' });
     }
 
     // Remove the product from the cart
-    cart.products = cart.products.filter(p => p.product.toString() !== productId);
+    cart.products = cart.products.filter(p => p.product._id !== productId);
 
     // Save the updated cart
     await cart.save();
@@ -72,33 +73,51 @@ exports.removeFromCart = async (req, res) => {
   }
 };
 
-// Controller function
 exports.updateCart = async (req, res) => {
   const { userId, products } = req.body;
 
   try {
-      let cart = await Cart.findOne({ user: userId });
+    // Ensure userId and products are present
+    if (!userId || !products || !Array.isArray(products)) {
+      return res.status(400).json({ message: 'Invalid input' });
+    }
 
-      if (!cart) {
-          return res.status(404).json({ message: 'Cart not found' });
+    // Find the cart for the user
+    let cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+    // Debug: Log cart and products
+    console.log('Cart:', cart);
+    console.log('Products:', products);
+
+    // Convert products to ObjectId and update cart
+    products.forEach(({ productId, quantity }) => {
+      if (!productId || !quantity) {
+        console.warn('Missing productId or quantity:', { productId, quantity });
+        return;
       }
 
-      // Update cart with new quantities
-      products.forEach(({ productId, quantity }) => {
-          const productIndex = cart.products.findIndex(p => p.product.toString() === productId);
+      const objectId = mongoose.Types.ObjectId(productId);
+      const productIndex = cart.products.findIndex(p => p.product._id === objectId);
 
-          if (productIndex > -1) {
-              cart.products[productIndex].quantity = quantity;
-          } else {
-              cart.products.push({ product: productId, quantity });
-          }
-      });
+      if (productIndex > -1) {
+        // Update existing product quantity
+        cart.products[productIndex].quantity = quantity;
+      } else {
+        // Add new product to cart
+        cart.products.push({ product: objectId, quantity });
+      }
+    });
 
-      await cart.save();
-      res.status(200).json(cart);
+    // Save the updated cart
+    await cart.save();
+    res.status(200).json(cart);
   } catch (error) {
-    console.log(error)
-      res.status(500).json({ message: 'Failed to update cart', error });
+    console.error('Error updating cart:', error);
+    res.status(500).json({ message: 'Failed to update cart', error });
   }
 };
 

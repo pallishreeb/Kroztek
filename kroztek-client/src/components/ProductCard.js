@@ -1,11 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import imgPlaceholder from "../img/no-image.jpg";
 import { IMG_URL } from "../config";
 import { useAuthApi } from "../context/authState";
+import Modal from "./Modal";
 const ProductCard = ({ products }) => {
   const navigate = useNavigate();
   const { addToCart } = useAuthApi();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+
+
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.slice(0, maxLength - 3) + "...";
@@ -13,11 +20,11 @@ const ProductCard = ({ products }) => {
     return text;
   }
 
-  function stripHtmlTags(htmlString) {
-    const tempElement = document.createElement("div");
-    tempElement.innerHTML = htmlString;
-    return tempElement.textContent || tempElement.innerText || "";
-  }
+  // function stripHtmlTags(htmlString) {
+  //   const tempElement = document.createElement("div");
+  //   tempElement.innerHTML = htmlString;
+  //   return tempElement.textContent || tempElement.innerText || "";
+  // }
 
   const navigateToDetails = (id) => navigate(`/product/${id}`);
 
@@ -43,6 +50,8 @@ const ProductCard = ({ products }) => {
   // };
   const handleAddToCart = (product) => {
     addToCart(product);
+    setModalMessage(`${product.name} added to cart!`);
+    setModalOpen(true);
   };
   const getPrice = (features) => {
     const priceFeature = features.find(feature => feature.name.toLowerCase() === "price");
@@ -50,7 +59,8 @@ const ProductCard = ({ products }) => {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    <>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {products?.map((product, index) => (
         <div
           key={index}
@@ -88,6 +98,9 @@ const ProductCard = ({ products }) => {
         </div>
       ))}
     </div>
+    <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} message={modalMessage} />
+    </>
+
   );
 };
 

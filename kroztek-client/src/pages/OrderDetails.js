@@ -22,6 +22,7 @@ const OrderDetails = () => {
     };
     return date.toLocaleDateString('en-US', options);
   };
+
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -40,29 +41,31 @@ const OrderDetails = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 order-details">
+    <div className="container md:w-1/2 mx-auto p-4 order-details">
       <h1 className="text-xl font-bold mb-4">Order Details</h1>
-      <h2 className="text-xl  mb-2">Order ID: {order._id}</h2>
+      <h2 className="text-xl mb-2">Order ID: {order._id}</h2>
       <p>Total Amount: ₹{order.totalAmount}</p>
       <p>Payment Status: {order.paymentStatus}</p>
       {/* <p>Shipping Charge: ₹{order.shippingCharge}</p> */}
-      <p>Delivery address: {order.streetAddress},{order.city},{order.state},{order.country},{order.pincode}</p>
+      <p>Delivery address: {order.streetAddress}, {order.city}, {order.state}, {order.country}, {order.pincode}</p>
       <p>Delivery status: {order.status}</p>
       <p>Order date: {formatDate(order.createdAt)}</p>
       <p>Order Note: {order.orderNotes}</p>
       <div className="grid grid-cols-1 gap-4 mt-4">
         {order.products.map((item) => (
-          <div key={item.product._id} className="bg-white p-4 rounded shadow-md">
-             <Link to={`/product/${item?.product._id}`}>
-            <img
-              src={item.product?.images[0] ? `${IMG_URL}/images/${item.product.images[0]}` : imgPlaceholder}
-              alt={item.product.name}
-              className="w-64 h-64 object-cover rounded mr-4"
-            />
-            <h3 className="text-lg font-semibold">{item.product.name}</h3>
+          <div key={item.product._id} className="bg-white p-4 rounded border flex items-center">
+            <Link to={`/product/${item.product._id}`} className="flex-shrink-0">
+              <img
+                src={item.product?.images[0] ? `${IMG_URL}/images/${item.product.images[0]}` : imgPlaceholder}
+                alt={item.product.name}
+                className="w-32 h-32 object-cover rounded mr-4"
+              />
             </Link>
-            <p>Price: ₹{item.product.features.find((feature) => feature.name.toLowerCase() === 'price')?.value}</p>
-            <p>Quantity: {item.quantity}</p>
+            <div className="flex-grow">
+              <h3 className="text-lg font-semibold">{item.product.name}</h3>
+              <p>Price: ₹{item.product.features.find((feature) => feature.name.toLowerCase() === 'price')?.value}</p>
+              <p>Quantity: {item.quantity}</p>
+            </div>
           </div>
         ))}
       </div>

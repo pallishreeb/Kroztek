@@ -48,20 +48,7 @@ const AuthState = ({ children }) => {
                 type: LOAD_USER_SUCCESS,
                 payload: user,
             });
-        }
-    
-        if (user && !cartString) {
-            console.log(user?._id);
-            fetchCartDetails(user?._id).then((res) => {
-                if (res) {
-                    dispatch({
-                        type: 'LOAD_CART',
-                        payload: res.products || [], // Ensure it's an array
-                    });
-                    localStorage.setItem("cart", JSON.stringify(res.products || []));
-                }
-            });
-        } else {
+        }else {
             dispatch({
                 type: 'LOAD_CART',
                 payload: cart, // Use the cart from localStorage
@@ -80,20 +67,20 @@ const AuthState = ({ children }) => {
             const res = await axios.get(`${API_URL}/user/singleUser`, config);
             localStorage.setItem("user", JSON.stringify(res.data.response));
             dispatch({ type: LOAD_USER_SUCCESS, payload: res.data.response });
-            let userId = res.data?.response?._id
-             // Sync local cart with backend
-            await syncCartWithBackend(userId).then((res) =>{
-                if(res){
-                    fetchCartDetails(userId).then((res) =>{
-                        dispatch({
-                            type: 'LOAD_CART',
-                            payload: res,
-                        });
-                    })
-                }
-            }).catch((error) =>{
-                console.error(error,"error in updating cart");
-            });
+            // let userId = res.data?.response?._id
+            //  // Sync local cart with backend
+            // await syncCartWithBackend(userId).then((res) =>{
+            //     if(res){
+            //         fetchCartDetails(userId).then((res) =>{
+            //             dispatch({
+            //                 type: 'LOAD_CART',
+            //                 payload: res,
+            //             });
+            //         })
+            //     }
+            // }).catch((error) =>{
+            //     console.error(error,"error in updating cart");
+            // });
            
            
         } catch (error) {
@@ -228,9 +215,9 @@ const AuthState = ({ children }) => {
         }
     };
     const addToCart = async (product) => {
-        const user = JSON.parse(localStorage.getItem("user"));
+        // const user = JSON.parse(localStorage.getItem("user"));
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const userId = user?._id;
+        // const userId = user?._id;
     
         const existingProduct = cart.find(item => item._id === product._id);
     
@@ -241,120 +228,125 @@ const AuthState = ({ children }) => {
         }
     
         localStorage.setItem("cart", JSON.stringify(cart));
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: cart,
+        });
+        // if (userId) {
+        //     try {
+        //         const response = await fetch(`${API_URL}/cart/add`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify({
+        //                 userId,
+        //                 productId: product._id,
+        //                 quantity: existingProduct ? existingProduct.quantity : 1
+        //             })
+        //         });
     
-        if (userId) {
-            try {
-                const response = await fetch(`${API_URL}/cart/add`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userId,
-                        productId: product._id,
-                        quantity: existingProduct ? existingProduct.quantity : 1
-                    })
-                });
+        //         if (!response.ok) {
+        //             throw new Error('Failed to update cart in backend');
+        //         }
     
-                if (!response.ok) {
-                    throw new Error('Failed to update cart in backend');
-                }
+        //         const updatedCart = await response.json();
+        //         dispatch({
+        //             type: 'ADD_TO_CART',
+        //             payload: updatedCart.products || [],
+        //         });
     
-                const updatedCart = await response.json();
-                dispatch({
-                    type: 'ADD_TO_CART',
-                    payload: updatedCart.products || [],
-                });
-    
-                toast.success('Item added to cart!');
-            } catch (error) {
-                console.error(error);
-                toast.error('Failed to add item to cart');
-            }
-        } else {
-            dispatch({
-                type: 'ADD_TO_CART',
-                payload: cart,
-            });
-        }
+        //         toast.success('Item added to cart!');
+        //     } catch (error) {
+        //         console.error(error);
+        //         toast.error('Failed to add item to cart');
+        //     }
+        // } else {
+        //     dispatch({
+        //         type: 'ADD_TO_CART',
+        //         payload: cart,
+        //     });
+        // }
     };
-    const syncCartWithBackend = async (userId) => {
-        const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+    // const syncCartWithBackend = async (userId) => {
+    //     const localCart = JSON.parse(localStorage.getItem("cart")) || [];
     
-        try {
-            const response = await fetch(`${API_URL}/cart/sync`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userId,
-                    cart: localCart
-                })
-            });
+    //     try {
+    //         const response = await fetch(`${API_URL}/cart/sync`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 userId,
+    //                 cart: localCart
+    //             })
+    //         });
     
-            if (!response.ok) {
-                throw new Error('Failed to sync cart with backend');
-            }
+    //         if (!response.ok) {
+    //             throw new Error('Failed to sync cart with backend');
+    //         }
     
-            const updatedCart = await response.json();
-            dispatch({
-                type: 'ADD_TO_CART',
-                payload: updatedCart.products || [],
-            });
+    //         const updatedCart = await response.json();
+    //         dispatch({
+    //             type: 'ADD_TO_CART',
+    //             payload: updatedCart.products || [],
+    //         });
 
-            toast.success('Cart synced with backend!');
-        } catch (error) {
-            console.error(error);
-            toast.error('Failed to sync cart with backend');
-        }
-    };
+    //         toast.success('Cart synced with backend!');
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error('Failed to sync cart with backend');
+    //     }
+    // };
         
-    
     const removeFromCart = async (productId) => {
-        const user = JSON.parse(localStorage.getItem("user"));
+        // const user = JSON.parse(localStorage.getItem("user"));
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const userId = user?._id;
+        // const userId = user?._id;
     
         cart = cart.filter(item => item._id !== productId);
     
         localStorage.setItem("cart", JSON.stringify(cart));
+        dispatch({
+            type: 'REMOVE_FROM_CART',
+            payload: cart,
+        });
+    //     if (userId) {
+    //     try {
+    //         const response = await fetch(`${API_URL}/cart/remove`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 userId,
+    //                 productId
+    //             })
+    //         });
     
-        if (userId) {
-            try {
-                const response = await fetch(`${API_URL}/cart/remove`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userId,
-                        productId
-                    })
-                });
+    //         if (!response.ok) {
+    //             throw new Error('Failed to remove item from cart in backend');
+    //         }
     
-                if (!response.ok) {
-                    throw new Error('Failed to remove item from cart in backend');
-                }
+    //         const updatedCart = await response.json();
+    //         dispatch({
+    //             type: 'REMOVE_FROM_CART',
+    //             payload: updatedCart.products || [],
+    //         });
     
-                const updatedCart = await response.json();
-                dispatch({
-                    type: 'REMOVE_FROM_CART',
-                    payload: updatedCart.products || [],
-                });
-    
-                toast.success('Item removed from cart!');
-            } catch (error) {
-                console.error(error);
-                toast.error('Failed to remove item from cart');
-            }
-        } else {
-            dispatch({
-                type: 'REMOVE_FROM_CART',
-                payload: cart,
-            });
-        }
-    };
+    //         toast.success('Item removed from cart!');
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error('Failed to remove item from cart');
+    //     }
+    // }else{
+    //     dispatch({
+    //         type: 'REMOVE_FROM_CART',
+    //         payload: cart,
+    //     });
+    // }
+    }
     
     
     const fetchCartDetails = async (userId) => {
@@ -378,7 +370,7 @@ const AuthState = ({ children }) => {
         }
     };
 
-    const placeOrder = async (orderData) => {
+     const placeOrder = async (orderData,navigate) => {
         try {
           const response = await fetch(`${API_URL}/order/create`, {
             method: 'POST',
@@ -391,13 +383,13 @@ const AuthState = ({ children }) => {
           if (!response.ok) {
             throw new Error('Failed to place order');
           }
-    
-          fetchCartDetails(orderData.userId).then((res) =>{
-            dispatch({
-                type: 'LOAD_CART',
-                payload: res,
-            });
-        })
+          dispatch({
+            type: 'REMOVE_FROM_CART',
+            payload: [],
+        });
+          localStorage.removeItem('cart');
+          navigate('/myorders')
+          toast.success('Order placed successfully');
           return response.json();
         } catch (error) {
           console.error(error);
