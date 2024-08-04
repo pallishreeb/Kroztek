@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { singlePost, relatedPost } from "../networkCalls/products";
 import { IMG_URL } from "../config";
@@ -16,7 +16,7 @@ function ProductDetails() {
   const [loading, setLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [previewImage, setPreviewImage] = useState(null);
-
+  const imageContainerRef = useRef(null);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -43,6 +43,17 @@ function ProductDetails() {
     }
   }, [id]);
 
+  const scrollLeft = () => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (imageContainerRef.current) {
+      imageContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
   const handleThumbnailClick = (index) => {
     setCurrentImageIndex(index);
     setPreviewImage(null);
@@ -68,33 +79,71 @@ function ProductDetails() {
   return (
     <div className="container mx-auto p-8 md:w-2/3">
       <div className="flex flex-col md:flex-row">
-        {/* Image Section */}
-        <div className="p-2 w-full md:w-1/2">
-          <div className="mb-4">
-            <img
-              src={currentImage}
-              alt="Product"
-              className="object-fit border border-gray-300 cursor-pointer"
-              style={{ width: "370px", height: "333px" }}
-              onClick={handleLargeImageClick}
-            />
-          </div>
-          {post?.images?.length > 0 && (
-            <div className="flex overflow-x-auto mt-2">
-              {post?.images?.map((item, index) => (
+      {/* Image Section */}
+      <div className="p-2 w-full md:w-1/2">
+      <div className="mb-4">
+        <img
+          src={currentImage}
+          alt="Product"
+          className="object-fit border border-gray-300 cursor-pointer"
+          style={{ width: "370px", height: "333px" }}
+          onClick={handleLargeImageClick}
+        />
+      </div>
+      {post?.images?.length > 0 && (
+        <div className="relative">
+          {post.images.length > 4 && (
+            <button
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-1 rounded-full shadow-md"
+              onClick={scrollLeft}
+            >
+              &#9664;
+            </button>
+          )}
+          <div className="flex overflow-x-auto mt-2 gap-1" style={{ width: '370px' }} ref={imageContainerRef}>
+            {post?.images?.map((item, index) => (
+              <img
+                key={index}
+                src={`${IMG_URL}/images/${item}`}
+                alt="Thumbnail"
+                className={`w-20 h-20 object-cover border border-gray-300 m-1 cursor-pointer ${
+                  currentImageIndex === index ? "border-blue-500" : ""
+                }`}
+                onClick={() => handleThumbnailClick(index)}
+              />
+            ))}
+            {/* If images length is less than 4, duplicate existing images to fill the gap */}
+            {/* {post.images.length < 4 && (
+              Array.from({ length: 4 - post.images.length }).map((_, index) => (
                 <img
-                  key={index}
-                  src={`${IMG_URL}/images/${item}`}
+                  key={`duplicate-${index}`}
+                  src={`${IMG_URL}/images/${post.images[index % post.images.length]}`}
                   alt="Thumbnail"
-                  className={`w-24 h-24 object-cover border border-gray-300 m-1 cursor-pointer ${
-                    currentImageIndex === index ? "border-blue-500" : ""
-                  }`}
-                  onClick={() => handleThumbnailClick(index)}
+                  className="w-20 h-20 object-cover border border-gray-300 m-1 cursor-pointer"
                 />
-              ))}
-            </div>
+              ))
+            )} */}
+            {Array.from({ length: 4 - post.images.length }).map((_, index) => (
+              <img
+              key={`duplicate-${index}`}
+              src={`${imgPlaceholder}`}
+              alt="Thumbnail"
+              className="w-20 h-20 object-cover border border-gray-300 m-1 cursor-pointer"
+            />
+            ))}
+          </div>
+          {post.images.length > 4 && (
+            <button
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 p-1 rounded-full shadow-md"
+              onClick={scrollRight}
+            >
+              &#9654;
+            </button>
           )}
         </div>
+      )}
+    </div>
+
 
         {/* Features and Add to Cart Section */}
         <div className="p-2 w-full md:w-1/2">
@@ -114,7 +163,7 @@ function ProductDetails() {
             )}
             <div className="mt-4">
               <button
-                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+                className="addToCart py-2 px-4 rounded hover:bg-blue-700"
                 onClick={() => handleAddToCart(post)}
               >
                 Add to Cart
@@ -167,7 +216,7 @@ function ProductDetails() {
       </div>
       {relatedPosts?.length > 0 && (
         <div className="mb-4">
-          <h3 className="text-xl font-semibold text-center">
+          <h3 className="text-xl  text-left">
             Related Products
           </h3>
           <ProductCard products={relatedPosts} />

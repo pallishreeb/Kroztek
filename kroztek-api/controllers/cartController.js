@@ -24,20 +24,52 @@ exports.addToCart = async (req, res) => {
 
 exports.getCart = async (req, res) => {
   const { userId } = req.params;
-  console.log(userId)
-  const cart = await Cart.findOne({ user: userId }).populate('products.product');
-  res.status(200).json(cart);
+
+  try {
+    // Find the cart and populate the product details
+    const cart = await Cart.findOne({ user: userId }).populate('products.product');
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found for this user' });
+    }
+
+    res.status(200).json(cart);
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    res.status(500).json({ error: 'Failed to fetch cart' });
+  }
 };
+
 
 exports.removeFromCart = async (req, res) => {
   const { userId, productId } = req.body;
 
-  let cart = await Cart.findOne({ user: userId });
+  try {
+    // Find the cart for the user
+    let cart = await Cart.findOne({ user: userId });
 
-  cart.products = cart.products.filter(p => p.product.toString() !== productId);
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found for this user' });
+    }
 
-  await cart.save();
-  res.status(200).json(cart);
+    // Check if the product exists in the cart
+    const productExists = cart.products.some(p => p.product.toString() === productId);
+
+    if (!productExists) {
+      return res.status(404).json({ error: 'Product not found in the cart' });
+    }
+
+    // Remove the product from the cart
+    cart.products = cart.products.filter(p => p.product.toString() !== productId);
+
+    // Save the updated cart
+    await cart.save();
+
+    res.status(200).json(cart);
+  } catch (error) {
+    console.error('Error removing product from cart:', error);
+    res.status(500).json({ error: 'Failed to remove product from cart' });
+  }
 };
 
 // Controller function
@@ -65,6 +97,29 @@ exports.updateCart = async (req, res) => {
       await cart.save();
       res.status(200).json(cart);
   } catch (error) {
+    console.log(error)
       res.status(500).json({ message: 'Failed to update cart', error });
   }
 };
+
+exports.syncCart = async (req, res) => {
+  const { userId, cart } = req.body;
+
+  if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+  }
+
+  try {
+      // Update or create the cart for the user
+      const updatedCart = await Cart.findOneAndUpdate(
+          { user: userId },
+          { products: cart },
+          { new: true, upsert: true }
+      );
+
+      res.status(200).json({ products: updatedCart.products });
+  } catch (error) {
+    console.log(error)
+      res.status(500).json({ error: 'Failed to sync cart' });
+  }
+}

@@ -47,7 +47,6 @@ const authReducer = (state,action) => {
                     isAuthenticated: false,
                     user:null,
                     error:action.payload,
-                    cart:[]
                 }
         case 'ADD_TO_CART':
             return {

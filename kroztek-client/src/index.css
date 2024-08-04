@@ -50,3 +50,27 @@ h2{
 .hr-thick {
   height: 4px; /* Change this value to the desired thickness */
 }
+.addToCart{
+  background-color: #005BAB;
+  color: #fff;
+}
+
+.productAddToCart{
+  border: 1px solid #005BAB;
+  color: #005BAB;
+}
+
+.productAddToCart:hover{
+  background-color: #005BAB;
+  color: #fff;
+}
+
+.textColor {
+  color: #777777;
+  font-family: Lato, sans-serif;
+}
+
+.order-details{
+  font-family: Lato, sans-serif;
+  color: #777777;
+}

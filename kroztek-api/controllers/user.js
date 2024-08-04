@@ -292,8 +292,10 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     try {
+      // console.log(req.body, req.user)
       const { _id } = req.user;
       const { name, phoneNumber, password, newPassword } = req.body;
+      let errors = {};
       const user = await User.findById(ObjectId(_id));
       if (name) {
         user.name = name;
@@ -325,6 +327,7 @@ module.exports = {
         response: userRes,
       });
     } catch (error) {
+      console.log("update user error",error)
       return res.status(500).json({
         success: false,
         message: "Internal Server Error",

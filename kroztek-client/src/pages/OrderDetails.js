@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuthApi } from '../context/authState';
 import imgPlaceholder from '../img/no-image.jpg';
 import { IMG_URL } from '../config';
@@ -40,9 +40,9 @@ const OrderDetails = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Order Details</h1>
-      <h2 className="text-xl font-semibold mb-2">Order ID: {order._id}</h2>
+    <div className="container mx-auto p-4 order-details">
+      <h1 className="text-xl font-bold mb-4">Order Details</h1>
+      <h2 className="text-xl  mb-2">Order ID: {order._id}</h2>
       <p>Total Amount: ₹{order.totalAmount}</p>
       <p>Payment Status: {order.paymentStatus}</p>
       {/* <p>Shipping Charge: ₹{order.shippingCharge}</p> */}
@@ -53,12 +53,14 @@ const OrderDetails = () => {
       <div className="grid grid-cols-1 gap-4 mt-4">
         {order.products.map((item) => (
           <div key={item.product._id} className="bg-white p-4 rounded shadow-md">
+             <Link to={`/product/${item?.product._id}`}>
             <img
               src={item.product?.images[0] ? `${IMG_URL}/images/${item.product.images[0]}` : imgPlaceholder}
               alt={item.product.name}
               className="w-64 h-64 object-cover rounded mr-4"
             />
             <h3 className="text-lg font-semibold">{item.product.name}</h3>
+            </Link>
             <p>Price: ₹{item.product.features.find((feature) => feature.name.toLowerCase() === 'price')?.value}</p>
             <p>Quantity: {item.quantity}</p>
           </div>

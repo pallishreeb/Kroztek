@@ -109,7 +109,7 @@ const Navbar = () => {
               {/* <div className="menu-item">
                 <CategoryDropdown />
               </div> */}
-              {renderMenusInLargeScreen()}
+              {/* {renderMenusInLargeScreen()} */}
               {/* <div className="menu-item">
                 <FormDropdown />
               </div> */}
@@ -118,19 +118,15 @@ const Navbar = () => {
                   <ProfileDropdown />
                 </div>
               )}
-               {isAuthenticated && (
+
               <div className="menu-item">
               <Link to="/cart" className="menu-text flex items-center">
                 <ShoppingCartOutlined className="text-2xl" />
               {cartCount > 0 && <span className="ml-2 bg-red-500 text-white rounded-full px-2">{cartCount}</span>}
                </Link>
               </div>
-               )}
-              {isAuthenticated ? (
-                <div className="menu-item">
-                  <button onClick={logout}>Logout</button>
-                </div>
-              ) : (
+
+              {!isAuthenticated && (
                 <div className="menu-item">
                   <Link to="/login" className="menu-text">Login</Link>
                 </div>
@@ -146,7 +142,7 @@ const Navbar = () => {
             {/* <div className="menu-item">
               <CategoryDropdown />
             </div> */}
-            {renderMenusInSmallScreen()}
+            {/* {renderMenusInSmallScreen()} */}
             {/* <div className="menu-item">
               <FormDropdown />
             </div> */}
@@ -155,7 +151,7 @@ const Navbar = () => {
                 <ProfileDropdown />
               </div>
             )}
-           {isAuthenticated && (
+
             <div className="menu-item">
               <Link to="/cart" className="flex items-center">
                 <ShoppingCartOutlined className="text-xl" />
@@ -164,12 +160,12 @@ const Navbar = () => {
                 )}
               </Link>
             </div>
-            )}
-            {isAuthenticated ? (
-              <div className="menu-item">
-                <button onClick={logout}>Logout</button>
-              </div>
-            ) : (
+            
+            {!isAuthenticated && (
+            //   <div className="menu-item">
+            //     <button onClick={logout}>Logout</button>
+            //   </div>
+            // ) : (
               <div className="menu-item">
                 <Link to="/login" className="menu-text">Login</Link>
               </div>

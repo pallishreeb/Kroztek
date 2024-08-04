@@ -6,5 +6,5 @@ router.post('/add', cartController.addToCart);
 router.get('/:userId', cartController.getCart);
 router.post('/remove', cartController.removeFromCart);
 router.post('/update', cartController.updateCart);
-
+router.post('/sync', cartController.syncCart);
 module.exports = router;

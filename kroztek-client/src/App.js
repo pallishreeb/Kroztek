@@ -1,7 +1,7 @@
 import { ToastContainer } from 'react-toastify';
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
-import Home from "./pages/home";
+// import Home from "./pages/home";
 import AppFooter from "./components/Footer";
 import ProductDetails from "./pages/productDetails";
 import ServiceDetails from "./pages/serviceDeatils";
@@ -35,13 +35,14 @@ function App() {
       <ToastContainer />
      <div className='app-container'>
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        {/* <Route exact path="/" element={<Home />} /> */}
+        <Route exact path="/" element={<Navigate to="/products/CG" />}/>
         <Route exact path="/services" element={<Services />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route exact path="/verifyEmail" element={<VerifyEmail />} />
-        <Route exact path="/cart" element={<ProtectedRoute element={<Cart />} />} />
+        <Route exact path="/cart" element={<Cart/>} />
         <Route exact path="/checkout" element={<ProtectedRoute element={<Checkout />} />} />
         <Route exact path="/requirement/:formType" element={<Contact />} />
         <Route exact path="/products/:brand" element={<Products />} />

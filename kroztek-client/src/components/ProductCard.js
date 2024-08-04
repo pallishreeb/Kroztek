@@ -68,7 +68,7 @@ const ProductCard = ({ products }) => {
               className="w-full h-40 object-cover rounded"
             />
           </div>
-          <div className="text-sm  mb-1">
+          <div className="text-sm  mb-1 textColor">
             {truncateText(product?.name.trim(), 30)}
           </div>
           <p className="text-gray-900 font-bold mb-2">
@@ -76,7 +76,7 @@ const ProductCard = ({ products }) => {
           </p>
           <div className="mt-2 flex justify-between">
             <button
-              className="border text-blue-600 py-1 px-2 rounded hover:bg-yellow-700 hover:text-white"
+              className="borde py-1 px-2 rounded  productAddToCart "
               onClick={(e) => {
                 e.stopPropagation();
                 handleAddToCart(product)

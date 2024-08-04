@@ -42,15 +42,15 @@ const MyOrders = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">My Orders</h1>
+    <div className="container mx-auto p-4 order-details">
+      <h1 className="text-xl font-bold mb-4">My Orders</h1>
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {orders.map((order) => (
             <div key={order._id} className="bg-white p-4 rounded shadow-md">
-              <h2 className="text-xl font-semibold mb-2">Order ID: {order._id}</h2>
+              <h2 className="text-xl mb-2">Order ID: {order._id}</h2>
               <p>Total Amount: ₹{order.totalAmount}</p>
               <p>Payment Status: {order.paymentStatus}</p>
               <p>Delivery Status: {order.status}</p>
@@ -62,12 +62,15 @@ const MyOrders = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {order.products.map(({ product, quantity }) => (
                     <div key={product._id} className="product-item">
+                      <Link to={`/product/${product._id}`}>
                       <img 
                         src={product.images ? `${IMG_URL}/images/${product.images[0]}` : imgPlaceholder} 
                         alt={product.name} 
                         className="w-28 h-28 object-cover rounded mb-2"
                       />
                       <p>{product.name}</p>
+                      
+                      </Link>
                       <p>Quantity: {quantity}</p>
                     </div>
                   ))}

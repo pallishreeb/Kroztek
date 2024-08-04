@@ -18,18 +18,33 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Update(form, localStorage.getItem('token'));
-      setMessage('Profile updated successfully!');
+      await Update(form, JSON.parse(localStorage.getItem('token')));
+      // setMessage('Profile updated successfully!');
     } catch (error) {
       setMessage('Profile update failed. Please try again.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-1/2 p-4 flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Profile</h2>
         <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email"
+              value={user?.email}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              readOnly
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
               Name
@@ -88,17 +103,17 @@ const Profile = () => {
           <div className="flex items-center justify-between mt-6">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="addToCart hover:bg-blue-700  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Update Profile
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={logout}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

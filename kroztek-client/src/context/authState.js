@@ -80,13 +80,21 @@ const AuthState = ({ children }) => {
             const res = await axios.get(`${API_URL}/user/singleUser`, config);
             localStorage.setItem("user", JSON.stringify(res.data.response));
             dispatch({ type: LOAD_USER_SUCCESS, payload: res.data.response });
-            // console.log(res.data.response)
-            fetchCartDetails(res.data?.response?._id).then((res) =>{
-                dispatch({
-                    type: 'LOAD_CART',
-                    payload: res,
-                });
-            })
+            let userId = res.data?.response?._id
+             // Sync local cart with backend
+            await syncCartWithBackend(userId).then((res) =>{
+                if(res){
+                    fetchCartDetails(userId).then((res) =>{
+                        dispatch({
+                            type: 'LOAD_CART',
+                            payload: res,
+                        });
+                    })
+                }
+            }).catch((error) =>{
+                console.error(error,"error in updating cart");
+            });
+           
            
         } catch (error) {
             toast(error.response.data.message);
@@ -234,21 +242,59 @@ const AuthState = ({ children }) => {
     
         localStorage.setItem("cart", JSON.stringify(cart));
     
+        if (userId) {
+            try {
+                const response = await fetch(`${API_URL}/cart/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId,
+                        productId: product._id,
+                        quantity: existingProduct ? existingProduct.quantity : 1
+                    })
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to update cart in backend');
+                }
+    
+                const updatedCart = await response.json();
+                dispatch({
+                    type: 'ADD_TO_CART',
+                    payload: updatedCart.products || [],
+                });
+    
+                toast.success('Item added to cart!');
+            } catch (error) {
+                console.error(error);
+                toast.error('Failed to add item to cart');
+            }
+        } else {
+            dispatch({
+                type: 'ADD_TO_CART',
+                payload: cart,
+            });
+        }
+    };
+    const syncCartWithBackend = async (userId) => {
+        const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+    
         try {
-            const response = await fetch(`${API_URL}/cart/add`, {
+            const response = await fetch(`${API_URL}/cart/sync`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     userId,
-                    productId: product._id,
-                    quantity: existingProduct ? existingProduct.quantity : 1
+                    cart: localCart
                 })
             });
     
             if (!response.ok) {
-                throw new Error('Failed to update cart in backend');
+                throw new Error('Failed to sync cart with backend');
             }
     
             const updatedCart = await response.json();
@@ -256,13 +302,14 @@ const AuthState = ({ children }) => {
                 type: 'ADD_TO_CART',
                 payload: updatedCart.products || [],
             });
-    
-            toast.success('Item added to cart!');
+
+            toast.success('Cart synced with backend!');
         } catch (error) {
             console.error(error);
-            toast.error('Failed to add item to cart');
+            toast.error('Failed to sync cart with backend');
         }
     };
+        
     
     const removeFromCart = async (productId) => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -273,34 +320,42 @@ const AuthState = ({ children }) => {
     
         localStorage.setItem("cart", JSON.stringify(cart));
     
-        try {
-            const response = await fetch(`${API_URL}/cart/remove`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userId,
-                    productId
-                })
-            });
+        if (userId) {
+            try {
+                const response = await fetch(`${API_URL}/cart/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId,
+                        productId
+                    })
+                });
     
-            if (!response.ok) {
-                throw new Error('Failed to remove item from cart in backend');
+                if (!response.ok) {
+                    throw new Error('Failed to remove item from cart in backend');
+                }
+    
+                const updatedCart = await response.json();
+                dispatch({
+                    type: 'REMOVE_FROM_CART',
+                    payload: updatedCart.products || [],
+                });
+    
+                toast.success('Item removed from cart!');
+            } catch (error) {
+                console.error(error);
+                toast.error('Failed to remove item from cart');
             }
-    
-            const updatedCart = await response.json();
+        } else {
             dispatch({
                 type: 'REMOVE_FROM_CART',
-                payload: updatedCart.products || [],
+                payload: cart,
             });
-    
-            toast.success('Item removed from cart!');
-        } catch (error) {
-            console.error(error);
-            toast.error('Failed to remove item from cart');
         }
     };
+    
     
     const fetchCartDetails = async (userId) => {
         try {
@@ -371,7 +426,8 @@ const AuthState = ({ children }) => {
     
     const logout = () => {
         dispatch({ type: LOGOUT });
-        localStorage.removeItem('cart');
+         // Redirect to login page
+        window.location.href = '/login';
     };
 
     return (
@@ -387,6 +443,7 @@ const AuthState = ({ children }) => {
                 removeFromCart,
                 placeOrder,
                 getOrdersByUser,
+                fetchCartDetails,
                 getOrder,
                 login,
                 logout,

@@ -15,7 +15,7 @@ const CartPage = () => {
     setCart(cartItems);
 
   }, []);
-
+  const navigateToDetails = (id) => navigate(`/product/${id}`);
   const handleQuantityChange = async (id, change) => {
     const updatedCart = cart.map(item => {
         if (item._id === id) {
@@ -89,11 +89,12 @@ const CartPage = () => {
             <img
               src={item?.images?.length > 0 ? `${IMG_URL}/images/${item?.images[0]}` : imgPlaceholder}
               alt={item.name}
-              className="w-24 h-24 object-cover rounded mr-4"
+              className="w-28 h-28 object-cover rounded mr-4 cursor-pointer"
+              onClick={() => navigateToDetails(item?._id)}
             />
 
               <div className="flex-grow">
-                <h3 className="text-lg font-semibold">{item.name}</h3>
+                <h3 className="text-lg font-semibold textColor">{item.name}</h3>
                 <p className="text-gray-800">Price: ₹{item?.features?.find(feature => feature.name.toLowerCase() === 'price')?.value}</p>
                 <div className="flex items-center mt-2">
                   <button
@@ -130,7 +131,7 @@ const CartPage = () => {
           <p className="text-gray-800 mb-2">Total Quantity: {cart?.reduce((total, item) => total + item.quantity, 0)}</p>
           <p className="text-gray-800 mb-4">Subtotal: ₹{getTotal().toLocaleString()}</p>
           <button
-            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 w-full"
+            className="addToCart py-2 px-4 rounded hover:bg-blue-700 w-full"
             onClick={handleCheckout}
           >
             Checkout
