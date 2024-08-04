@@ -39,7 +39,7 @@ require("./config/passport")(passport);
 
 //connect to DB
 connectDb()
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/dev/api/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get("/", (_,res) =>{
     res.send("Welcome to Kroztek integrated solution!")
 })
