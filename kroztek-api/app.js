@@ -50,6 +50,8 @@ app.use("/dev/api/v1/service", require("./routes/service"));
 app.use("/dev/api/v1/notification", require("./routes/notification"));
 app.use("/dev/api/v1/metadata", require("./routes/metadata"));
 app.use("/dev/api/v1/client", require("./routes/client"));
+app.use('/dev/api/v1/cart', require('./routes/cartRoutes'));
+app.use('/dev/api/v1/order', require('./routes/orderRoutes'));
 //Catch 404 error
 app.use((req, _, next) => {
     const error = new Error(`Unsupported Route.- ${req.originalUrl}`);

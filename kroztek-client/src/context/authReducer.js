@@ -36,9 +36,9 @@ const authReducer = (state,action) => {
                 isverified:false,
 
             } 
-            case LOGIN_FAIL:
-            case LOGOUT:
-           case LOAD_USER_FAIL:
+        case LOGIN_FAIL:
+        case LOGOUT:
+        case LOAD_USER_FAIL:
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 return{
@@ -46,8 +46,24 @@ const authReducer = (state,action) => {
                     token:null,
                     isAuthenticated: false,
                     user:null,
-                    error:action.payload
+                    error:action.payload,
+                    cart:[]
                 }
+        case 'ADD_TO_CART':
+            return {
+                ...state,
+                cart: [...state.cart, action.payload],
+            };
+        case 'REMOVE_FROM_CART':
+            return {
+                ...state,
+                cart: action.payload,
+            };
+        case 'LOAD_CART':
+            return {
+                ...state,
+                cart: action.payload,
+            };     
         default:
             return  state;
     }

@@ -16,23 +16,36 @@ module.exports = {
     try {
       let errors = {};
       const { name, email, password, phoneNumber } = req.body;
-      const user = await User.findOne({ email });
-      if (user) {
-        errors.email = "Email already exist";
+  
+      // Validate required fields
+      if (!email) {
+        errors.email = "Email is required";
+      }
+      if (!password) {
+        errors.password = "Password is required";
+      }
+      if (Object.keys(errors).length > 0) {
         return res.status(400).json(errors);
       }
-
+  
+      const user = await User.findOne({ email });
+      if (user) {
+        errors.email = "Email already exists";
+        return res.status(400).json(errors);
+      }
+  
       let hashedPassword;
       hashedPassword = await bcrypt.hash(password, 8);
-
+  
       //GENERATE OTP
       const OTP = Math.floor(100000 + Math.random() * 900000);
-      const body = `Hi Here is OTP ${OTP} for email verification`;
-      //generate unique Id for user
+      const body = `Hi, here is your OTP ${OTP} for email verification`;
+  
+      // Generate unique ID for user
       generateNextUserId('user')
         .then(async (nextUserId) => {
           console.log(`Next User ID: ${nextUserId}`);
-          const newUser = await new User({
+          const newUser = new User({
             name,
             userId: nextUserId,
             email,
@@ -42,25 +55,33 @@ module.exports = {
             isEmailVerified: false,
           });
           await newUser.save();
-          //SEND MAIL TO USER FOR EMAIL VERIFICATION
-          await sendMail(email, "EMail verification", body);
-          //remove otp after 2 min
+  
+          // Send email to user for email verification
+          await sendMail(email, "Email Verification", body);
+  
+          // Remove OTP after 200 seconds
           setTimeout(async () => {
-            newUser.otp = -1
-            await newUser.save()
-          }, 200000)
+            newUser.otp = -1;
+            await newUser.save();
+          }, 200000);
+  
+          res.status(200).json({
+            message: "User registered successfully. Kindly verify your email.",
+            success: true,
+            response: {},
+          });
         })
         .catch((error) => {
           console.error('Error:', error);
+          res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message,
+          });
         });
-
-      res.status(200).json({
-        message: "User registerd successfully, kindly verify your mail",
-        success: true,
-        response: {},
-      });
+  
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
         success: false,
         message: "Internal Server Error",
@@ -102,6 +123,16 @@ module.exports = {
     try {
       let errors = {};
       const { email, password } = req.body;
+        // Validate required fields
+        if (!email) {
+          errors.message = "Email is required";
+        }
+        if (!password) {
+          errors.message = "Password is required";
+        }
+        if (Object.keys(errors).length > 0) {
+          return res.status(400).json(errors);
+        }
       const user = await User.findOne({ email });
       if (!user) {
         errors.message = "Email doesnt not exist";

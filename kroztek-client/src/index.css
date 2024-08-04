@@ -9,6 +9,7 @@
 }
 html, body {
   scroll-behavior: smooth;
+
 }
 a {
   text-decoration: none;
@@ -37,4 +38,15 @@ h2{
 /* Change the color of active dots */
 .slick-active button {
   background-color: #ff0000; /* Change to your desired color */
+}
+
+.product-details{
+  margin: auto;
+  font-family: Lato, sans-serif;
+  line-height: 1.6;
+  color: #777777;
+}
+
+.hr-thick {
+  height: 4px; /* Change this value to the desired thickness */
 }

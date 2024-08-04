@@ -1,5 +1,3 @@
-/** @format */
-
 import { useReducer, useEffect, useContext } from "react";
 import AuthContext from "./index";
 import authReducer from "./authReducer";
@@ -18,7 +16,6 @@ import {
     VERIFY_FAIL,
     VERIFY_SUCCESS,
 } from "./constants";
-import authContext from "./index";
 
 const AuthState = ({ children }) => {
     const navigate = useNavigate()
@@ -28,23 +25,51 @@ const AuthState = ({ children }) => {
         isAuthenticated: null,
         isRegistered: false,
         isverified: false,
+        cart: [],  // Added cart state
     };
     const [state, dispatch] = useReducer(authReducer, initialState);
     useEffect(() => {
-        if (state.token === null && localStorage.getItem("token")) {
+        const token = localStorage.getItem("token");
+        const userString = localStorage.getItem("user");
+        const cartString = localStorage.getItem("cart");
+    
+        const user = userString ? JSON.parse(userString) : null;
+        const cart = cartString ? JSON.parse(cartString) : []; // Ensure cart is an array
+    
+        if (token && !state.token) {
             dispatch({
                 type: LOGIN_SUCCESS,
-                payload: JSON.parse(localStorage.getItem("token")),
+                payload: JSON.parse(token),
             });
         }
-        if (state.user === null && localStorage.getItem("user")) {
+    
+        if (user && !state.user) {
             dispatch({
                 type: LOAD_USER_SUCCESS,
-                payload: JSON.parse(localStorage.getItem("user")),
+                payload: user,
             });
         }
-    }, [state]);
-
+    
+        if (user && !cartString) {
+            console.log(user?._id);
+            fetchCartDetails(user?._id).then((res) => {
+                if (res) {
+                    dispatch({
+                        type: 'LOAD_CART',
+                        payload: res.products || [], // Ensure it's an array
+                    });
+                    localStorage.setItem("cart", JSON.stringify(res.products || []));
+                }
+            });
+        } else {
+            dispatch({
+                type: 'LOAD_CART',
+                payload: cart, // Use the cart from localStorage
+            });
+        }
+    }, [state.token, state.user]);
+    
+    
     const loadUser = async (token) => {
         const config = {
             headers: {
@@ -55,8 +80,15 @@ const AuthState = ({ children }) => {
             const res = await axios.get(`${API_URL}/user/singleUser`, config);
             localStorage.setItem("user", JSON.stringify(res.data.response));
             dispatch({ type: LOAD_USER_SUCCESS, payload: res.data.response });
+            // console.log(res.data.response)
+            fetchCartDetails(res.data?.response?._id).then((res) =>{
+                dispatch({
+                    type: 'LOAD_CART',
+                    payload: res,
+                });
+            })
+           
         } catch (error) {
-            // console.log(error.response)
             toast(error.response.data.message);
             dispatch({ type: LOAD_USER_FAIL });
         }
@@ -76,10 +108,14 @@ const AuthState = ({ children }) => {
             });
             localStorage.setItem("token", JSON.stringify(res.data.token));
             loadUser(res.data.token);
+            
             navigate('/')
         } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message || "Try sometimes later");
+            toast.error(
+                error.response?.data?.message
+                    ? error.response.data.message
+                    : "Try again later"
+            );
             dispatch({
                 type: LOGIN_FAIL,
                 payload: error.response.data.message,
@@ -87,7 +123,7 @@ const AuthState = ({ children }) => {
         }
     };
 
-    const register = async (formData) => {
+    const register = async (formData, navigate) => {
         try {
             const config = {
                 headers: {
@@ -99,11 +135,10 @@ const AuthState = ({ children }) => {
                 formData,
                 config
             );
-            //  console.log(res);
             localStorage.setItem("emailToVerify", formData.email);
             dispatch({ type: REGISTER_SUCCESS });
+            navigate('/verifyEmail')
         } catch (error) {
-            console.log(error.response.data.email);
             toast.error(
                 error.response?.data?.email
                     ? error.response.data.email
@@ -115,7 +150,8 @@ const AuthState = ({ children }) => {
             });
         }
     };
-    const verifyEmail = async (data) => {
+
+    const verifyEmail = async (data, navigate) => {
         try {
             const config = {
                 headers: {
@@ -123,36 +159,31 @@ const AuthState = ({ children }) => {
                 },
             };
             const res = await axios.post(`${API_URL}/user/verifyEmail`, data, config);
-            // console.log(res.data.message);
             toast.success(res.data.message);
             localStorage.removeItem("emailToVerify");
             dispatch({ type: VERIFY_SUCCESS });
-            // navigate('/login')
+            navigate('/login')
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
             dispatch({ type: VERIFY_FAIL });
         }
     };
+
     const Update = async (data, token) => {
         try {
-            console.log(data);
             const config = {
                 headers: {
-                    "Content-Type": "application/json",
-                    authorization: `${token}`,
+                    "Authorization": `${token}`, // Correct format
                 },
             };
             const res = await axios.put(`${API_URL}/user/editDetails`, data, config);
-            console.log(res.data.message);
             toast.success(res.data.message);
             loadUser(token);
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
         }
     };
-
+    
     const forgotPassword = async (data) => {
         try {
             const config = {
@@ -165,10 +196,10 @@ const AuthState = ({ children }) => {
             localStorage.setItem("emailToVerify", data.email);
             dispatch({ type: VERIFY_SUCCESS });
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
         }
     };
+
     const resetPassword = async (data) => {
         try {
             const config = {
@@ -185,12 +216,162 @@ const AuthState = ({ children }) => {
             localStorage.setItem("emailToVerify", data.email);
             dispatch({ type: VERIFY_SUCCESS });
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
         }
     };
+    const addToCart = async (product) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const userId = user?._id;
+    
+        const existingProduct = cart.find(item => item._id === product._id);
+    
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+    
+        localStorage.setItem("cart", JSON.stringify(cart));
+    
+        try {
+            const response = await fetch(`${API_URL}/cart/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId,
+                    productId: product._id,
+                    quantity: existingProduct ? existingProduct.quantity : 1
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to update cart in backend');
+            }
+    
+            const updatedCart = await response.json();
+            dispatch({
+                type: 'ADD_TO_CART',
+                payload: updatedCart.products || [],
+            });
+    
+            toast.success('Item added to cart!');
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to add item to cart');
+        }
+    };
+    
+    const removeFromCart = async (productId) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const userId = user?._id;
+    
+        cart = cart.filter(item => item._id !== productId);
+    
+        localStorage.setItem("cart", JSON.stringify(cart));
+    
+        try {
+            const response = await fetch(`${API_URL}/cart/remove`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId,
+                    productId
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to remove item from cart in backend');
+            }
+    
+            const updatedCart = await response.json();
+            dispatch({
+                type: 'REMOVE_FROM_CART',
+                payload: updatedCart.products || [],
+            });
+    
+            toast.success('Item removed from cart!');
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to remove item from cart');
+        }
+    };
+    
+    const fetchCartDetails = async (userId) => {
+        try {
+            const response = await fetch(`${API_URL}/cart/${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart details');
+            }
+    
+            const cart = await response.json();
+            return cart || { products: [] }; // Ensure cart is always an object with products
+        } catch (error) {
+            console.error(error);
+            return { products: [] }; // Return a default value
+        }
+    };
+
+    const placeOrder = async (orderData) => {
+        try {
+          const response = await fetch(`${API_URL}/order/create`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Failed to place order');
+          }
+    
+          fetchCartDetails(orderData.userId).then((res) =>{
+            dispatch({
+                type: 'LOAD_CART',
+                payload: res,
+            });
+        })
+          return response.json();
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      };
+      const getOrdersByUser = async (userId) => {
+        try {
+          const response = await axios.get(`${API_URL}/order/user/${userId}`);
+          return response.data;
+        } catch (error) {
+          console.error('Failed to fetch orders:', error);
+          throw error;
+        }
+      };
+    
+      const getOrder = async (orderId) => {
+        try {
+          const response = await axios.get(`${API_URL}/order/${orderId}`);
+          return response.data;
+        } catch (error) {
+          console.error('Failed to fetch order:', error);
+          throw error;
+        }
+      };
+    
     const logout = () => {
         dispatch({ type: LOGOUT });
+        localStorage.removeItem('cart');
     };
 
     return (
@@ -201,6 +382,12 @@ const AuthState = ({ children }) => {
                 user: state.user,
                 isRegistered: state.isRegistered,
                 isverified: state.isverified,
+                cart: state.cart,
+                addToCart,
+                removeFromCart,
+                placeOrder,
+                getOrdersByUser,
+                getOrder,
                 login,
                 logout,
                 loadUser,
@@ -218,5 +405,4 @@ const AuthState = ({ children }) => {
 
 export default AuthState;
 
-
-export const useAuthApi = () => useContext(authContext);
+export const useAuthApi = () => useContext(AuthContext);

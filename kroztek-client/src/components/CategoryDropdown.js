@@ -31,12 +31,12 @@ const DropdownMenu = () => {
             <Link to="/products/CG" onClick={() => Clearfilters()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               CG
             </Link>
-            <Link to="/products/Sovereign" onClick={() => Clearfilters()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+            {/* <Link to="/products/Sovereign" onClick={() => Clearfilters()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               Sovereign Pumps
             </Link>
             <Link to="/products/OLI"  onClick={() => Clearfilters()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
               OLI
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}

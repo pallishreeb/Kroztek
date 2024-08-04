@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import imgPlaceholder from "../img/no-image.jpg";
 import { IMG_URL } from "../config";
-
+import { useAuthApi } from "../context/authState";
 const ProductCard = ({ products }) => {
   const navigate = useNavigate();
-
+  const { addToCart } = useAuthApi();
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.slice(0, maxLength - 3) + "...";
@@ -18,13 +18,43 @@ const ProductCard = ({ products }) => {
     tempElement.innerHTML = htmlString;
     return tempElement.textContent || tempElement.innerText || "";
   }
+
   const navigateToDetails = (id) => navigate(`/product/${id}`);
+
+  // const addToCart = (product) => {
+  //   // Fetch the existing cart from localStorage
+  //   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  //   // Check if the product is already in the cart
+  //   const existingProduct = cart.find(item => item._id === product._id);
+
+  //   if (existingProduct) {
+  //     // Increase the quantity if the product is already in the cart
+  //     existingProduct.quantity += 1;
+  //   } else {
+  //     // Add the new product to the cart
+  //     cart.push({ ...product, quantity: 1 });
+  //   }
+
+  //   // Save the updated cart back to localStorage
+  //   localStorage.setItem("cart", JSON.stringify(cart));
+
+  //   console.log(`Product added to cart: ${product.name}`);
+  // };
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
+  const getPrice = (features) => {
+    const priceFeature = features.find(feature => feature.name.toLowerCase() === "price");
+    return priceFeature ? priceFeature.value : "00";
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {products?.map((product, index) => (
         <div
           key={index}
-          className="border p-4 cursor-pointer relative"
+          className="border p-4 cursor-pointer relative bg-white rounded-lg shadow-sm"
           onClick={() => navigateToDetails(product?._id)}
         >
           <div className="mb-2">
@@ -35,21 +65,24 @@ const ProductCard = ({ products }) => {
                   : imgPlaceholder
               }
               alt={product.name}
-              className="w-full h-auto"
+              className="w-full h-40 object-cover rounded"
             />
           </div>
-          <div className="text-lg font-bold">
+          <div className="text-sm  mb-1">
             {truncateText(product?.name.trim(), 30)}
           </div>
-          <p className="text-gray-600">
-            {truncateText(stripHtmlTags(product?.description), 180)}
+          <p className="text-gray-900 font-bold mb-2">
+            {`₹${getPrice(product.features)}`}
           </p>
-          <div className="mt-4">
+          <div className="mt-2 flex justify-between">
             <button
-              className="bg-blue-500 text-white w-full py-2 rounded hover:bg-blue-700"
-              onClick={() => navigate(`/service/${product?._id}`)}
+              className="border text-blue-600 py-1 px-2 rounded hover:bg-yellow-700 hover:text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(product)
+              }}
             >
-              Know More
+              Add to Cart
             </button>
           </div>
         </div>
