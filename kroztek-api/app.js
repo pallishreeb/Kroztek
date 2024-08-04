@@ -6,6 +6,7 @@ const hpp = require("hpp");
 const helmet = require("helmet");
 const passport = require("passport");
 const morgan = require("morgan");
+const path = require("path");
 const connectDb = require("./config/dbConfig")
 
 // Configure CORS to allow requests from any origin
@@ -38,7 +39,7 @@ require("./config/passport")(passport);
 
 //connect to DB
 connectDb()
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get("/", (_,res) =>{
     res.send("Welcome to Kroztek integrated solution!")
 })
