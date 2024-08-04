@@ -6,6 +6,7 @@ const hpp = require("hpp");
 const helmet = require("helmet");
 const passport = require("passport");
 const morgan = require("morgan");
+const path = require("path");
 const connectDb = require("./config/dbConfig")
 
 // Configure CORS to allow requests from any origin
@@ -16,33 +17,46 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-//middlewares enable
+
+// Middlewares enable
 app.use(hpp());  // HTTP parameter pollution (HPP)
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-//No clickjacking protection configured
+// No clickjacking protection configured
 app.use(helmet.frameguard());
 
-//Prevent mime sniffing
+// Prevent mime sniffing
 app.use(helmet.noSniff());
 app.use(helmet({
     crossOriginResourcePolicy: false,
-  }));
+}));
+
 // Passport Middleware
 app.use(passport.initialize());
 
 // Passport Config.
 require("./config/passport")(passport);
 
-//connect to DB
+// Connect to DB
 connectDb()
+
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, 'kroztek-client/build')));
+
+// Route to serve the frontend build index.html
+app.get('/', (_, res) => {
+    res.sendFile(path.join(__dirname, 'kroztek-client/build', 'index.html'));
+});
+
+// Serve uploaded files
 app.use('/uploads', express.static('uploads'));
-app.get("/", (_,res) =>{
-    res.send("Welcome to Kroztek integrated solution!")
+
+app.get('/dev/api', (req,res) =>{
+    res.send('Hello from dev API')
 })
-//api routes
+// API routes
 app.use("/dev/api/v1/user", require("./routes/user"));
 app.use("/dev/api/v1/product", require("./routes/product"));
 app.use("/dev/api/v1/category", require("./routes/category"));
@@ -52,14 +66,15 @@ app.use("/dev/api/v1/metadata", require("./routes/metadata"));
 app.use("/dev/api/v1/client", require("./routes/client"));
 app.use('/dev/api/v1/cart', require('./routes/cartRoutes'));
 app.use('/dev/api/v1/order', require('./routes/orderRoutes'));
-//Catch 404 error
+
+// Catch 404 error
 app.use((req, _, next) => {
     const error = new Error(`Unsupported Route.- ${req.originalUrl}`);
     error.status = 404;
     next(error);
 });
 
-//Error handler functions
+// Error handler functions
 app.use((error, _, res, next) => {
     res.status(error.status || 500);
     console.log(error)
@@ -71,12 +86,9 @@ app.use((error, _, res, next) => {
     next()
 });
 
-
-
-//listen to server
+// Listen to server
 const PORT = config.PORT || 8000;
 
 module.exports = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-

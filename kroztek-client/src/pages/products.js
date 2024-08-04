@@ -4,9 +4,9 @@ import { allSubCategories } from "../networkCalls/categories";
 import { filterBySubCategory , AllPosts} from "../networkCalls/products";
 import { usePostApi } from "../context/PostProvider";
 import "../css/category.css";
-import BusinessDescription from "../components/BusinessDescription";
+// import BusinessDescription from "../components/BusinessDescription";
 import ProductCard from "../components/ProductCard";
-import Carousel from "../components/Carousel";
+// import Carousel from "../components/Carousel";
 import Pagination from "../components/Pagination";
 
 function Products() {
