@@ -43,11 +43,11 @@ require("./config/passport")(passport);
 connectDb()
 
 // Serve static files from the frontend build directory
-app.use(express.static(path.join(__dirname, 'kroztek-client/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Route to serve the frontend build index.html
 app.get('/', (_, res) => {
-    res.sendFile(path.join(__dirname, 'kroztek-client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Serve uploaded files
