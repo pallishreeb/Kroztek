@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+// import { AppstoreOutlined } from '@ant-design/icons';
 import { allSubCategories } from "../networkCalls/categories";
 import { filterBySubCategory , AllPosts} from "../networkCalls/products";
 import { usePostApi } from "../context/PostProvider";
@@ -8,6 +10,7 @@ import "../css/category.css";
 import ProductCard from "../components/ProductCard";
 // import Carousel from "../components/Carousel";
 import Pagination from "../components/Pagination";
+import { APP_URL } from "../config";
 
 function Products() {
   const { brand } = useParams();
@@ -21,7 +24,7 @@ function Products() {
   const [isOpen, setIsOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 15;
+  const itemsPerPage = 12;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -85,6 +88,18 @@ function Products() {
 
   return (
     <>
+    <Helmet>
+      <title>{brand}</title>
+      { categoriesData?.map((category, index) => (
+        <meta name="description" content={category.name} key={index} />
+      ))}
+       <meta
+          name="description"
+          content="CG Emotron, CG Drives,Variable Frequency Drives VFD applications VFD manufacturers Energy-efficient VFDs for HVAC systemsIndustrial VFDs for motor control Industrial VFDs"
+        />
+      <link rel="canonical" href={`${APP_URL}/products/CG`} />
+    </Helmet>
+    <div className="md:w-5/6 container mx-auto">
       {/* <section>
         <Carousel />
       </section> */}
@@ -97,7 +112,8 @@ function Products() {
               onClick={toggleMenu}
               className="addToCart py-2 px-4 rounded hover:bg-blue-700"
             >
-              Categories
+               {/* <AppstoreOutlined style={{ fontSize: '24px', padding:'2px' }} /> */}
+             Categories
             </button>
           </div>
           {loading ? (
@@ -111,7 +127,7 @@ function Products() {
                       <>
                       <div key={index} className="rounded-md p-2 mb-2">
                         <div
-                          className="cursor-pointer flex items-center justify-between"
+                          className="cursor-pointer flex items-center justify-between textColor"
                           onClick={() =>
                             setExpandedCategory(expandedCategory === index ? null : index)
                           }
@@ -138,7 +154,7 @@ function Products() {
                                 </>
                               ))
                             ) : (
-                              <li>No subcategories</li>
+                              <li>N/A</li>
                             )}
                           </ul>
                         )}
@@ -173,6 +189,7 @@ function Products() {
           )}
         </div>
       </div>
+    </div>
     </>
   );
 }

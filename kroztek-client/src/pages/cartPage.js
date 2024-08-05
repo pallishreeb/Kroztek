@@ -82,9 +82,9 @@ const CartPage = () => {
     <div className="flex flex-col md:flex-row p-4 bg-gray-100">
       {/* Left Side: Cart Items */}
       <div className="w-full md:w-2/3 pr-4 mb-4 md:mb-0">
-        <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+        <h2 className="text-xl font-bold mb-4 textColor">Your Cart</h2>
         {cart.length === 0 ? (
-          <p className="text-center text-gray-600">Your cart is empty.</p>
+          <p className="text-gray-600">Your cart is empty.</p>
         ) : (
           cart.map(item => (
             <div key={item._id} className="flex border-b pb-4 mb-4">
@@ -126,7 +126,7 @@ const CartPage = () => {
 
       {/* Right Side: Summary */}
       <div className="w-full md:w-1/3 pl-4">
-        <h2 className="text-2xl font-bold mb-4">Summary</h2>
+        <h2 className="text-xl font-bold mb-4 textColor">Summary</h2>
         <div className="bg-white p-4 rounded shadow-sm">
           <p className="text-gray-800 mb-2">Total Products: {cart.length}</p>
           <p className="text-gray-800 mb-2">Total Quantity: {cart.reduce((total, item) => total + item.quantity, 0)}</p>

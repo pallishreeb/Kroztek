@@ -30,7 +30,9 @@
   }
 
   .contact-info .heading {
-    color: #005BAB;
+    /* color: #005BAB; */
+    color: #777777;
+    cursor: pointer;
   }
 
   .small-screen{

@@ -5,12 +5,14 @@ import App from './App';
 // import './css/bootstrap.min.css'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom"
+import {HelmetProvider} from 'react-helmet-async'
 import AuthState from './context/authState';
 import { PostApiProvider } from './context/PostProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <HelmetProvider>
     <BrowserRouter>
       <AuthState>
       <PostApiProvider>
@@ -18,6 +20,7 @@ root.render(
       </PostApiProvider>
       </AuthState>
     </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );
 
