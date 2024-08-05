@@ -79,7 +79,7 @@ const ProductCard = ({ products }) => {
             />
           </div>
           <div className="text-sm  mb-1 textColor">
-            {truncateText(product?.name.trim(), 30)}
+            {truncateText(product?.name.trim(), 60)}
           </div>
           <p className="text-gray-900 font-bold mb-2">
             {`₹${getPrice(product.features)}`}

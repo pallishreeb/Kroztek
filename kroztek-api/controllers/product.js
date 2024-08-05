@@ -209,7 +209,7 @@ exports.relatedProducts = async (req, res) => {
     // Define a query to find related products in the same category or subcategory
     const query = {
       $or: [
-        { category: targetProduct.category }, // Products in the same category
+        // { category: targetProduct.category }, // Products in the same category
         { subcategory: targetProduct.subcategory }, // Products in the same subcategory
       ],
       _id: { $ne: targetProduct._id }, // Exclude the target product itself

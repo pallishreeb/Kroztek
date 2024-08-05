@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import imgPlaceholder from '../img/no-image.jpg';
 import { IMG_URL } from '../config';
 import { useAuthApi } from "../context/authState";
@@ -84,7 +84,10 @@ const CartPage = () => {
       <div className="w-full md:w-2/3 pr-4 mb-4 md:mb-0">
         <h2 className="text-xl font-bold mb-4 textColor">Your Cart</h2>
         {cart.length === 0 ? (
+          <>
           <p className="text-gray-600">Your cart is empty.</p>
+          <a href='/' className='text-blue-700'>Return to Shopping</a>
+          </>
         ) : (
           cart.map(item => (
             <div key={item._id} className="flex border-b pb-4 mb-4">
