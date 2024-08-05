@@ -13,7 +13,7 @@ const Navbar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const { user, isAuthenticated, logout,cart } = useAuthApi();
+  const { isAuthenticated,cart } = useAuthApi();
   useEffect(() => {
     setCartCount(cart?.length || 0);
 }, [cart]);
@@ -41,29 +41,7 @@ const Navbar = () => {
     setMenuVisible(!menuVisible);
   };
 
-  const renderMenusInLargeScreen = () => {
-    return [
-      { path: "/products/CG", name: "Products" }
-    ].map((item) => (
-      <div className="menu-item" key={item.path}>
-        <Link to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
-          <span className="menu-text">{item.name}</span>
-        </Link>
-      </div>
-    ));
-  };
 
-  const renderMenusInSmallScreen = () => {
-    return [
-      { path: "/products/CG", name: "Products" }
-    ].map((item) => (
-      <div className="menu-item-vertical" key={item.path}>
-        <Link to={item.path} style={{ textDecoration: "none", color: "inherit" }}>
-          <span className="menu-text">{item.name}</span>
-        </Link>
-      </div>
-    ));
-  };
   // const renderMenusInLargeScreen = () => {
   //   return [
   //     { path: "/services", name: "Services" }

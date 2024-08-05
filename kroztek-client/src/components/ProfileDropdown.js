@@ -6,7 +6,7 @@ import { LogoutOutlined } from '@ant-design/icons'; // Import the logout icon fr
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { user, isAuthenticated, logout } = useAuthApi();
+  const { user, logout } = useAuthApi();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
