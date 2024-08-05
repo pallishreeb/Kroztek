@@ -99,7 +99,7 @@ function Products() {
         />
       <link rel="canonical" href={`${APP_URL}/products/CG`} />
     </Helmet>
-    <div className="md:w-5/6 container mx-auto">
+    {/* <div className="md:w-5/6 container mx-auto"> */}
       {/* <section>
         <Carousel />
       </section> */}
@@ -189,7 +189,7 @@ function Products() {
           )}
         </div>
       </div>
-    </div>
+    {/* </div> */}
     </>
   );
 }

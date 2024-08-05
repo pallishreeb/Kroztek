@@ -95,6 +95,7 @@ function ProductDetails() {
           name="description"
           content="CG Emotron, CG Drives,Variable Frequency Drives VFD applications VFD manufacturers Energy-efficient VFDs for HVAC systemsIndustrial VFDs for motor control Industrial VFDs"
         />
+        <meta property="og:title" content={post?.name}/>
       </Helmet>
 
       <div className="container mx-auto p-8 md:w-2/3">
