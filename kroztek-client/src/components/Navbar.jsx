@@ -2,7 +2,7 @@
 
 import "../css/Navbar.css";
 import React, { useState, useEffect } from "react";
-import { MenuOutlined, CloseOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { MenuOutlined, CloseOutlined, ShoppingCartOutlined,UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 // import CategoryDropdown from "./CategoryDropdown";
 import ProfileDropdown from "./ProfileDropdown";
@@ -99,14 +99,14 @@ const Navbar = () => {
 
               <div className="menu-item">
               <Link to="/cart" className="menu-text flex items-center">
-                <ShoppingCartOutlined className="text-2xl" />
+               My Cart {" "} <ShoppingCartOutlined className="text-2xl" />
               {cartCount > 0 && <span className="ml-2 bg-red-500 text-white rounded-full px-2">{cartCount}</span>}
                </Link>
               </div>
 
               {!isAuthenticated && (
                 <div className="menu-item">
-                  <Link to="/login" className="menu-text">Login</Link>
+                  <Link to="/login" className="menu-text">Login {" "} <UserOutlined className="text-xl"/></Link>
                 </div>
               )}
               
@@ -132,7 +132,7 @@ const Navbar = () => {
 
             <div className="menu-item">
               <Link to="/cart" className="flex items-center">
-                <ShoppingCartOutlined className="text-xl" />
+                My Cart {" "} <ShoppingCartOutlined className="text-xl" />
                 {cartCount > 0 && (
                   <span className="ml-2 bg-red-500 text-white rounded-full px-2 py-1 text-sm">{cartCount}</span>
                 )}
@@ -145,7 +145,7 @@ const Navbar = () => {
             //   </div>
             // ) : (
               <div className="menu-item">
-                <Link to="/login" className="menu-text">Login</Link>
+                <Link to="/login" className="menu-text">Login {" "} <UserOutlined className="text-xl"/></Link>
               </div>
             )}
           </div>

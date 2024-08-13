@@ -22,6 +22,9 @@ import Checkout from './pages/checkout';
 import ProtectedRoute from './components/ProtectedRoute';
 import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
+import FAQPage from './pages/faq';
+import TermsAndConditionsPage from './pages/termAndCondition';
+import PrivacyPolicyPage from './pages/privacyPolicy';
 function App() {
   return (
     <div className="App">
@@ -38,6 +41,9 @@ function App() {
         {/* <Route exact path="/" element={<Home />} /> */}
         <Route exact path="/" element={<Navigate to="/products/CG" />}/>
         <Route exact path="/services" element={<Services />} />
+        <Route exact path="/faq" element={<FAQPage />} />
+        <Route exact path="/terms-and-condition" element={<TermsAndConditionsPage />} />
+        <Route exact path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/profile" element={<ProtectedRoute element={<Profile />} />} />
