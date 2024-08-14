@@ -23,14 +23,15 @@ const TermsAndConditionsPage = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">🔄 Return and Refund Policy</h2>
         <p className="text-gray-700 mb-4">
-          At Kroztek, we strive to provide high-quality products for your industrial needs. However, if you are not satisfied with your purchase, you may return the product under the following conditions:
+          At Kroztek, we strive to provide high-quality products for your industrial needs.We do not have any refaund and return policy.However , if any defective or not  described product
+          is delivered please contact us immediately, we will do all the needful based on warranty of the products.
         </p>
-        <ul className="list-disc pl-5 text-gray-700">
+        {/* <ul className="list-disc pl-5 text-gray-700">
           <li>Products can be returned within 15 days of receipt if they are defective or damaged during shipping.</li>
           <li>To initiate a return, please contact our customer support team at <a href="mailto:kroztekintegratedsolution@gmail.com" className="text-blue-500">kroztekintegratedsolution@gmail.com</a> with your order details.</li>
           <li>Refunds will be processed within 7-10 business days after we receive and inspect the returned product.</li>
           <li>Shipping costs for returns will be borne by the customer, except in cases of defective or damaged products.</li>
-        </ul>
+        </ul> */}
       </section>
 
       {/* Shipping Policy */}
@@ -40,7 +41,7 @@ const TermsAndConditionsPage = () => {
           We are committed to delivering your orders in a timely and efficient manner. Please review our shipping policies below:
         </p>
         <ul className="list-disc pl-5 text-gray-700">
-          <li>Orders are processed within 2-3 business days after payment confirmation.</li>
+          <li>Orders are processed within 2-3 business days after payment confirmation subject to stock availability.</li>
           <li>We offer standard and express shipping options across India. Shipping costs are calculated at checkout based on the weight and destination of your order.</li>
           <li>Delivery times may vary depending on the location and availability of the products.</li>
           <li>Once your order is shipped, you will receive a tracking number via email to monitor the status of your delivery.</li>

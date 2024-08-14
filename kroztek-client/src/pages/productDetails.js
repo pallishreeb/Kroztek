@@ -88,9 +88,9 @@ function ProductDetails() {
         <title>{post?.name}</title>
         {/* <meta name="description" content={post?.name} /> */}
         <link rel="canonical" href={`${APP_URL}/product/${id}`} />
-        {post?.features?.map((feature, index) => (
-          <meta name="description" content={feature.value} key={index} />
-        ))}
+        
+        <meta name="description" content={post?.tags} />
+
         <meta
           name="description"
           content="CG Emotron, CG Drives,Variable Frequency Drives VFD applications VFD manufacturers Energy-efficient VFDs for HVAC systemsIndustrial VFDs for motor control Industrial VFDs"
@@ -168,7 +168,9 @@ function ProductDetails() {
                   <h1 className="text-md font-bold mb-2 textColor">
                     {post?.name}
                   </h1>
+                  <h5 className="text-md mb-2 font-bold textColor"> {`₹${post?.sellingPrice}  (Including Shipping Charge)` } </h5>
                   <h3 className="text-l mb-2 textColor">Specifications</h3>
+                  
                   <ul className="list-disc pl-4">
                     {post?.features?.map((feature, index) => (
                       <li key={index}>

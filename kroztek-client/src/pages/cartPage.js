@@ -71,7 +71,7 @@ const CartPage = () => {
   };
 
   const getTotal = () => {
-    return cart.reduce((total, item) => total + (parseFloat(item.features.find(feature => feature.name.toLowerCase() === 'price')?.value.replace(/,/g, '') || 0) * item.quantity), 0);
+    return cart.reduce((total, item) => total + (parseFloat(item?.sellingPrice.replace(/,/g, '') || 0) * item.quantity), 0);
   };
 
   const handleCheckout = () => {
@@ -99,7 +99,7 @@ const CartPage = () => {
               />
               <div className="flex-grow">
                 <h3 className="text-lg font-semibold textColor">{item.name}</h3>
-                <p className="text-gray-800">Price: ₹{item.features.find(feature => feature.name.toLowerCase() === 'price')?.value}</p>
+                <p className="text-gray-800">Price: ₹{item?.sellingPrice}</p>
                 <div className="flex items-center mt-2">
                   <button
                     className="bg-blue-500 text-white px-2 py-1 rounded mr-2"

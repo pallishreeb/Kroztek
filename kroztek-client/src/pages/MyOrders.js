@@ -7,6 +7,7 @@ import imgPlaceholder from '../img/no-image.jpg';
 const MyOrders = () => {
   const { user, getOrdersByUser } = useAuthApi();
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false)
   
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -24,11 +25,14 @@ const MyOrders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setLoading(true)
       try {
         const userOrders = await getOrdersByUser(user._id);
         setOrders(userOrders);
+        setLoading(false)
       } catch (error) {
         console.error('Failed to fetch orders:', error);
+        setLoading(false)
       }
     };
 
@@ -39,6 +43,10 @@ const MyOrders = () => {
 
   if (!user) {
     return <p>Loading...</p>;
+  }
+
+  if(loading){
+    return <p className='text-center text-xl'>Loading Your Orders...</p>
   }
 
   return (
@@ -71,7 +79,7 @@ const MyOrders = () => {
                       </Link>
                       <div className="flex-grow">
                         <p className="text-sm font-semibold">{product.name}</p>
-                        <p>Price: ₹{product.features.find(feature => feature.name.toLowerCase() === 'price')?.value}</p>
+                        <p>Price: ₹{product?.sellingPrice}</p>
                         <p>Quantity: {quantity}</p>
                       </div>
                     </div>

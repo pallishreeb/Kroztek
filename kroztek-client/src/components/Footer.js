@@ -25,7 +25,7 @@ function AppFooter() {
         <Link
               to={`/faq`}
             >
-          ❓ FAQ
+          ❓ FAQs
           </Link>
           </li> 
           <li>

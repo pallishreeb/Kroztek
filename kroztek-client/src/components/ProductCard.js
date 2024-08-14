@@ -53,10 +53,10 @@ const ProductCard = ({ products }) => {
     setModalMessage(`${product.name} added to cart!`);
     setModalOpen(true);
   };
-  const getPrice = (features) => {
-    const priceFeature = features.find(feature => feature.name.toLowerCase() === "price");
-    return priceFeature ? priceFeature.value : "00";
-  };
+  // const getPrice = (features) => {
+  //   const priceFeature = features.find(feature => feature.name.toLowerCase() === "price");
+  //   return priceFeature ? priceFeature.value : "00";
+  // };
 
   return (
     <>
@@ -82,7 +82,7 @@ const ProductCard = ({ products }) => {
             {truncateText(product?.name.trim(), 60)}
           </div>
           <p className="text-gray-900 font-bold mb-2">
-            {`₹${getPrice(product.features)}`}
+            {`₹${product?.sellingPrice}`}
           </p>
           <div className="mt-2 flex justify-between">
             <button

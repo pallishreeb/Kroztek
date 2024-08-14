@@ -33,7 +33,7 @@ const CheckoutPage = () => {
   }, []);
 
   const getTotalAmount = () => {
-    return cart.reduce((total, item) => total + (parseFloat(item.features.find(feature => feature.name.toLowerCase() === 'price')?.value.replace(/,/g, '') || 0) * item.quantity), 0);
+    return cart.reduce((total, item) => total + (parseFloat(item?.sellingPrice.replace(/,/g, '') || 0) * item.quantity), 0);
   };
 
   const handleInputChange = (e) => {
@@ -277,7 +277,7 @@ const CheckoutPage = () => {
               <div className="flex-grow">
                 <h3 className="text-lg font-semibold">{item.name}</h3>
                 <p className="text-gray-800">
-                  Price: ₹{item.features.find(feature => feature.name.toLowerCase() === 'price')?.value}
+                  Price: ₹{item?.sellingPrice}
                 </p>
                 <p className="text-gray-800">Quantity: {item.quantity}</p>
               </div>

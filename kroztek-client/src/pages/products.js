@@ -93,6 +93,7 @@ function Products() {
       { categoriesData?.map((category, index) => (
         <meta name="description" content={category.name} key={index} />
       ))}
+      
        <meta
           name="description"
           content="CG Emotron, CG Drives,Variable Frequency Drives VFD applications VFD manufacturers Energy-efficient VFDs for HVAC systemsIndustrial VFDs for motor control Industrial VFDs"
