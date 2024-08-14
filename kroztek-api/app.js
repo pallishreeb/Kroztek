@@ -19,8 +19,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 //middlewares enable
 app.use(hpp());  // HTTP parameter pollution (HPP)
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb',extended: true }));
 app.use(morgan("dev"));
 
 //No clickjacking protection configured

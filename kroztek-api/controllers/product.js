@@ -22,6 +22,7 @@ exports.addProduct = async (req, res) => {
       });
     }
 
+    // console.log(req.body, "req.body")
     // Retrieve the user's _id from req.user (assuming you have user authentication)
     const userId = req.user._id;
     let user = User.findById(userId);
@@ -56,6 +57,9 @@ exports.addProduct = async (req, res) => {
       documents: docsFilenames, // Get the document filename from multer
       images: imageFilenames, // Store image filenames in the 'images' field
       rank: req.body?.rank,
+      sellingPrice: req.body?.sellingPrice,
+      originalPrice: req.body?.originalPrice,
+      tags: req.body?.tags,
     });
 
     // Check if the user is an admin
@@ -113,6 +117,15 @@ exports.editProduct = async (req, res) => {
     }
     if (updatedFields.rank) {
       existingProduct.rank = updatedFields.rank;
+    }
+    if (updatedFields.sellingPrice) {
+      existingProduct.sellingPrice = updatedFields.sellingPrice;
+    }
+    if (updatedFields.originalPrice) {
+      existingProduct.originalPrice = updatedFields.originalPrice;
+    }
+    if (updatedFields.tags) {
+      existingProduct.tags = updatedFields.tags;
     }
     // Handle document and image uploads if provided
     if (req.files && req.files.documents) {

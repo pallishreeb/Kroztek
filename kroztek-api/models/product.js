@@ -42,6 +42,13 @@ const productSchema = new mongoose.Schema({
   rank: {
     type: Number,
   },
+  sellingPrice: {
+    type: String,
+  },
+  originalPrice: {
+    type: String,
+  },
+  tags: String,
   status: {
     type: String,
     enum: ["draft", "approved", "rejected"],
