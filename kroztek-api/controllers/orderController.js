@@ -46,7 +46,7 @@ exports.getOrder = async (req, res) => {
 
 exports.getOrdersByUser = async (req, res) => {
   const { userId } = req.params;
-  const orders = await Order.find({ user: userId }).populate('products.product');
+  const orders = await Order.find({ user: userId }).populate('products.product').sort({ createdAt: -1 });
   res.status(200).json(orders);
 };
 
@@ -54,7 +54,7 @@ exports.getOrdersByUser = async (req, res) => {
 // Get all orders
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate('products.product');
+    const orders = await Order.find().populate('products.product').sort({ createdAt: -1 });
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching orders', error });
