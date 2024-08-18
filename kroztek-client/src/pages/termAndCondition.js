@@ -23,9 +23,14 @@ const TermsAndConditionsPage = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">🔄 Return and Refund Policy</h2>
         <p className="text-gray-700 mb-4">
+          At Kroztek, we strive to provide high-quality products for your industrial needs.However if you are not satisfied for any reason,
+           We accept returns within 14 days of delivery.please contact our customer service team for instructions. 
+           Once your return is received, we will issue a refund to your original method of payment within 5 to 7 business days.
+        </p>
+        {/* <p className="text-gray-700 mb-4">
           At Kroztek, we strive to provide high-quality products for your industrial needs.We do not have any refaund and return policy.However , if any defective or not  described product
           is delivered please contact us immediately, we will do all the needful based on warranty of the products.
-        </p>
+        </p> */}
         {/* <ul className="list-disc pl-5 text-gray-700">
           <li>Products can be returned within 15 days of receipt if they are defective or damaged during shipping.</li>
           <li>To initiate a return, please contact our customer support team at <a href="mailto:kroztekintegratedsolution@gmail.com" className="text-blue-500">kroztekintegratedsolution@gmail.com</a> with your order details.</li>

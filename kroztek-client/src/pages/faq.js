@@ -25,7 +25,7 @@ const FAQPage = () => {
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-2">❓ What is your return and refund policy?</h2>
         <p className="text-gray-700">
-         Currently We dont accept any returns after delivery of products. If a product is found to be defective or not as described, please contact us immediately. For more details, please refer to our Return and Refund Policy.
+        If you are not satisfied for any reason, We accept returns within 14 days of delivery.please contact our customer service team for instructions. Once your return is received, we will issue a refund to your original method of payment within 5 to 7 business days.
         </p>
       </div>
 
