@@ -3,7 +3,7 @@ import React from "react";
 const TermsAndConditionsPage = () => {
   return (
     <div className="container  md:w-1/2 mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Terms and Conditions</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Terms & Condition</h1>
 
       <p className="text-md mb-6 text-justify">
       Welcome to Kroztek Integrated Solution
@@ -98,14 +98,14 @@ const TermsAndConditionsPage = () => {
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Governing Law</h2>
         <p className="text-gray-700 mb-4">
-        These Terms shall be governed and construed in accordance with the laws of Maharashtra, India, without regard to its conflict of law provisions.
+        These Terms shall be governed and construed in accordance with the laws of Odisha, India, without regard to its conflict of law provisions.
         </p>
       </section>
       {/* Return and Refund Policy */}
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-4"> Contact Us</h2>
         <p className="text-gray-700 mb-4">
-        If you have any questions about these Terms, please contact us at info@mfbuddy.com or call us at 9370546852
+        If you have any questions about these Terms, please contact us at kroztekintegratedsolution@gmail.com or call us at +918637214899
         </p>
       </section>
 
