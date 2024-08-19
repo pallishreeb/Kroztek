@@ -8,7 +8,7 @@ const TermsAndConditionsPage = () => {
       <p className="text-md mb-6 text-justify">
       Welcome to Kroztek Integrated Solution
       <br/>
-      These Terms and Conditions  govern your relationship with Kroztek Integrated Solution operated by Shashwat Dibyashakti Sahoo.
+      These Terms and Conditions  govern your relationship with Kroztek Integrated Solution operated by Saswat Dibyashakti Sahoo.
       <br/>
       Please read these Terms and Conditions carefully before using our Service.
       <br/>
