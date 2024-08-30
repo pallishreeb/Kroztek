@@ -383,14 +383,16 @@ const AuthState = ({ children }) => {
           if (!response.ok) {
             throw new Error('Failed to place order');
           }
+          // Parse the JSON response
+         const responseData = await response.json();
           dispatch({
             type: 'REMOVE_FROM_CART',
             payload: [],
         });
           localStorage.removeItem('cart');
-          navigate('/myorders')
+        //   navigate('/myorders')
           toast.success('Order placed successfully');
-          return response.json();
+          return responseData;
         } catch (error) {
           console.error(error);
           throw error;

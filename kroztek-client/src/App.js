@@ -25,6 +25,7 @@ import OrderDetails from './pages/OrderDetails';
 import FAQPage from './pages/faq';
 import TermsAndConditionsPage from './pages/termAndCondition';
 import PrivacyPolicyPage from './pages/privacyPolicy';
+import PaymentFailure from './pages/failure';
 function App() {
   return (
     <div className="App">
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/service/:id" element={<ServiceDetails />} />
         <Route exact path="/myorders" element={<ProtectedRoute element={<MyOrders />} />} />
         <Route exact path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails />} />} />
+        <Route exact path="/payment-failure" element={<ProtectedRoute element={<PaymentFailure />} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       </div>

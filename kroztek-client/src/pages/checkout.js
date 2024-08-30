@@ -69,8 +69,16 @@ const CheckoutPage = () => {
     };
 
     try {
-      await placeOrder(orderData,navigate);
-      // navigate('/myorders');
+      const response = await placeOrder(orderData,navigate);
+      // console.log(response,"order response ")
+      // Extract the payment URL from the response data
+      const paymentUrl = response.paymentUrl;
+      
+      if (paymentUrl) {
+        window.location.href = paymentUrl;
+      } else {
+        toast.error('Payment initiation failed');
+      }
     } catch (error) {
       toast.error('Failed to place order');
     }
