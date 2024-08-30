@@ -8,7 +8,7 @@ const passport = require("passport");
 const morgan = require("morgan");
 const path = require("path");
 const connectDb = require("./config/dbConfig")
-
+require('dotenv').config()
 // Configure CORS to allow requests from any origin
 const corsOptions = {
     origin: '*',

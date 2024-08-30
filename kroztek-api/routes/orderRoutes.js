@@ -15,4 +15,6 @@ router.delete('/:orderId',  passport.authenticate("jwt", { session: false }),ord
 
 router.get('/:orderId', orderController.getOrder);
 router.get('/user/:userId', orderController.getOrdersByUser);
+
+router.post("/status", orderController.getPaymentStatus)
 module.exports = router;
